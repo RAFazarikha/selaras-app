@@ -2,6 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { sendMagicLink, signInPassword, signUp } from "./actions";
+import { Spinner } from "@/components/ui/spinner";
 
 type AuthTab = "password" | "magic" | "signup";
 
@@ -155,12 +156,21 @@ export default function LoginPage() {
                 <button
                   type="submit"
                   disabled={pwPending}
-                  className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-[#6d28d9] to-[#8455ef] text-white text-sm font-semibold flex items-center justify-center gap-2 primary-btn-glow active:scale-[0.98] transition-all disabled:opacity-60"
+                  className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-[#6d28d9] to-[#8455ef] text-white text-sm font-semibold flex items-center justify-center gap-2 primary-btn-glow active:scale-[0.98] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  <span>{pwPending ? "Memverifikasi…" : "Masuk ke Selaras"}</span>
-                  <span className="material-symbols-outlined text-[18px]">
-                    arrow_forward
-                  </span>
+                  {pwPending ? (
+                    <>
+                      <Spinner className="w-4 h-4 text-white" />
+                      <span>Memverifikasi…</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Masuk ke Selaras</span>
+                      <span className="material-symbols-outlined text-[18px]">
+                        arrow_forward
+                      </span>
+                    </>
+                  )}
                 </button>
               </div>
             </form>
@@ -210,12 +220,21 @@ export default function LoginPage() {
                 <button
                   type="submit"
                   disabled={magicPending}
-                  className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-[#6d28d9] to-[#8455ef] text-white text-sm font-semibold flex items-center justify-center gap-2 primary-btn-glow active:scale-[0.98] transition-all disabled:opacity-60"
+                  className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-[#6d28d9] to-[#8455ef] text-white text-sm font-semibold flex items-center justify-center gap-2 primary-btn-glow active:scale-[0.98] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  <span>{magicPending ? "Mengirim tautan…" : "Kirim Tautan Masuk"}</span>
-                  <span className="material-symbols-outlined text-[18px]">
-                    mail
-                  </span>
+                  {magicPending ? (
+                    <>
+                      <Spinner className="w-4 h-4 text-white" />
+                      <span>Mengirim tautan…</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Kirim Tautan Masuk</span>
+                      <span className="material-symbols-outlined text-[18px]">
+                        mail
+                      </span>
+                    </>
+                  )}
                 </button>
               </div>
             </form>
@@ -303,12 +322,21 @@ export default function LoginPage() {
                 <button
                   type="submit"
                   disabled={regPending}
-                  className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-[#6d28d9] to-[#8455ef] text-white text-sm font-semibold flex items-center justify-center gap-2 primary-btn-glow active:scale-[0.98] transition-all disabled:opacity-60"
+                  className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-[#6d28d9] to-[#8455ef] text-white text-sm font-semibold flex items-center justify-center gap-2 primary-btn-glow active:scale-[0.98] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  <span>{regPending ? "Mendaftarkan…" : "Buat Akun Selaras"}</span>
-                  <span className="material-symbols-outlined text-[18px]">
-                    arrow_forward
-                  </span>
+                  {regPending ? (
+                    <>
+                      <Spinner className="w-4 h-4 text-white" />
+                      <span>Mendaftarkan…</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Buat Akun Selaras</span>
+                      <span className="material-symbols-outlined text-[18px]">
+                        arrow_forward
+                      </span>
+                    </>
+                  )}
                 </button>
               </div>
             </form>

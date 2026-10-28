@@ -2,6 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { createInvite } from "./actions";
+import { Spinner } from "@/components/ui/spinner";
 
 export function InviteButton() {
   const [state, run, pending] = useActionState(createInvite, {});
@@ -19,10 +20,19 @@ export function InviteButton() {
         <button
           type="submit"
           disabled={pending}
-          className="w-full purple-gradient-btn text-white py-2.5 px-4 rounded-full text-xs font-semibold flex items-center justify-center gap-2 active:scale-95 transition-all disabled:opacity-60"
+          className="w-full purple-gradient-btn text-white py-2.5 px-4 rounded-full text-xs font-semibold flex items-center justify-center gap-2 active:scale-95 transition-all disabled:opacity-70 disabled:cursor-not-allowed"
         >
-          <span className="material-symbols-outlined text-[18px]">key</span>
-          <span>{pending ? "Membuat kode…" : "Buat Kode Undangan"}</span>
+          {pending ? (
+            <>
+              <Spinner className="w-3.5 h-3.5 text-white" />
+              <span>Membuat kode…</span>
+            </>
+          ) : (
+            <>
+              <span className="material-symbols-outlined text-[18px]">key</span>
+              <span>Buat Kode Undangan</span>
+            </>
+          )}
         </button>
       </form>
 

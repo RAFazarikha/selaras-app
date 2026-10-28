@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { formatDateIndo, rupiah } from "@/lib/format";
 import { getDayName } from "@/supabase/functions/_shared/budget";
 import { updatePeriodParameters } from "@/app/(app)/periods/[id]/actions";
+import { Spinner } from "@/components/ui/spinner";
 
 export function BentoParameterDock({
   period,
@@ -144,9 +145,16 @@ export function BentoParameterDock({
             <button
               type="submit"
               disabled={isPending}
-              className="flex-1 py-1.5 px-3 rounded-xl bg-gradient-to-r from-[#6d28d9] to-[#8455ef] text-white text-xs font-semibold primary-btn-glow active:scale-[0.98] transition-all disabled:opacity-60"
+              className="flex-1 py-1.5 px-3 rounded-xl bg-gradient-to-r from-[#6d28d9] to-[#8455ef] text-white text-xs font-semibold flex items-center justify-center gap-1.5 primary-btn-glow active:scale-[0.98] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              {isPending ? "Menyimpan…" : "Simpan Parameter"}
+              {isPending ? (
+                <>
+                  <Spinner className="w-3.5 h-3.5 text-white" />
+                  <span>Menyimpan…</span>
+                </>
+              ) : (
+                <span>Simpan Parameter</span>
+              )}
             </button>
             <button
               type="button"

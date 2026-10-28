@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { type SpreadsheetDayRow, type SpreadsheetSummary } from "@/supabase/functions/_shared/budget";
 import { formatDateIndo, rupiah } from "@/lib/format";
 import { addTransaction, deleteTransaction } from "@/app/(app)/periods/[id]/actions";
+import { Spinner } from "@/components/ui/spinner";
 
 type TxItem = {
   id: string;
@@ -293,10 +294,19 @@ export function BentoDailyLedger({
                       <button
                         type="submit"
                         disabled={isPending}
-                        className="w-full py-1.5 px-3 rounded-xl bg-gradient-to-r from-[#6d28d9] to-[#8455ef] text-white text-xs font-semibold flex items-center justify-center gap-1.5 primary-btn-glow active:scale-[0.98] transition-all disabled:opacity-60"
+                        className="w-full py-1.5 px-3 rounded-xl bg-gradient-to-r from-[#6d28d9] to-[#8455ef] text-white text-xs font-semibold flex items-center justify-center gap-1.5 primary-btn-glow active:scale-[0.98] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
                       >
-                        <span className="material-symbols-outlined text-[15px]">add</span>
-                        <span>{isPending ? "Menyimpan…" : "Tambah Pengeluaran"}</span>
+                        {isPending ? (
+                          <>
+                            <Spinner className="w-3.5 h-3.5 text-white" />
+                            <span>Menyimpan…</span>
+                          </>
+                        ) : (
+                          <>
+                            <span className="material-symbols-outlined text-[15px]">add</span>
+                            <span>Tambah Pengeluaran</span>
+                          </>
+                        )}
                       </button>
                     </form>
                   )}

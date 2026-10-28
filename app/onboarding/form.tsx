@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import type { State } from "@/app/login/actions";
 import { createWorkspace, redeemInvite } from "./actions";
+import { Spinner } from "@/components/ui/spinner";
 
 function Form({
   title,
@@ -47,9 +48,16 @@ function Form({
       <button
         type="submit"
         disabled={pending}
-        className="w-full purple-gradient-btn text-white py-2.5 px-4 rounded-full text-xs font-semibold flex items-center justify-center gap-2 active:scale-95 transition-all disabled:opacity-60"
+        className="w-full purple-gradient-btn text-white py-2.5 px-4 rounded-full text-xs font-semibold flex items-center justify-center gap-2 active:scale-95 transition-all disabled:opacity-70 disabled:cursor-not-allowed"
       >
-        <span>{pending ? "Memproses…" : cta}</span>
+        {pending ? (
+          <>
+            <Spinner className="w-3.5 h-3.5 text-white" />
+            <span>Memproses…</span>
+          </>
+        ) : (
+          <span>{cta}</span>
+        )}
       </button>
     </form>
   );

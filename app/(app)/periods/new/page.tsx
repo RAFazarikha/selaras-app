@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import Link from "next/link";
 import { createPeriod } from "./actions";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function NewPeriodPage() {
   const [state, run, pending] = useActionState(createPeriod, {});
@@ -153,10 +154,19 @@ export default function NewPeriodPage() {
         <button
           type="submit"
           disabled={pending}
-          className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-[#6d28d9] to-[#8455ef] text-white text-sm font-semibold flex items-center justify-center gap-2 primary-btn-glow active:scale-[0.98] transition-all disabled:opacity-60"
+          className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-[#6d28d9] to-[#8455ef] text-white text-sm font-semibold flex items-center justify-center gap-2 primary-btn-glow active:scale-[0.98] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
         >
-          <span>{pending ? "Menyimpan…" : "Buat Periode Baru"}</span>
-          <span className="material-symbols-outlined text-[18px]">add_circle</span>
+          {pending ? (
+            <>
+              <Spinner className="w-4 h-4 text-white" />
+              <span>Menyimpan…</span>
+            </>
+          ) : (
+            <>
+              <span>Buat Periode Baru</span>
+              <span className="material-symbols-outlined text-[18px]">add_circle</span>
+            </>
+          )}
         </button>
       </form>
     </div>

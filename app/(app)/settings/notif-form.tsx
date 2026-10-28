@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { saveDiscord } from "./notif-actions";
+import { Spinner } from "@/components/ui/spinner";
 
 export function DiscordForm({ hint }: { hint: string | null }) {
   const [state, run, pending] = useActionState(saveDiscord, {});
@@ -98,10 +99,19 @@ export function DiscordForm({ hint }: { hint: string | null }) {
         <button
           type="submit"
           disabled={pending}
-          className="w-full purple-gradient-btn text-white py-2.5 px-4 rounded-full text-xs font-semibold flex items-center justify-center gap-2 active:scale-95 transition-all disabled:opacity-60"
+          className="w-full purple-gradient-btn text-white py-2.5 px-4 rounded-full text-xs font-semibold flex items-center justify-center gap-2 active:scale-95 transition-all disabled:opacity-70 disabled:cursor-not-allowed"
         >
-          <span className="material-symbols-outlined text-[18px]">cloud_sync</span>
-          <span>{pending ? "Menyimpan…" : "Simpan Perubahan Webhook"}</span>
+          {pending ? (
+            <>
+              <Spinner className="w-3.5 h-3.5 text-white" />
+              <span>Menyimpan…</span>
+            </>
+          ) : (
+            <>
+              <span className="material-symbols-outlined text-[18px]">cloud_sync</span>
+              <span>Simpan Perubahan Webhook</span>
+            </>
+          )}
         </button>
       </form>
     </section>
