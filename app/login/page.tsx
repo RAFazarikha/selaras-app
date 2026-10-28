@@ -3,6 +3,18 @@
 import { useActionState, useState } from "react";
 import { sendMagicLink, signInPassword, signUp } from "./actions";
 import { Spinner } from "@/components/ui/spinner";
+import {
+  Wallet,
+  Mail,
+  Lock,
+  Eye,
+  EyeOff,
+  ArrowRight,
+  Send,
+  User,
+  ShieldCheck,
+  LockKeyhole,
+} from "lucide-react";
 
 type AuthTab = "password" | "magic" | "signup";
 
@@ -34,9 +46,7 @@ export default function LoginPage() {
           <div className="relative mb-4">
             <div className="absolute inset-0 rounded-2xl bg-[#6d28d9]/25 blur-xl scale-125" />
             <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-[#6d28d9] to-[#8455ef] flex items-center justify-center specular-border shadow-lg">
-              <span className="material-symbols-outlined text-white text-[32px]">
-                account_balance_wallet
-              </span>
+              <Wallet className="w-8 h-8 text-white" />
               <div className="absolute top-1 left-1 right-1 h-1/2 bg-white/20 rounded-t-xl pointer-events-none" />
             </div>
           </div>
@@ -98,9 +108,7 @@ export default function LoginPage() {
                   Email Akun
                 </label>
                 <div className="relative flex items-center rounded-2xl bg-white/95 border border-[#ccc3d7]/60 px-3 py-2.5 transition-all input-ambient-glow">
-                  <span className="material-symbols-outlined text-[#7b7486] mr-2 text-[20px]">
-                    mail
-                  </span>
+                  <Mail className="w-4 h-4 text-[#7b7486] mr-2 shrink-0" />
                   <input
                     id="pw-email"
                     name="email"
@@ -121,9 +129,7 @@ export default function LoginPage() {
                   Kata Sandi
                 </label>
                 <div className="relative flex items-center rounded-2xl bg-white/95 border border-[#ccc3d7]/60 px-3 py-2.5 transition-all input-ambient-glow">
-                  <span className="material-symbols-outlined text-[#7b7486] mr-2 text-[20px]">
-                    lock
-                  </span>
+                  <Lock className="w-4 h-4 text-[#7b7486] mr-2 shrink-0" />
                   <input
                     id="pw-pass"
                     name="password"
@@ -139,9 +145,11 @@ export default function LoginPage() {
                     aria-label="Tampilkan sandi"
                     className="text-[#7b7486] hover:text-[#0b1c30] p-0.5 ml-1"
                   >
-                    <span className="material-symbols-outlined text-[20px]">
-                      {showPassword ? "visibility_off" : "visibility"}
-                    </span>
+                    {showPassword ? (
+                      <EyeOff className="w-4 h-4" />
+                    ) : (
+                      <Eye className="w-4 h-4" />
+                    )}
                   </button>
                 </div>
               </div>
@@ -166,9 +174,7 @@ export default function LoginPage() {
                   ) : (
                     <>
                       <span>Masuk ke Selaras</span>
-                      <span className="material-symbols-outlined text-[18px]">
-                        arrow_forward
-                      </span>
+                      <ArrowRight className="w-4 h-4" />
                     </>
                   )}
                 </button>
@@ -187,9 +193,7 @@ export default function LoginPage() {
                   Email Anda
                 </label>
                 <div className="relative flex items-center rounded-2xl bg-white/95 border border-[#ccc3d7]/60 px-3 py-2.5 transition-all input-ambient-glow">
-                  <span className="material-symbols-outlined text-[#7b7486] mr-2 text-[20px]">
-                    send
-                  </span>
+                  <Send className="w-4 h-4 text-[#7b7486] mr-2 shrink-0" />
                   <input
                     id="magic-email"
                     name="email"
@@ -230,9 +234,7 @@ export default function LoginPage() {
                   ) : (
                     <>
                       <span>Kirim Tautan Masuk</span>
-                      <span className="material-symbols-outlined text-[18px]">
-                        mail
-                      </span>
+                      <Mail className="w-4 h-4" />
                     </>
                   )}
                 </button>
@@ -251,9 +253,7 @@ export default function LoginPage() {
                   Nama Panggilan
                 </label>
                 <div className="relative flex items-center rounded-2xl bg-white/95 border border-[#ccc3d7]/60 px-3 py-2.5 transition-all input-ambient-glow">
-                  <span className="material-symbols-outlined text-[#7b7486] mr-2 text-[20px]">
-                    person
-                  </span>
+                  <User className="w-4 h-4 text-[#7b7486] mr-2 shrink-0" />
                   <input
                     id="reg-name"
                     name="name"
@@ -273,9 +273,7 @@ export default function LoginPage() {
                   Email
                 </label>
                 <div className="relative flex items-center rounded-2xl bg-white/95 border border-[#ccc3d7]/60 px-3 py-2.5 transition-all input-ambient-glow">
-                  <span className="material-symbols-outlined text-[#7b7486] mr-2 text-[20px]">
-                    mail
-                  </span>
+                  <Mail className="w-4 h-4 text-[#7b7486] mr-2 shrink-0" />
                   <input
                     id="reg-email"
                     name="email"
@@ -296,9 +294,7 @@ export default function LoginPage() {
                   Kata Sandi (min. 8 karakter)
                 </label>
                 <div className="relative flex items-center rounded-2xl bg-white/95 border border-[#ccc3d7]/60 px-3 py-2.5 transition-all input-ambient-glow">
-                  <span className="material-symbols-outlined text-[#7b7486] mr-2 text-[20px]">
-                    lock
-                  </span>
+                  <Lock className="w-4 h-4 text-[#7b7486] mr-2 shrink-0" />
                   <input
                     id="reg-pass"
                     name="password"
@@ -332,9 +328,7 @@ export default function LoginPage() {
                   ) : (
                     <>
                       <span>Buat Akun Selaras</span>
-                      <span className="material-symbols-outlined text-[18px]">
-                        arrow_forward
-                      </span>
+                      <ArrowRight className="w-4 h-4" />
                     </>
                   )}
                 </button>
@@ -345,9 +339,7 @@ export default function LoginPage() {
           {/* Institutional Trust Micro-Badge */}
           <div className="mt-5 pt-3 border-t border-[#ccc3d7]/25 flex items-center justify-between text-xs text-[#4a4455]">
             <span className="flex items-center gap-1.5">
-              <span className="material-symbols-outlined text-[#006544] text-[16px]">
-                verified_user
-              </span>
+              <ShieldCheck className="w-4 h-4 text-[#006544]" />
               <span>Workspace Berdua Terenkripsi</span>
             </span>
             <span className="text-[#7b7486] text-[11px]">v4.8.2 Sequoia</span>
@@ -358,9 +350,7 @@ export default function LoginPage() {
       {/* Bottom Security & Privacy Pill */}
       <footer className="w-full flex flex-col items-center pb-2 pt-3">
         <div className="inline-flex items-center gap-1.5 py-1.5 px-3.5 rounded-full bg-white/80 backdrop-blur-md border border-white/90 shadow-sm text-xs text-[#4a4455]">
-          <span className="material-symbols-outlined text-[#006544] text-[15px]">
-            lock
-          </span>
+          <LockKeyhole className="w-3.5 h-3.5 text-[#006544]" />
           <span>Enkripsi data keuangan end-to-end terproteksi</span>
         </div>
       </footer>

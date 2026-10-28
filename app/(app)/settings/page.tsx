@@ -2,6 +2,18 @@ import { createClient } from "@/lib/supabase/server";
 import { signOut } from "@/app/login/actions";
 import { InviteButton } from "./invite";
 import { DiscordForm } from "./notif-form";
+import {
+  Settings,
+  Building2,
+  Users,
+  ShieldCheck,
+  CheckCircle2,
+  UserPlus,
+  Table2,
+  Calculator,
+  Fuel,
+  Coins,
+} from "lucide-react";
 
 export default async function SettingsPage() {
   const supabase = await createClient();
@@ -32,7 +44,7 @@ export default async function SettingsPage() {
       <header className="flex justify-between items-center py-2 border-b border-[#e5eeff]">
         <div className="flex items-center gap-2">
           <div className="w-6 h-6 rounded-full bg-[#e9ddff] flex items-center justify-center text-[#6d28d9]">
-            <span className="material-symbols-outlined text-[15px]">settings</span>
+            <Settings className="w-3.5 h-3.5" />
           </div>
           <span className="text-base font-bold text-[#0b1c30]">Pengaturan</span>
         </div>
@@ -58,7 +70,7 @@ export default async function SettingsPage() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-2xl bg-[#e9ddff] flex items-center justify-center text-[#6d28d9] shadow-inner">
-              <span className="material-symbols-outlined text-[20px]">corporate_fare</span>
+              <Building2 className="w-5 h-5" />
             </div>
             <div>
               <h2 className="text-sm font-bold text-[#0b1c30]">Workspace Berdua</h2>
@@ -67,7 +79,7 @@ export default async function SettingsPage() {
           </div>
 
           <div className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#eff4ff] border border-[#d3e4fe] text-[11px] font-semibold text-[#6d28d9]">
-            <span className="material-symbols-outlined text-[14px]">group</span>
+            <Users className="w-3.5 h-3.5 mr-0.5" />
             <span>{memberCount}/2 anggota</span>
           </div>
         </div>
@@ -90,7 +102,7 @@ export default async function SettingsPage() {
                 <span className="text-[10px] text-[#4a4455]">{user?.email} (Anda)</span>
               </div>
             </div>
-            <span className="material-symbols-outlined text-[#006544] text-[18px]">verified_user</span>
+            <ShieldCheck className="w-4 h-4 text-[#006544]" />
           </div>
 
           {/* Partner Slot or Available Slot */}
@@ -110,13 +122,13 @@ export default async function SettingsPage() {
                   <span className="text-[10px] text-[#4a4455]">Terkoneksi ke Workspace</span>
                 </div>
               </div>
-              <span className="material-symbols-outlined text-[#006544] text-[18px]">check_circle</span>
+              <CheckCircle2 className="w-4 h-4 text-[#006544]" />
             </div>
           ) : (
             <div className="flex items-center justify-between p-2.5 bg-[#eff4ff]/60 rounded-2xl border border-dashed border-[#ccc3d7]">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-full border border-dashed border-[#7b7486] flex items-center justify-center bg-white/40 text-[#7b7486]">
-                  <span className="material-symbols-outlined text-[18px]">person_add</span>
+                  <UserPlus className="w-4 h-4" />
                 </div>
                 <div>
                   <span className="text-xs font-medium text-[#4a4455]">Slot Pasangan Tersedia</span>
@@ -143,7 +155,7 @@ export default async function SettingsPage() {
       <section className="glass-tile rounded-3xl p-5 space-y-3">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-2xl bg-[#e9ddff] flex items-center justify-center text-[#6d28d9] shadow-inner">
-            <span className="material-symbols-outlined text-[20px]">table_chart</span>
+            <Table2 className="w-5 h-5" />
           </div>
           <div>
             <h2 className="text-sm font-bold text-[#0b1c30]">Preferensi Spreadsheet</h2>
@@ -154,7 +166,7 @@ export default async function SettingsPage() {
         <div className="space-y-2 text-xs">
           <div className="flex items-center justify-between p-2.5 bg-white/80 rounded-2xl border border-white/60">
             <div className="flex items-center gap-2.5">
-              <span className="material-symbols-outlined text-[#6d28d9] text-[18px]">calculate</span>
+              <Calculator className="w-4 h-4 text-[#6d28d9]" />
               <div>
                 <span className="font-semibold text-[#0b1c30] block">Pembulatan Budget Harian</span>
                 <span className="text-[10px] text-[#4a4455]">Lining arithmetic otomatis</span>
@@ -167,7 +179,7 @@ export default async function SettingsPage() {
 
           <div className="flex items-center justify-between p-2.5 bg-white/80 rounded-2xl border border-white/60">
             <div className="flex items-center gap-2.5">
-              <span className="material-symbols-outlined text-[#6d28d9] text-[18px]">local_gas_station</span>
+              <Fuel className="w-4 h-4 text-[#6d28d9]" />
               <div>
                 <span className="font-semibold text-[#0b1c30] block">Jadwal Alokasi BBM Rutin</span>
                 <span className="text-[10px] text-[#4a4455]">Siklus pengisian mingguan</span>
@@ -180,7 +192,7 @@ export default async function SettingsPage() {
 
           <div className="flex items-center justify-between p-2.5 bg-white/80 rounded-2xl border border-white/60">
             <div className="flex items-center gap-2.5">
-              <span className="material-symbols-outlined text-[#6d28d9] text-[18px]">payments</span>
+              <Coins className="w-4 h-4 text-[#6d28d9]" />
               <div>
                 <span className="font-semibold text-[#0b1c30] block">Mata Uang Utama</span>
                 <span className="text-[10px] text-[#4a4455]">ISO 4217 Rupiah Indonesia</span>

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Wallet, LineChart, Settings } from "lucide-react";
 
 export function FloatingNav() {
   const pathname = usePathname();
@@ -24,9 +25,7 @@ export function FloatingNav() {
             : "text-[#4a4455] hover:text-[#6d28d9]"
         }`}
       >
-        <span className="material-symbols-outlined text-[20px]">
-          account_balance_wallet
-        </span>
+        <Wallet className="w-5 h-5" />
         <span className="text-[11px] font-semibold mt-0.5">Ringkasan</span>
       </Link>
 
@@ -39,9 +38,7 @@ export function FloatingNav() {
             : "text-[#4a4455] hover:text-[#6d28d9]"
         }`}
       >
-        <span className="material-symbols-outlined text-[20px]">
-          monitoring
-        </span>
+        <LineChart className="w-5 h-5" />
         <span className="text-[11px] font-semibold mt-0.5">Analitik</span>
       </Link>
 
@@ -54,9 +51,7 @@ export function FloatingNav() {
             : "text-[#4a4455] hover:text-[#6d28d9]"
         }`}
       >
-        <span className="material-symbols-outlined text-[20px]">
-          settings
-        </span>
+        <Settings className="w-5 h-5" />
         <span className="text-[11px] font-semibold mt-0.5">Pengaturan</span>
       </Link>
     </nav>

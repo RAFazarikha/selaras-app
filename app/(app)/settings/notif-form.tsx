@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { saveDiscord } from "./notif-actions";
 import { Spinner } from "@/components/ui/spinner";
+import { BellRing, Link2, RefreshCw } from "lucide-react";
 
 export function DiscordForm({ hint }: { hint: string | null }) {
   const [state, run, pending] = useActionState(saveDiscord, {});
@@ -13,7 +14,7 @@ export function DiscordForm({ hint }: { hint: string | null }) {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-2xl bg-[#ebddff] flex items-center justify-center text-[#6d28d9] shadow-inner">
-            <span className="material-symbols-outlined text-[20px]">notifications_active</span>
+            <BellRing className="w-5 h-5" />
           </div>
           <div>
             <h2 className="text-sm font-bold text-[#0b1c30]">Webhook Notifikasi</h2>
@@ -44,9 +45,7 @@ export function DiscordForm({ hint }: { hint: string | null }) {
             Discord Webhook URL
           </label>
           <div className="relative flex items-center rounded-2xl bg-white border border-[#ccc3d7]/60 px-3 py-2.5 input-ambient-glow transition-all">
-            <span className="material-symbols-outlined text-[#7b7486] mr-2 text-[18px]">
-              link
-            </span>
+            <Link2 className="w-4 h-4 text-[#7b7486] mr-2 shrink-0" />
             <input
               id="discord_webhook"
               name="discord_webhook"
@@ -108,7 +107,7 @@ export function DiscordForm({ hint }: { hint: string | null }) {
             </>
           ) : (
             <>
-              <span className="material-symbols-outlined text-[18px]">cloud_sync</span>
+              <RefreshCw className="w-4 h-4" />
               <span>Simpan Perubahan Webhook</span>
             </>
           )}

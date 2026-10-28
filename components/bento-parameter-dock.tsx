@@ -5,6 +5,7 @@ import { formatDateIndo, rupiah } from "@/lib/format";
 import { getDayName } from "@/supabase/functions/_shared/budget";
 import { updatePeriodParameters } from "@/app/(app)/periods/[id]/actions";
 import { Spinner } from "@/components/ui/spinner";
+import { Calendar, CalendarDays, PiggyBank, Fuel, Pencil, X } from "lucide-react";
 
 export function BentoParameterDock({
   period,
@@ -55,7 +56,7 @@ export function BentoParameterDock({
       <div className="flex items-center justify-between pb-2.5 border-b border-[#e5eeff]">
         <div className="flex items-center gap-2">
           <div className="w-6 h-6 rounded-full bg-[#e9ddff] flex items-center justify-center text-[#6d28d9] shrink-0">
-            <span className="material-symbols-outlined text-[15px]">calendar_month</span>
+            <Calendar className="w-3.5 h-3.5" />
           </div>
           <h2 className="text-xs font-bold text-[#0b1c30] tracking-tight">{period.name}</h2>
         </div>
@@ -67,12 +68,11 @@ export function BentoParameterDock({
             <button
               type="button"
               onClick={() => setIsEditing(!isEditing)}
-              className="text-[#6d28d9] hover:opacity-80 p-0.5"
+              className="text-[#6d28d9] hover:opacity-80 p-1 flex items-center"
               title="Ubah parameter"
+              aria-label="Ubah parameter"
             >
-              <span className="material-symbols-outlined text-[18px]">
-                {isEditing ? "close" : "edit"}
-              </span>
+              {isEditing ? <X className="w-4 h-4" /> : <Pencil className="w-3.5 h-3.5" />}
             </button>
           )}
         </div>
@@ -170,9 +170,7 @@ export function BentoParameterDock({
           {/* Total Uang */}
           <div className="flex items-center justify-between p-2 rounded-2xl bg-[#eff4ff]/60 hover:bg-[#eff4ff] transition-colors">
             <div className="flex items-center gap-2">
-              <span className="material-symbols-outlined text-[18px] text-[#6d28d9]">
-                savings
-              </span>
+              <PiggyBank className="w-4 h-4 text-[#6d28d9]" />
               <span className="text-xs font-medium text-[#4a4455]">Total Uang</span>
             </div>
             <span className="text-xs font-bold tabular-nums text-[#0b1c30]">
@@ -183,9 +181,7 @@ export function BentoParameterDock({
           {/* Rentang Tanggal */}
           <div className="flex items-center justify-between p-2 rounded-2xl bg-[#eff4ff]/60 hover:bg-[#eff4ff] transition-colors">
             <div className="flex items-center gap-2">
-              <span className="material-symbols-outlined text-[18px] text-[#7b7486]">
-                date_range
-              </span>
+              <CalendarDays className="w-4 h-4 text-[#7b7486]" />
               <span className="text-xs font-medium text-[#4a4455]">Rentang Tanggal</span>
             </div>
             <span className="text-[11px] font-medium text-[#0b1c30]">
@@ -196,9 +192,7 @@ export function BentoParameterDock({
           {/* Alokasi Rutin BBM */}
           <div className="flex items-center justify-between p-2 rounded-2xl bg-[#eff4ff]/60 hover:bg-[#eff4ff] transition-colors">
             <div className="flex items-center gap-2">
-              <span className="material-symbols-outlined text-[18px] text-[#8455ef]">
-                local_gas_station
-              </span>
+              <Fuel className="w-4 h-4 text-[#8455ef]" />
               <span className="text-xs font-medium text-[#4a4455]">Alokasi Rutin (BBM)</span>
             </div>
             <div className="flex items-center gap-1.5">

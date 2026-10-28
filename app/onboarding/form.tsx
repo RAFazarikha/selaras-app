@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import type { State } from "@/app/login/actions";
 import { createWorkspace, redeemInvite } from "./actions";
 import { Spinner } from "@/components/ui/spinner";
+import { Home, Key } from "lucide-react";
 
 function Form({
   title,
@@ -18,14 +19,14 @@ function Form({
   name: string;
   placeholder: string;
   cta: string;
-  icon: string;
+  icon: React.ReactNode;
 }) {
   const [state, run, pending] = useActionState(action, {});
   return (
     <form action={run} className="glass-tile rounded-3xl p-5 space-y-3.5 shadow-sm">
       <div className="flex items-center gap-2">
         <div className="w-8 h-8 rounded-xl bg-[#ebddff] flex items-center justify-center text-[#6d28d9]">
-          <span className="material-symbols-outlined text-[18px]">{icon}</span>
+          {icon}
         </div>
         <h2 className="text-sm font-bold text-[#0b1c30]">{title}</h2>
       </div>
@@ -72,7 +73,7 @@ export function OnboardingForms() {
         name="name"
         placeholder="mis. Rumah Kita"
         cta="Buat Workspace"
-        icon="add_home"
+        icon={<Home className="w-4 h-4" />}
       />
       <div className="relative flex items-center py-1">
         <div className="flex-grow border-t border-[#ccc3d7]/30" />
@@ -85,7 +86,7 @@ export function OnboardingForms() {
         name="code"
         placeholder="Masukkan 12 karakter kode undangan"
         cta="Gabung ke Workspace"
-        icon="key"
+        icon={<Key className="w-4 h-4" />}
       />
     </div>
   );

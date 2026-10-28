@@ -12,6 +12,7 @@ import {
   type Tx,
 } from "@/supabase/functions/_shared/budget";
 import { todayJakarta } from "@/lib/format";
+import { Plus } from "lucide-react";
 
 export default async function PeriodPage(props: PageProps<"/periods/[id]">) {
   const { id } = await props.params;
@@ -80,8 +81,9 @@ export default async function PeriodPage(props: PageProps<"/periods/[id]">) {
           href="/periods/new"
           className="w-9 h-9 rounded-full flex items-center justify-center text-[#4a4455] hover:bg-[#e5eeff] transition-all active:scale-95"
           title="Buat periode baru"
+          aria-label="Buat periode baru"
         >
-          <span className="material-symbols-outlined text-[20px]">add</span>
+          <Plus className="w-5 h-5 text-[#4a4455]" />
         </Link>
       </header>
 

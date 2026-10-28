@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import Link from "next/link";
 import { createPeriod } from "./actions";
 import { Spinner } from "@/components/ui/spinner";
+import { ArrowLeft, PlusCircle } from "lucide-react";
 
 export default function NewPeriodPage() {
   const [state, run, pending] = useActionState(createPeriod, {});
@@ -15,8 +16,9 @@ export default function NewPeriodPage() {
         <Link
           href="/"
           className="w-9 h-9 rounded-full bg-white/80 border border-white/90 flex items-center justify-center text-[#4a4455] hover:text-[#6d28d9] transition-all"
+          aria-label="Kembali"
         >
-          <span className="material-symbols-outlined text-[20px]">arrow_back</span>
+          <ArrowLeft className="w-4 h-4" />
         </Link>
         <h1 className="text-lg font-bold text-[#0b1c30]">Buat Periode Baru</h1>
         <div className="w-9" />
@@ -164,7 +166,7 @@ export default function NewPeriodPage() {
           ) : (
             <>
               <span>Buat Periode Baru</span>
-              <span className="material-symbols-outlined text-[18px]">add_circle</span>
+              <PlusCircle className="w-4 h-4" />
             </>
           )}
         </button>

@@ -7,6 +7,16 @@ import {
   type Tx,
 } from "@/supabase/functions/_shared/budget";
 import { formatDateShort, rupiah, todayJakarta } from "@/lib/format";
+import {
+  TrendingUp,
+  TrendingDown,
+  CheckCircle2,
+  BarChart2,
+  PieChart,
+  Fuel,
+  Utensils,
+  PiggyBank,
+} from "lucide-react";
 
 export default async function AnalyticsPage() {
   const supabase = await createClient();
@@ -91,7 +101,7 @@ export default async function AnalyticsPage() {
       <header className="flex justify-between items-center py-2 border-b border-[#e5eeff]">
         <div className="flex items-center gap-2">
           <div className="w-6 h-6 rounded-full bg-[#e9ddff] flex items-center justify-center text-[#6d28d9]">
-            <span className="material-symbols-outlined text-[15px]">monitoring</span>
+            <TrendingUp className="w-3.5 h-3.5" />
           </div>
           <span className="text-xs font-bold text-[#0b1c30]">Analitik & Visualisasi</span>
         </div>
@@ -124,9 +134,7 @@ export default async function AnalyticsPage() {
         <div className="flex items-start justify-between">
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="material-symbols-outlined text-[#6d28d9] text-[18px]">
-                trending_down
-              </span>
+              <TrendingDown className="w-4 h-4 text-[#6d28d9]" />
               <h2 className="text-sm font-bold text-[#0b1c30]">Garis Saldo Kumulatif</h2>
             </div>
             <p className="text-[11px] text-[#4a4455]">Trajektori burn-down sisa pagu anggaran</p>
@@ -153,7 +161,7 @@ export default async function AnalyticsPage() {
             <span>Realisasi Aktual</span>
           </div>
           <div className="flex items-center gap-1 text-[#006544] font-semibold">
-            <span className="material-symbols-outlined text-[14px]">verified</span>
+            <CheckCircle2 className="w-3.5 h-3.5" />
             <span>Terkendali</span>
           </div>
         </div>
@@ -164,9 +172,7 @@ export default async function AnalyticsPage() {
         <div className="flex items-center justify-between">
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="material-symbols-outlined text-[#8455ef] text-[18px]">
-                bar_chart
-              </span>
+              <BarChart2 className="w-4 h-4 text-[#8455ef]" />
               <h2 className="text-sm font-bold text-[#0b1c30]">Rencana vs Aktual per Pekan</h2>
             </div>
             <p className="text-[11px] text-[#4a4455]">Komparasi deviasi anggaran per pekan</p>
@@ -211,9 +217,7 @@ export default async function AnalyticsPage() {
         <div className="flex items-center justify-between">
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="material-symbols-outlined text-[#6d28d9] text-[18px]">
-                pie_chart
-              </span>
+              <PieChart className="w-4 h-4 text-[#6d28d9]" />
               <h2 className="text-sm font-bold text-[#0b1c30]">Alokasi Pos & BBM Tracker</h2>
             </div>
             <p className="text-[11px] text-[#4a4455]">Realisasi per pos distribusi anggaran</p>
@@ -227,7 +231,7 @@ export default async function AnalyticsPage() {
           <div className="flex items-center justify-between p-2.5 rounded-2xl bg-[#eff4ff]/60 border border-white/70">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-xl bg-[#ebddff] flex items-center justify-center text-[#6d28d9]">
-                <span className="material-symbols-outlined text-[18px]">local_gas_station</span>
+                <Fuel className="w-4 h-4" />
               </div>
               <div>
                 <span className="font-semibold text-[#0b1c30] block">BBM Rutin</span>
@@ -246,7 +250,7 @@ export default async function AnalyticsPage() {
           <div className="flex items-center justify-between p-2.5 rounded-2xl bg-[#eff4ff]/60 border border-white/70">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-xl bg-[#e9ddff] flex items-center justify-center text-[#8455ef]">
-                <span className="material-symbols-outlined text-[18px]">restaurant</span>
+                <Utensils className="w-4 h-4" />
               </div>
               <div>
                 <span className="font-semibold text-[#0b1c30] block">Kebutuhan Harian</span>
@@ -267,7 +271,7 @@ export default async function AnalyticsPage() {
           <div className="flex items-center justify-between p-2.5 rounded-2xl bg-[#eff4ff]/60 border border-white/70">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-xl bg-[#d3e4fe] flex items-center justify-center text-[#006544]">
-                <span className="material-symbols-outlined text-[18px]">savings</span>
+                <PiggyBank className="w-4 h-4" />
               </div>
               <div>
                 <span className="font-semibold text-[#0b1c30] block">Cadangan Pembulatan</span>

@@ -5,6 +5,7 @@ import { type SpreadsheetDayRow, type SpreadsheetSummary } from "@/supabase/func
 import { formatDateIndo, rupiah } from "@/lib/format";
 import { addTransaction, deleteTransaction } from "@/app/(app)/periods/[id]/actions";
 import { Spinner } from "@/components/ui/spinner";
+import { FileSpreadsheet, Sparkles, Plus, Download, FileJson } from "lucide-react";
 
 type TxItem = {
   id: string;
@@ -91,15 +92,13 @@ export function BentoDailyLedger({
           <p className="text-xs text-[#4a4455]">Pencatatan realisasi belanja vs kuota</p>
         </div>
         <div className="w-8 h-8 rounded-full bg-[#eff4ff] flex items-center justify-center text-[#6d28d9]">
-          <span className="material-symbols-outlined text-[18px]">edit_note</span>
+          <FileSpreadsheet className="w-4 h-4" />
         </div>
       </div>
 
       {/* Instructional Banner from Stitch */}
       <div className="p-3 rounded-2xl bg-gradient-to-r from-violet-100/60 to-amber-50/70 border border-violet-200/50 flex items-start gap-2">
-        <span className="material-symbols-outlined text-[18px] text-[#6d28d9] mt-0.5 shrink-0">
-          auto_awesome
-        </span>
+        <Sparkles className="w-4 h-4 text-[#6d28d9] mt-0.5 shrink-0" />
         <p className="text-xs text-[#0b1c30] leading-relaxed">
           Klik kotak <strong>Aktual</strong> pada tanggal untuk mencatat atau melihat rincian pengeluaran harian.
         </p>
@@ -303,7 +302,7 @@ export function BentoDailyLedger({
                           </>
                         ) : (
                           <>
-                            <span className="material-symbols-outlined text-[15px]">add</span>
+                            <Plus className="w-4 h-4" />
                             <span>Tambah Pengeluaran</span>
                           </>
                         )}
@@ -350,7 +349,7 @@ export function BentoDailyLedger({
             download
             className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-[#eff4ff] hover:bg-[#e5eeff] border border-[#d3e4fe] text-[#6d28d9] text-xs font-semibold transition-all active:scale-95"
           >
-            <span className="material-symbols-outlined text-[16px]">file_download</span>
+            <Download className="w-3.5 h-3.5" />
             <span>Ekspor CSV</span>
           </a>
           <a
@@ -358,7 +357,7 @@ export function BentoDailyLedger({
             download
             className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-[#eff4ff] hover:bg-[#e5eeff] border border-[#d3e4fe] text-[#6d28d9] text-xs font-semibold transition-all active:scale-95"
           >
-            <span className="material-symbols-outlined text-[16px]">data_object</span>
+            <FileJson className="w-3.5 h-3.5" />
             <span>Ekspor JSON</span>
           </a>
         </div>

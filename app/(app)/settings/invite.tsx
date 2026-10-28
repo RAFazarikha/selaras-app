@@ -3,6 +3,7 @@
 import { useActionState, useState } from "react";
 import { createInvite } from "./actions";
 import { Spinner } from "@/components/ui/spinner";
+import { Key } from "lucide-react";
 
 export function InviteButton() {
   const [state, run, pending] = useActionState(createInvite, {});
@@ -29,7 +30,7 @@ export function InviteButton() {
             </>
           ) : (
             <>
-              <span className="material-symbols-outlined text-[18px]">key</span>
+              <Key className="w-4 h-4" />
               <span>Buat Kode Undangan</span>
             </>
           )}
