@@ -2,6 +2,9 @@
 
 import { useActionState } from "react";
 import { saveDiscord } from "./notif-actions";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { BellRing, Link2, RefreshCw } from "lucide-react";
 
@@ -13,26 +16,26 @@ export function DiscordForm({ hint }: { hint: string | null }) {
     <section className="glass-tile rounded-3xl p-5 relative overflow-hidden space-y-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-2xl bg-[#ebddff] flex items-center justify-center text-[#6d28d9] shadow-inner">
-            <BellRing className="w-5 h-5" />
+          <div className="w-9 h-9 rounded-2xl bg-primary-fixed flex items-center justify-center text-primary shadow-inner">
+            <BellRing aria-hidden="true" className="w-5 h-5" />
           </div>
           <div>
-            <h2 className="text-sm font-bold text-[#0b1c30]">Webhook Notifikasi</h2>
-            <p className="text-[11px] text-[#4a4455]">Integrasi Real-time Ledger ke Discord</p>
+            <h2 className="text-sm font-bold text-foreground">Webhook Notifikasi</h2>
+            <p className="text-xs text-muted-foreground">Kirim catatan ke Discord</p>
           </div>
         </div>
 
         {/* Status Tag */}
         <div
-          className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[11px] font-semibold ${
+          className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs font-semibold ${
             isConnected
-              ? "bg-[#006544]/10 border-[#4edea3]/40 text-[#006544]"
-              : "bg-[#eff4ff] border-[#d3e4fe] text-[#7b7486]"
+              ? "bg-tertiary-container/10 border-tertiary-fixed/40 text-tertiary-container"
+              : "bg-muted border-surface-highest text-outline"
           }`}
         >
           <span
             className={`w-2 h-2 rounded-full ${
-              isConnected ? "bg-[#006544] animate-pulse" : "bg-[#7b7486]"
+              isConnected ? "bg-tertiary-container" : "bg-outline"
             }`}
           />
           <span>{isConnected ? "Terkoneksi" : "Belum Diatur"}</span>
@@ -41,12 +44,12 @@ export function DiscordForm({ hint }: { hint: string | null }) {
 
       <form action={run} className="space-y-3.5">
         <div>
-          <label className="block text-xs font-semibold text-[#0b1c30] mb-1.5" htmlFor="discord_webhook">
+          <Label className="block text-xs font-semibold text-foreground mb-1.5" htmlFor="discord_webhook">
             Discord Webhook URL
-          </label>
-          <div className="relative flex items-center rounded-2xl bg-white border border-[#ccc3d7]/60 px-3 py-2.5 input-ambient-glow transition-all">
-            <Link2 className="w-4 h-4 text-[#7b7486] mr-2 shrink-0" />
-            <input
+          </Label>
+          <div className="relative">
+<Link2 aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-outline" />
+<Input
               id="discord_webhook"
               name="discord_webhook"
               type="url"
@@ -56,49 +59,48 @@ export function DiscordForm({ hint }: { hint: string | null }) {
                   : "https://discord.com/api/webhooks/..."
               }
               autoComplete="off"
-              className="w-full bg-transparent border-0 p-0 text-xs text-[#0b1c30] placeholder:text-[#7b7486]/70 focus:outline-none truncate"
-            />
-          </div>
+             className="pl-9" />
+</div>
         </div>
 
         {/* Info Toggles Preview */}
         <div className="space-y-2 pt-1 text-xs">
-          <div className="flex items-center justify-between p-2.5 bg-white/80 rounded-2xl border border-white/80">
+          <div className="flex items-center justify-between p-2.5 bg-muted/50 rounded-2xl border border-surface-high">
             <div className="pr-2">
-              <span className="font-semibold text-[#0b1c30] block">Rekap harian jam 21:00 WIB</span>
-              <span className="text-[10px] text-[#4a4455]">Laporan pergerakan kas & pembagian budget</span>
+              <span className="font-semibold text-foreground block">Rekap harian jam 21:00 WIB</span>
+              <span className="text-xs text-muted-foreground">Ringkasan pengeluaran tiap malam</span>
             </div>
-            <span className="text-[11px] font-bold text-[#006544] bg-[#006544]/10 px-2 py-0.5 rounded-full">
+            <span className="text-xs font-bold text-tertiary-container bg-tertiary-container/10 px-2 py-0.5 rounded-full">
               Aktif
             </span>
           </div>
 
-          <div className="flex items-center justify-between p-2.5 bg-white/80 rounded-2xl border border-white/80">
+          <div className="flex items-center justify-between p-2.5 bg-muted/50 rounded-2xl border border-surface-high">
             <div className="pr-2">
-              <span className="font-semibold text-[#0b1c30] block">Peringatan over-budget</span>
-              <span className="text-[10px] text-[#4a4455]">Trigger instan ketika belanja melewati jatah harian</span>
+              <span className="font-semibold text-foreground block">Peringatan melebihi jatah</span>
+              <span className="text-xs text-muted-foreground">Langsung kabari jika melewati jatah harian</span>
             </div>
-            <span className="text-[11px] font-bold text-[#006544] bg-[#006544]/10 px-2 py-0.5 rounded-full">
+            <span className="text-xs font-bold text-tertiary-container bg-tertiary-container/10 px-2 py-0.5 rounded-full">
               Aktif
             </span>
           </div>
         </div>
 
         {state.error && (
-          <p role="alert" className="text-xs font-medium text-[#ba1a1a]">
+          <p role="alert" className="text-xs font-medium text-destructive">
             {state.error}
           </p>
         )}
         {state.info && (
-          <p role="status" className="text-xs font-medium text-[#006544]">
+          <p role="status" className="text-xs font-medium text-tertiary-container">
             {state.info}
           </p>
         )}
 
-        <button
+        <Button
           type="submit"
           disabled={pending}
-          className="w-full purple-gradient-btn text-white py-2.5 px-4 rounded-full text-xs font-semibold flex items-center justify-center gap-2 active:scale-95 transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+          variant="brand" className="w-full rounded-2xl"
         >
           {pending ? (
             <>
@@ -107,11 +109,11 @@ export function DiscordForm({ hint }: { hint: string | null }) {
             </>
           ) : (
             <>
-              <RefreshCw className="w-4 h-4" />
+              <RefreshCw aria-hidden="true" className="w-4 h-4" />
               <span>Simpan Perubahan Webhook</span>
             </>
           )}
-        </button>
+        </Button>
       </form>
     </section>
   );

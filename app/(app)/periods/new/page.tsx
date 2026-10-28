@@ -3,6 +3,9 @@
 import { useActionState } from "react";
 import Link from "next/link";
 import { createPeriod } from "./actions";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { ArrowLeft, PlusCircle } from "lucide-react";
 
@@ -15,60 +18,57 @@ export default function NewPeriodPage() {
       <div className="flex items-center justify-between">
         <Link
           href="/"
-          className="w-9 h-9 rounded-full bg-white/80 border border-white/90 flex items-center justify-center text-[#4a4455] hover:text-[#6d28d9] transition-all"
+          className="size-11 rounded-full bg-white/80 border border-white/90 flex items-center justify-center text-muted-foreground hover:text-primary transition-all"
           aria-label="Kembali"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft aria-hidden="true" className="w-4 h-4" />
         </Link>
-        <h1 className="text-lg font-bold text-[#0b1c30]">Buat Periode Baru</h1>
-        <div className="w-9" />
+        <h1 className="text-lg font-bold text-foreground">Buat Periode Baru</h1>
+        <div className="w-11" />
       </div>
 
       <form action={run} className="glass-tile rounded-3xl p-5 space-y-4 shadow-sm">
         <div>
-          <label className="block text-xs font-semibold text-[#4a4455] mb-1">
+          <Label htmlFor="f-name" className="block text-xs font-semibold text-muted-foreground mb-1">
             Nama Periode
-          </label>
-          <input
+          </Label>
+          <Input id="f-name"
             name="name"
             placeholder="mis. Budget 26 Okt – 30 Nov 2026"
             required
-            className="w-full rounded-2xl bg-white/95 border border-[#ccc3d7]/60 px-3 py-2.5 text-sm text-[#0b1c30] placeholder:text-[#7b7486]/70 focus:outline-none input-ambient-glow"
           />
         </div>
 
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="block text-xs font-semibold text-[#4a4455] mb-1">
+            <Label htmlFor="f-start_date" className="block text-xs font-semibold text-muted-foreground mb-1">
               Tanggal Mulai
-            </label>
-            <input
+            </Label>
+            <Input id="f-start_date"
               name="start_date"
               type="date"
               required
-              className="w-full rounded-2xl bg-white/95 border border-[#ccc3d7]/60 px-3 py-2.5 text-sm text-[#0b1c30] focus:outline-none input-ambient-glow"
             />
           </div>
           <div>
-            <label className="block text-xs font-semibold text-[#4a4455] mb-1">
+            <Label htmlFor="f-end_date" className="block text-xs font-semibold text-muted-foreground mb-1">
               Tanggal Akhir
-            </label>
-            <input
+            </Label>
+            <Input id="f-end_date"
               name="end_date"
               type="date"
               required
-              className="w-full rounded-2xl bg-white/95 border border-[#ccc3d7]/60 px-3 py-2.5 text-sm text-[#0b1c30] focus:outline-none input-ambient-glow"
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-[#4a4455] mb-1">
+          <Label htmlFor="f-initial_balance" className="block text-xs font-semibold text-muted-foreground mb-1">
             Total Uang (Pagu Periode)
-          </label>
-          <div className="relative flex items-center rounded-2xl bg-white/95 border border-[#ccc3d7]/60 px-3 py-2.5 transition-all input-ambient-glow">
-            <span className="text-xs font-bold text-[#6d28d9] mr-2">Rp</span>
-            <input
+          </Label>
+          <div className="relative">
+<span aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-primary">Rp</span>
+<Input id="f-initial_balance"
               name="initial_balance"
               type="number"
               inputMode="numeric"
@@ -76,19 +76,18 @@ export default function NewPeriodPage() {
               step={1}
               placeholder="1553232"
               required
-              className="w-full bg-transparent border-0 p-0 text-sm font-semibold tabular-nums text-[#0b1c30] focus:ring-0 focus:outline-none"
-            />
-          </div>
+             className="pl-10" />
+</div>
         </div>
 
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="block text-xs font-semibold text-[#4a4455] mb-1">
+            <Label htmlFor="f-routine_amount" className="block text-xs font-semibold text-muted-foreground mb-1">
               Alokasi BBM Mingguan
-            </label>
-            <div className="relative flex items-center rounded-2xl bg-white/95 border border-[#ccc3d7]/60 px-3 py-2.5 transition-all input-ambient-glow">
-              <span className="text-xs font-bold text-[#8455ef] mr-2">Rp</span>
-              <input
+            </Label>
+            <div className="relative">
+<span aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-secondary">Rp</span>
+<Input id="f-routine_amount"
                 name="routine_amount"
                 type="number"
                 inputMode="numeric"
@@ -96,18 +95,17 @@ export default function NewPeriodPage() {
                 step={1}
                 defaultValue={50000}
                 required
-                className="w-full bg-transparent border-0 p-0 text-sm font-semibold tabular-nums text-[#0b1c30] focus:ring-0 focus:outline-none"
-              />
-            </div>
+               className="pl-10" />
+</div>
           </div>
           <div>
-            <label className="block text-xs font-semibold text-[#4a4455] mb-1">
+            <Label htmlFor="f-routine_day" className="block text-xs font-semibold text-muted-foreground mb-1">
               Hari Rutin BBM
-            </label>
-            <select
+            </Label>
+            <select id="f-routine_day"
               name="routine_day"
               defaultValue={1}
-              className="w-full rounded-2xl bg-white/95 border border-[#ccc3d7]/60 px-3 py-2.5 text-sm text-[#0b1c30] focus:outline-none input-ambient-glow"
+              className="h-11 w-full rounded-2xl border border-input bg-white/95 px-3 text-base text-foreground focus-visible:border-ring focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
             >
               <option value={1}>Setiap Senin</option>
               <option value={2}>Setiap Selasa</option>
@@ -121,42 +119,42 @@ export default function NewPeriodPage() {
         </div>
 
         <div>
-          <span className="block text-xs font-semibold text-[#4a4455] mb-1.5">
+          <span className="block text-xs font-semibold text-muted-foreground mb-1.5">
             Visibilitas Periode
           </span>
           <div className="grid grid-cols-2 gap-2 text-xs">
-            <label className="flex items-center gap-2 p-2.5 rounded-2xl bg-surface-container-low/70 border border-[#ccc3d7]/40 cursor-pointer">
+            <label className="flex min-h-11 items-center gap-2 p-2.5 rounded-2xl bg-surface-container-low/70 border border-outline-variant/40 cursor-pointer">
               <input
                 type="radio"
                 name="visibility"
                 value="shared"
                 defaultChecked
-                className="text-[#6d28d9] focus:ring-[#6d28d9]"
+                className="text-primary focus:ring-primary"
               />
-              <span className="font-medium text-[#0b1c30]">Dibagikan</span>
+              <span className="font-medium text-foreground">Dibagikan</span>
             </label>
-            <label className="flex items-center gap-2 p-2.5 rounded-2xl bg-surface-container-low/70 border border-[#ccc3d7]/40 cursor-pointer">
+            <label className="flex min-h-11 items-center gap-2 p-2.5 rounded-2xl bg-surface-container-low/70 border border-outline-variant/40 cursor-pointer">
               <input
                 type="radio"
                 name="visibility"
                 value="private"
-                className="text-[#6d28d9] focus:ring-[#6d28d9]"
+                className="text-primary focus:ring-primary"
               />
-              <span className="font-medium text-[#0b1c30]">Pribadi</span>
+              <span className="font-medium text-foreground">Pribadi</span>
             </label>
           </div>
         </div>
 
         {state.error && (
-          <p role="alert" className="text-xs font-medium text-[#ba1a1a]">
+          <p role="alert" className="text-xs font-medium text-destructive">
             {state.error}
           </p>
         )}
 
-        <button
+        <Button
           type="submit"
           disabled={pending}
-          className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-[#6d28d9] to-[#8455ef] text-white text-sm font-semibold flex items-center justify-center gap-2 primary-btn-glow active:scale-[0.98] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+          variant="brand" className="w-full rounded-2xl"
         >
           {pending ? (
             <>
@@ -166,10 +164,10 @@ export default function NewPeriodPage() {
           ) : (
             <>
               <span>Buat Periode Baru</span>
-              <PlusCircle className="w-4 h-4" />
+              <PlusCircle aria-hidden="true" className="w-4 h-4" />
             </>
           )}
-        </button>
+        </Button>
       </form>
     </div>
   );

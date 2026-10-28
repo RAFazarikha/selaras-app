@@ -19,8 +19,8 @@ export default async function OnboardingPage() {
   return (
     <main className="mx-auto w-full max-w-md px-4 py-8 space-y-6">
       <div className="text-center space-y-1">
-        <h1 className="text-2xl font-bold text-[#0b1c30]">Mulai dengan Selaras</h1>
-        <p className="text-xs text-[#4a4455]">
+        <h1 className="text-2xl font-bold text-foreground">Mulai dengan Selaras</h1>
+        <p className="text-xs text-muted-foreground">
           Pilih untuk membuat workspace baru atau bergabung dengan workspace pasangan Anda.
         </p>
       </div>

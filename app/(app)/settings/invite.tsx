@@ -2,7 +2,9 @@
 
 import { useActionState, useState } from "react";
 import { createInvite } from "./actions";
+import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import { toast } from "sonner";
 import { Key } from "lucide-react";
 
 export function InviteButton() {
@@ -12,16 +14,17 @@ export function InviteButton() {
   const handleCopy = (code: string) => {
     navigator.clipboard.writeText(code);
     setCopied(true);
+    toast.success("Kode undangan tersalin ke clipboard");
     setTimeout(() => setCopied(false), 2000);
   };
 
   return (
     <div className="space-y-3">
       <form action={run}>
-        <button
+        <Button
           type="submit"
           disabled={pending}
-          className="w-full purple-gradient-btn text-white py-2.5 px-4 rounded-full text-xs font-semibold flex items-center justify-center gap-2 active:scale-95 transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+          variant="brand" className="w-full rounded-2xl"
         >
           {pending ? (
             <>
@@ -30,31 +33,31 @@ export function InviteButton() {
             </>
           ) : (
             <>
-              <Key className="w-4 h-4" />
+              <Key aria-hidden="true" className="w-4 h-4" />
               <span>Buat Kode Undangan</span>
             </>
           )}
-        </button>
+        </Button>
       </form>
 
       {state.error && (
-        <p role="alert" className="text-xs font-medium text-[#ba1a1a]">
+        <p role="alert" className="text-xs font-medium text-destructive">
           {state.error}
         </p>
       )}
 
       {state.code && (
-        <div className="p-3 rounded-2xl bg-[#eff4ff] border border-[#d3e4fe] flex items-center justify-between animate-in fade-in duration-150">
+        <div className="p-3 rounded-2xl bg-muted border border-surface-highest flex items-center justify-between animate-in fade-in duration-150">
           <div>
-            <span className="text-[10px] text-[#7b7486] block">Kode Undangan (48 jam, 1x pakai):</span>
-            <code className="text-sm font-bold tracking-widest text-[#6d28d9]">
+            <span className="text-xs text-outline block">Kode Undangan (48 jam, 1x pakai):</span>
+            <code className="text-sm font-bold tracking-widest text-primary">
               {state.code}
             </code>
           </div>
           <button
             type="button"
             onClick={() => handleCopy(state.code!)}
-            className="px-3 py-1.5 rounded-full bg-white border border-[#ccc3d7] text-xs font-semibold text-[#6d28d9] hover:bg-[#eff4ff] transition-all"
+            className="min-h-11 px-4 rounded-full bg-white border border-outline-variant text-xs font-semibold text-primary hover:bg-muted transition-all"
           >
             {copied ? "Tersalin!" : "Salin"}
           </button>

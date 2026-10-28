@@ -4,7 +4,11 @@ import { useState, useTransition } from "react";
 import { formatDateIndo, rupiah } from "@/lib/format";
 import { getDayName } from "@/supabase/functions/_shared/budget";
 import { updatePeriodParameters } from "@/app/(app)/periods/[id]/actions";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import { toast } from "sonner";
 import { Calendar, CalendarDays, PiggyBank, Fuel, Pencil, X } from "lucide-react";
 
 export function BentoParameterDock({
@@ -46,6 +50,7 @@ export function BentoParameterDock({
       } else {
         setIsEditing(false);
         setErrorMsg(null);
+        toast.success("Parameter periode berhasil diperbarui");
       }
     });
   };
@@ -53,26 +58,27 @@ export function BentoParameterDock({
   return (
     <section className="glass-tile rounded-3xl p-4 sm:p-5 space-y-3">
       {/* Title & Total Days */}
-      <div className="flex items-center justify-between pb-2.5 border-b border-[#e5eeff]">
+      <div className="flex items-center justify-between pb-2.5 border-b border-surface-container">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full bg-[#e9ddff] flex items-center justify-center text-[#6d28d9] shrink-0">
-            <Calendar className="w-3.5 h-3.5" />
+          <div className="w-6 h-6 rounded-full bg-accent flex items-center justify-center text-primary shrink-0">
+            <Calendar aria-hidden="true" className="w-3.5 h-3.5" />
           </div>
-          <h2 className="text-xs font-bold text-[#0b1c30] tracking-tight">{period.name}</h2>
+          <h2 className="text-xs font-bold text-foreground tracking-tight">{period.name}</h2>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#eff4ff] text-[#4a4455] border border-[#d3e4fe]">
+          <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-muted text-muted-foreground border border-surface-highest">
             {totalDays} Hari
           </span>
           {isOwner && (
             <button
               type="button"
               onClick={() => setIsEditing(!isEditing)}
-              className="text-[#6d28d9] hover:opacity-80 p-1 flex items-center"
+              className="text-primary hover:bg-muted size-11 -m-2 rounded-full flex items-center justify-center"
               title="Ubah parameter"
-              aria-label="Ubah parameter"
+              aria-label={isEditing ? "Tutup form parameter" : "Ubah parameter"}
+              aria-expanded={isEditing}
             >
-              {isEditing ? <X className="w-4 h-4" /> : <Pencil className="w-3.5 h-3.5" />}
+              {isEditing ? <X aria-hidden="true" className="w-4 h-4" /> : <Pencil aria-hidden="true" className="w-3.5 h-3.5" />}
             </button>
           )}
         </div>
@@ -82,47 +88,45 @@ export function BentoParameterDock({
       {isEditing ? (
         <form onSubmit={handleSubmit} className="space-y-3 pt-1 animate-in fade-in duration-150">
           <div>
-            <label className="block text-[11px] font-semibold text-[#4a4455] mb-1">
+            <Label htmlFor="dock-balance" className="block text-xs font-semibold text-muted-foreground mb-1">
               Total Uang (Pagu)
-            </label>
-            <div className="relative flex items-center rounded-xl bg-white border border-[#ccc3d7] px-2.5 py-1.5 input-ambient-glow">
-              <span className="text-xs font-bold text-[#6d28d9] mr-1.5">Rp</span>
-              <input
+            </Label>
+            <div className="relative">
+<span aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-primary">Rp</span>
+<Input id="dock-balance"
                 type="number"
                 inputMode="numeric"
                 value={balance}
                 onChange={(e) => setBalance(e.target.value)}
-                className="w-full bg-transparent border-0 p-0 text-xs font-bold tabular-nums text-[#0b1c30] focus:outline-none"
                 required
-              />
-            </div>
+               className="pl-10" />
+</div>
           </div>
 
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <label className="block text-[11px] font-semibold text-[#4a4455] mb-1">
+              <Label htmlFor="dock-routine-amount" className="block text-xs font-semibold text-muted-foreground mb-1">
                 Alokasi BBM Mingguan
-              </label>
-              <div className="relative flex items-center rounded-xl bg-white border border-[#ccc3d7] px-2.5 py-1.5 input-ambient-glow">
-                <span className="text-xs font-bold text-[#8455ef] mr-1.5">Rp</span>
-                <input
+              </Label>
+              <div className="relative">
+<span aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-secondary">Rp</span>
+<Input id="dock-routine-amount"
                   type="number"
                   inputMode="numeric"
                   value={routineAmount}
                   onChange={(e) => setRoutineAmount(e.target.value)}
-                  className="w-full bg-transparent border-0 p-0 text-xs font-bold tabular-nums text-[#0b1c30] focus:outline-none"
                   required
-                />
-              </div>
+                 className="pl-10" />
+</div>
             </div>
             <div>
-              <label className="block text-[11px] font-semibold text-[#4a4455] mb-1">
+              <Label htmlFor="dock-routine-day" className="block text-xs font-semibold text-muted-foreground mb-1">
                 Jadwal Hari BBM
-              </label>
-              <select
+              </Label>
+              <select id="dock-routine-day"
                 value={routineDay}
                 onChange={(e) => setRoutineDay(e.target.value)}
-                className="w-full rounded-xl bg-white border border-[#ccc3d7] px-2 py-1.5 text-xs text-[#0b1c30] focus:outline-none input-ambient-glow"
+                className="h-11 w-full rounded-2xl border border-input bg-white/95 px-3 text-base text-foreground focus-visible:border-ring focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
               >
                 <option value="1">Setiap Senin</option>
                 <option value="2">Setiap Selasa</option>
@@ -136,16 +140,16 @@ export function BentoParameterDock({
           </div>
 
           {errorMsg && (
-            <p role="alert" className="text-xs font-medium text-[#ba1a1a]">
+            <p role="alert" className="text-xs font-medium text-destructive">
               {errorMsg}
             </p>
           )}
 
           <div className="flex gap-2 pt-1">
-            <button
+            <Button
               type="submit"
               disabled={isPending}
-              className="flex-1 py-1.5 px-3 rounded-xl bg-gradient-to-r from-[#6d28d9] to-[#8455ef] text-white text-xs font-semibold flex items-center justify-center gap-1.5 primary-btn-glow active:scale-[0.98] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+              variant="brand" className="flex-1 rounded-2xl"
             >
               {isPending ? (
                 <>
@@ -155,51 +159,45 @@ export function BentoParameterDock({
               ) : (
                 <span>Simpan Parameter</span>
               )}
-            </button>
-            <button
-              type="button"
-              onClick={() => setIsEditing(false)}
-              className="py-1.5 px-3 rounded-xl bg-[#eff4ff] text-[#4a4455] text-xs font-medium hover:bg-[#e5eeff]"
-            >
-              Batal
-            </button>
+            </Button>
+            <Button type="button" variant="outline" className="rounded-2xl" onClick={() => setIsEditing(false)}>Batal</Button>
           </div>
         </form>
       ) : (
         <div className="space-y-2">
           {/* Total Uang */}
-          <div className="flex items-center justify-between p-2 rounded-2xl bg-[#eff4ff]/60 hover:bg-[#eff4ff] transition-colors">
+          <div className="flex items-center justify-between p-2 rounded-2xl bg-muted/60 hover:bg-muted transition-colors">
             <div className="flex items-center gap-2">
-              <PiggyBank className="w-4 h-4 text-[#6d28d9]" />
-              <span className="text-xs font-medium text-[#4a4455]">Total Uang</span>
+              <PiggyBank aria-hidden="true" className="w-4 h-4 text-primary" />
+              <span className="text-xs font-medium text-muted-foreground">Total Uang</span>
             </div>
-            <span className="text-xs font-bold tabular-nums text-[#0b1c30]">
+            <span className="text-xs font-bold tabular-nums text-foreground">
               {rupiah(period.initial_balance)}
             </span>
           </div>
 
           {/* Rentang Tanggal */}
-          <div className="flex items-center justify-between p-2 rounded-2xl bg-[#eff4ff]/60 hover:bg-[#eff4ff] transition-colors">
+          <div className="flex items-center justify-between p-2 rounded-2xl bg-muted/60 hover:bg-muted transition-colors">
             <div className="flex items-center gap-2">
-              <CalendarDays className="w-4 h-4 text-[#7b7486]" />
-              <span className="text-xs font-medium text-[#4a4455]">Rentang Tanggal</span>
+              <CalendarDays aria-hidden="true" className="w-4 h-4 text-outline" />
+              <span className="text-xs font-medium text-muted-foreground">Rentang Tanggal</span>
             </div>
-            <span className="text-[11px] font-medium text-[#0b1c30]">
+            <span className="text-xs font-medium text-foreground">
               {formatDateIndo(period.start_date)} – {formatDateIndo(period.end_date)}
             </span>
           </div>
 
           {/* Alokasi Rutin BBM */}
-          <div className="flex items-center justify-between p-2 rounded-2xl bg-[#eff4ff]/60 hover:bg-[#eff4ff] transition-colors">
+          <div className="flex items-center justify-between p-2 rounded-2xl bg-muted/60 hover:bg-muted transition-colors">
             <div className="flex items-center gap-2">
-              <Fuel className="w-4 h-4 text-[#8455ef]" />
-              <span className="text-xs font-medium text-[#4a4455]">Alokasi Rutin (BBM)</span>
+              <Fuel aria-hidden="true" className="w-4 h-4 text-secondary" />
+              <span className="text-xs font-medium text-muted-foreground">Alokasi Rutin (BBM)</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-[#e9ddff] text-[#23005c]">
+              <span className="px-1.5 py-0.5 rounded text-xs font-semibold bg-accent text-accent-foreground">
                 Setiap {getDayName(period.routine_day)}
               </span>
-              <span className="text-xs font-bold tabular-nums text-[#0b1c30]">
+              <span className="text-xs font-bold tabular-nums text-foreground">
                 {rupiah(period.routine_amount)}
               </span>
             </div>

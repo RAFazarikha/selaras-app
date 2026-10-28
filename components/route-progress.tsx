@@ -60,7 +60,7 @@ export function RouteProgress() {
       className="fixed top-0 left-0 right-0 h-[2.5px] z-[9999] pointer-events-none bg-transparent"
     >
       <div
-        className="h-full bg-gradient-to-r from-[#6d28d9] via-[#8455ef] to-[#6ffbbe] shadow-[0_0_8px_rgba(109,40,217,0.6)] transition-all duration-200 ease-out"
+        className="h-full bg-gradient-to-r from-primary via-secondary to-tertiary-fixed shadow-[0_0_8px_rgba(109,40,217,0.6)] transition-all duration-200 ease-out"
         style={{ width: `${progress}%` }}
       />
     </div>

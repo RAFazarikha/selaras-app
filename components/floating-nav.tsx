@@ -14,45 +14,48 @@ export function FloatingNav() {
   return (
     <nav
       aria-label="Navigasi Utama"
-      className="fixed bottom-4 inset-x-0 z-50 flex justify-around items-center px-2 py-1.5 max-w-[320px] mx-auto rounded-full bg-white/85 backdrop-blur-2xl border border-white/80 shadow-[0_12px_36px_-6px_rgba(109,40,217,0.18)]"
+      className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] inset-x-0 z-50 flex justify-around items-center px-2 py-1.5 max-w-[320px] mx-auto rounded-full bg-white border border-surface-high shadow-[0_8px_24px_-8px_rgba(11,28,48,0.2)]"
     >
       {/* Tab 1: Ringkasan */}
       <Link
         href="/"
-        className={`flex flex-col items-center justify-center rounded-full px-4 py-1.5 transition-all duration-150 active:scale-95 ${
+        aria-current={isSummary ? "page" : undefined}
+        className={`flex min-h-11 flex-col items-center justify-center rounded-full px-4 py-1.5 transition-all duration-150 active:scale-95 ${
           isSummary
-            ? "bg-[#6d28d9] text-white shadow-sm"
-            : "text-[#4a4455] hover:text-[#6d28d9]"
+            ? "bg-primary text-white shadow-sm"
+            : "text-muted-foreground hover:text-primary"
         }`}
       >
-        <Wallet className="w-5 h-5" />
-        <span className="text-[11px] font-semibold mt-0.5">Ringkasan</span>
+        <Wallet className="w-5 h-5" aria-hidden="true" />
+        <span className="text-xs font-semibold mt-0.5">Ringkasan</span>
       </Link>
 
       {/* Tab 2: Analitik */}
       <Link
         href="/analytics"
-        className={`flex flex-col items-center justify-center rounded-full px-4 py-1.5 transition-all duration-150 active:scale-95 ${
+        aria-current={isAnalytics ? "page" : undefined}
+        className={`flex min-h-11 flex-col items-center justify-center rounded-full px-4 py-1.5 transition-all duration-150 active:scale-95 ${
           isAnalytics
-            ? "bg-[#6d28d9] text-white shadow-sm"
-            : "text-[#4a4455] hover:text-[#6d28d9]"
+            ? "bg-primary text-white shadow-sm"
+            : "text-muted-foreground hover:text-primary"
         }`}
       >
-        <LineChart className="w-5 h-5" />
-        <span className="text-[11px] font-semibold mt-0.5">Analitik</span>
+        <LineChart className="w-5 h-5" aria-hidden="true" />
+        <span className="text-xs font-semibold mt-0.5">Analitik</span>
       </Link>
 
       {/* Tab 3: Pengaturan */}
       <Link
         href="/settings"
-        className={`flex flex-col items-center justify-center rounded-full px-4 py-1.5 transition-all duration-150 active:scale-95 ${
+        aria-current={isSettings ? "page" : undefined}
+        className={`flex min-h-11 flex-col items-center justify-center rounded-full px-4 py-1.5 transition-all duration-150 active:scale-95 ${
           isSettings
-            ? "bg-[#6d28d9] text-white shadow-sm"
-            : "text-[#4a4455] hover:text-[#6d28d9]"
+            ? "bg-primary text-white shadow-sm"
+            : "text-muted-foreground hover:text-primary"
         }`}
       >
-        <Settings className="w-5 h-5" />
-        <span className="text-[11px] font-semibold mt-0.5">Pengaturan</span>
+        <Settings className="w-5 h-5" aria-hidden="true" />
+        <span className="text-xs font-semibold mt-0.5">Pengaturan</span>
       </Link>
     </nav>
   );

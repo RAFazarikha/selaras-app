@@ -32,24 +32,24 @@ export default async function Home() {
   // Jika belum ada periode sama sekali
   return (
     <div className="w-full max-w-md mx-auto px-4 py-8 space-y-6 text-center">
-      <div className="relative mx-auto w-20 h-20 rounded-3xl bg-gradient-to-br from-[#6d28d9] to-[#8455ef] flex items-center justify-center specular-border shadow-xl">
-        <CalendarPlus className="w-10 h-10 text-white" />
+      <div className="relative mx-auto w-20 h-20 rounded-3xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center specular-border shadow-xl">
+        <CalendarPlus aria-hidden="true" className="w-10 h-10 text-white" />
       </div>
 
       <div className="space-y-2">
-        <h1 className="text-2xl font-bold text-[#0b1c30]">Belum Ada Periode</h1>
-        <p className="text-sm text-[#4a4455] max-w-[280px] mx-auto leading-relaxed">
-          Mulai dengan menentukan rentang tanggal, total pagu uang, dan jadwal rutin BBM mingguan.
+        <h1 className="text-2xl font-bold text-foreground">Belum Ada Periode</h1>
+        <p className="text-sm text-muted-foreground max-w-[280px] mx-auto leading-relaxed">
+          Tentukan rentang tanggal, total uang, dan alokasi BBM mingguan untuk mulai mencatat.
         </p>
       </div>
 
       <div className="pt-4">
         <Link
           href="/periods/new"
-          className="w-full inline-flex py-3.5 px-6 rounded-2xl bg-gradient-to-r from-[#6d28d9] to-[#8455ef] text-white text-sm font-semibold items-center justify-center gap-2 primary-btn-glow active:scale-[0.98] transition-all"
+          className="w-full inline-flex py-3.5 px-6 rounded-2xl bg-gradient-to-r from-primary to-secondary text-white text-sm font-semibold items-center justify-center gap-2 primary-btn-glow active:scale-[0.98] transition-all"
         >
           <span>Buat Periode Baru</span>
-          <PlusCircle className="w-4 h-4" />
+          <PlusCircle aria-hidden="true" className="w-4 h-4" />
         </Link>
       </div>
     </div>

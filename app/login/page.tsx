@@ -2,6 +2,9 @@
 
 import { useActionState, useState } from "react";
 import { sendMagicLink, signInPassword, signUp } from "./actions";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import {
   Wallet,
@@ -30,13 +33,7 @@ export default function LoginPage() {
     <div className="w-full max-w-md mx-auto min-h-screen flex flex-col justify-between px-4 py-6">
       {/* Top Status Bar */}
       <header className="w-full flex items-center justify-between pb-3">
-        <div className="flex items-center gap-1.5 text-xs text-[#4a4455] font-medium tracking-tight">
-          <span>ID • IDR</span>
-          <span className="w-1.5 h-1.5 rounded-full bg-[#006544]" />
-        </div>
-        <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/70 backdrop-blur-md border border-white/80 text-[11px] font-semibold text-[#6d28d9]">
-          <span>Executive Edition</span>
-        </div>
+        <span className="text-sm font-bold text-foreground">Selaras</span>
       </header>
 
       {/* Main Content Area */}
@@ -44,31 +41,31 @@ export default function LoginPage() {
         {/* Top Hero Branding */}
         <section className="w-full flex flex-col items-center text-center mb-6">
           <div className="relative mb-4">
-            <div className="absolute inset-0 rounded-2xl bg-[#6d28d9]/25 blur-xl scale-125" />
-            <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-[#6d28d9] to-[#8455ef] flex items-center justify-center specular-border shadow-lg">
-              <Wallet className="w-8 h-8 text-white" />
-              <div className="absolute top-1 left-1 right-1 h-1/2 bg-white/20 rounded-t-xl pointer-events-none" />
-            </div>
+                        <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center specular-border shadow-lg">
+              <Wallet aria-hidden="true" className="w-8 h-8 text-white" />
+                          </div>
           </div>
-          <h1 className="text-2xl font-bold text-[#0b1c30] tracking-tight mb-1.5">
+          <h1 className="text-2xl font-bold text-foreground tracking-tight mb-1.5">
             Kelola Keuangan Lebih Selaras
           </h1>
-          <p className="text-sm text-[#4a4455] max-w-[290px] leading-relaxed">
-            Presisi spreadsheet berbalut estetika executive iOS.
+          <p className="text-sm text-muted-foreground max-w-[290px] leading-relaxed">
+            Catat pengeluaran harian dan pantau sisa anggaran berdua.
           </p>
         </section>
 
         {/* Central Frosted Bento Card */}
-        <section className="w-full rounded-3xl bg-white/85 backdrop-blur-2xl border border-white/95 p-5 specular-border shadow-xl">
+        <section className="w-full rounded-3xl bg-white border border-surface-high p-5 specular-border shadow-xl">
           {/* Segmented iOS Segment Pill Control */}
-          <div className="w-full p-1 bg-[#eff4ff] rounded-full flex items-center justify-between mb-5 border border-[#ccc3d7]/30">
+          <div role="tablist" aria-label="Metode masuk" className="w-full p-1 bg-muted rounded-full flex items-center justify-between mb-5 border border-outline-variant/30">
             <button
               type="button"
               onClick={() => setTab("password")}
-              className={`flex-1 py-1.5 px-2 rounded-full text-xs font-semibold transition-all text-center ${
+              role="tab"
+              aria-selected={tab === "password"}
+              className={`flex-1 min-h-11 px-2 rounded-full text-sm font-semibold transition-all text-center ${
                 tab === "password"
-                  ? "bg-white text-[#6d28d9] shadow-sm"
-                  : "text-[#4a4455] hover:text-[#0b1c30]"
+                  ? "bg-white text-primary shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
               Masuk
@@ -76,10 +73,12 @@ export default function LoginPage() {
             <button
               type="button"
               onClick={() => setTab("magic")}
-              className={`flex-1 py-1.5 px-2 rounded-full text-xs font-semibold transition-all text-center truncate ${
+              role="tab"
+              aria-selected={tab === "magic"}
+              className={`flex-1 min-h-11 px-2 rounded-full text-sm font-semibold transition-all text-center truncate ${
                 tab === "magic"
-                  ? "bg-white text-[#6d28d9] shadow-sm"
-                  : "text-[#4a4455] hover:text-[#0b1c30]"
+                  ? "bg-white text-primary shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
               Tautan Email
@@ -87,10 +86,12 @@ export default function LoginPage() {
             <button
               type="button"
               onClick={() => setTab("signup")}
-              className={`flex-1 py-1.5 px-2 rounded-full text-xs font-semibold transition-all text-center ${
+              role="tab"
+              aria-selected={tab === "signup"}
+              className={`flex-1 min-h-11 px-2 rounded-full text-sm font-semibold transition-all text-center ${
                 tab === "signup"
-                  ? "bg-white text-[#6d28d9] shadow-sm"
-                  : "text-[#4a4455] hover:text-[#0b1c30]"
+                  ? "bg-white text-primary shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
               Daftar
@@ -101,71 +102,65 @@ export default function LoginPage() {
           {tab === "password" && (
             <form action={pwAction} className="w-full space-y-3.5">
               <div>
-                <label
+                <Label
                   htmlFor="pw-email"
-                  className="block text-xs font-semibold text-[#4a4455] mb-1 ml-1"
+                  className="block text-xs font-semibold text-muted-foreground mb-1 ml-1"
                 >
                   Email Akun
-                </label>
-                <div className="relative flex items-center rounded-2xl bg-white/95 border border-[#ccc3d7]/60 px-3 py-2.5 transition-all input-ambient-glow">
-                  <Mail className="w-4 h-4 text-[#7b7486] mr-2 shrink-0" />
-                  <input
+                </Label>
+                <div className="relative">
+<Mail aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-outline" />
+<Input
                     id="pw-email"
                     name="email"
                     type="email"
                     autoComplete="email"
                     placeholder="nama@email.com"
                     required
-                    className="w-full bg-transparent border-0 p-0 text-sm text-[#0b1c30] placeholder:text-[#7b7486]/70 focus:ring-0 focus:outline-none"
-                  />
-                </div>
+                   className="pl-9" />
+</div>
               </div>
 
               <div>
-                <label
+                <Label
                   htmlFor="pw-pass"
-                  className="block text-xs font-semibold text-[#4a4455] mb-1 ml-1"
+                  className="block text-xs font-semibold text-muted-foreground mb-1 ml-1"
                 >
                   Kata Sandi
-                </label>
-                <div className="relative flex items-center rounded-2xl bg-white/95 border border-[#ccc3d7]/60 px-3 py-2.5 transition-all input-ambient-glow">
-                  <Lock className="w-4 h-4 text-[#7b7486] mr-2 shrink-0" />
-                  <input
+                </Label>
+                <div className="relative">
+<Lock aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-outline" />
+<Input
                     id="pw-pass"
                     name="password"
                     type={showPassword ? "text" : "password"}
                     autoComplete="current-password"
                     placeholder="••••••••••••"
                     required
-                    className="w-full bg-transparent border-0 p-0 text-sm text-[#0b1c30] placeholder:text-[#7b7486]/70 focus:ring-0 focus:outline-none"
-                  />
-                  <button
+                   className="pl-9 pr-12" />
+                  <button className="absolute right-1 top-1/2 size-11 -translate-y-1/2 rounded-xl flex items-center justify-center text-outline hover:text-foreground"
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    aria-label="Tampilkan sandi"
-                    className="text-[#7b7486] hover:text-[#0b1c30] p-0.5 ml-1"
+                    aria-label={showPassword ? "Sembunyikan kata sandi" : "Tampilkan kata sandi"}
+                    
                   >
                     {showPassword ? (
-                      <EyeOff className="w-4 h-4" />
+                      <EyeOff aria-hidden="true"  />
                     ) : (
-                      <Eye className="w-4 h-4" />
+                      <Eye aria-hidden="true"  />
                     )}
                   </button>
-                </div>
+</div>
               </div>
 
               {pwState.error && (
-                <p role="alert" className="text-xs font-medium text-[#ba1a1a] px-1">
+                <p role="alert" className="text-xs font-medium text-destructive px-1">
                   {pwState.error}
                 </p>
               )}
 
               <div className="pt-2">
-                <button
-                  type="submit"
-                  disabled={pwPending}
-                  className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-[#6d28d9] to-[#8455ef] text-white text-sm font-semibold flex items-center justify-center gap-2 primary-btn-glow active:scale-[0.98] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
-                >
+                <Button type="submit" disabled={pwPending} variant="brand" size="lg" className="w-full rounded-2xl">
                   {pwPending ? (
                     <>
                       <Spinner className="w-4 h-4 text-white" />
@@ -174,10 +169,10 @@ export default function LoginPage() {
                   ) : (
                     <>
                       <span>Masuk ke Selaras</span>
-                      <ArrowRight className="w-4 h-4" />
+                      <ArrowRight aria-hidden="true" className="w-4 h-4" />
                     </>
                   )}
-                </button>
+                </Button>
               </div>
             </form>
           )}
@@ -186,46 +181,41 @@ export default function LoginPage() {
           {tab === "magic" && (
             <form action={magicAction} className="w-full space-y-3.5">
               <div>
-                <label
+                <Label
                   htmlFor="magic-email"
-                  className="block text-xs font-semibold text-[#4a4455] mb-1 ml-1"
+                  className="block text-xs font-semibold text-muted-foreground mb-1 ml-1"
                 >
                   Email Anda
-                </label>
-                <div className="relative flex items-center rounded-2xl bg-white/95 border border-[#ccc3d7]/60 px-3 py-2.5 transition-all input-ambient-glow">
-                  <Send className="w-4 h-4 text-[#7b7486] mr-2 shrink-0" />
-                  <input
+                </Label>
+                <div className="relative">
+<Send aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-outline" />
+<Input
                     id="magic-email"
                     name="email"
                     type="email"
                     autoComplete="email"
                     placeholder="nama@email.com"
                     required
-                    className="w-full bg-transparent border-0 p-0 text-sm text-[#0b1c30] placeholder:text-[#7b7486]/70 focus:ring-0 focus:outline-none"
-                  />
-                </div>
-                <p className="text-[11px] text-[#4a4455] mt-1.5 ml-1">
+                   className="pl-9" />
+</div>
+                <p className="text-xs text-muted-foreground mt-1.5 ml-1">
                   Kami akan mengirimkan tautan masuk instan tanpa perlu kata sandi.
                 </p>
               </div>
 
               {magicState.error && (
-                <p role="alert" className="text-xs font-medium text-[#ba1a1a] px-1">
+                <p role="alert" className="text-xs font-medium text-destructive px-1">
                   {magicState.error}
                 </p>
               )}
               {magicState.info && (
-                <p role="status" className="text-xs font-medium text-[#006544] px-1">
+                <p role="status" className="text-xs font-medium text-tertiary-container px-1">
                   {magicState.info}
                 </p>
               )}
 
               <div className="pt-2">
-                <button
-                  type="submit"
-                  disabled={magicPending}
-                  className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-[#6d28d9] to-[#8455ef] text-white text-sm font-semibold flex items-center justify-center gap-2 primary-btn-glow active:scale-[0.98] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
-                >
+                <Button type="submit" disabled={magicPending} variant="brand" size="lg" className="w-full rounded-2xl">
                   {magicPending ? (
                     <>
                       <Spinner className="w-4 h-4 text-white" />
@@ -234,10 +224,10 @@ export default function LoginPage() {
                   ) : (
                     <>
                       <span>Kirim Tautan Masuk</span>
-                      <Mail className="w-4 h-4" />
+                      <Mail aria-hidden="true" className="w-4 h-4" />
                     </>
                   )}
-                </button>
+                </Button>
               </div>
             </form>
           )}
@@ -246,56 +236,54 @@ export default function LoginPage() {
           {tab === "signup" && (
             <form action={regAction} className="w-full space-y-3.5">
               <div>
-                <label
+                <Label
                   htmlFor="reg-name"
-                  className="block text-xs font-semibold text-[#4a4455] mb-1 ml-1"
+                  className="block text-xs font-semibold text-muted-foreground mb-1 ml-1"
                 >
                   Nama Panggilan
-                </label>
-                <div className="relative flex items-center rounded-2xl bg-white/95 border border-[#ccc3d7]/60 px-3 py-2.5 transition-all input-ambient-glow">
-                  <User className="w-4 h-4 text-[#7b7486] mr-2 shrink-0" />
-                  <input
+                </Label>
+                <div className="relative">
+<User aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-outline" />
+<Input
                     id="reg-name"
                     name="name"
                     autoComplete="nickname"
                     placeholder="mis. Rakha"
                     required
-                    className="w-full bg-transparent border-0 p-0 text-sm text-[#0b1c30] placeholder:text-[#7b7486]/70 focus:ring-0 focus:outline-none"
-                  />
-                </div>
+                   className="pl-9" />
+</div>
               </div>
 
               <div>
-                <label
+                <Label
                   htmlFor="reg-email"
-                  className="block text-xs font-semibold text-[#4a4455] mb-1 ml-1"
+                  className="block text-xs font-semibold text-muted-foreground mb-1 ml-1"
                 >
                   Email
-                </label>
-                <div className="relative flex items-center rounded-2xl bg-white/95 border border-[#ccc3d7]/60 px-3 py-2.5 transition-all input-ambient-glow">
-                  <Mail className="w-4 h-4 text-[#7b7486] mr-2 shrink-0" />
-                  <input
+                </Label>
+                <div className="relative">
+<Mail aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-outline" />
+<Input
                     id="reg-email"
                     name="email"
                     type="email"
                     autoComplete="email"
                     placeholder="nama@email.com"
                     required
-                    className="w-full bg-transparent border-0 p-0 text-sm text-[#0b1c30] placeholder:text-[#7b7486]/70 focus:ring-0 focus:outline-none"
-                  />
-                </div>
+                   className="pl-9" />
+</div>
               </div>
 
               <div>
-                <label
+                <Label
                   htmlFor="reg-pass"
-                  className="block text-xs font-semibold text-[#4a4455] mb-1 ml-1"
+                  className="block text-xs font-semibold text-muted-foreground mb-1 ml-1"
                 >
                   Kata Sandi (min. 8 karakter)
-                </label>
-                <div className="relative flex items-center rounded-2xl bg-white/95 border border-[#ccc3d7]/60 px-3 py-2.5 transition-all input-ambient-glow">
-                  <Lock className="w-4 h-4 text-[#7b7486] mr-2 shrink-0" />
-                  <input
+                </Label>
+                <div className="relative">
+<Lock aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-outline" />
+<Input
                     id="reg-pass"
                     name="password"
                     type="password"
@@ -303,23 +291,18 @@ export default function LoginPage() {
                     placeholder="Minimal 8 karakter"
                     required
                     minLength={8}
-                    className="w-full bg-transparent border-0 p-0 text-sm text-[#0b1c30] placeholder:text-[#7b7486]/70 focus:ring-0 focus:outline-none"
-                  />
-                </div>
+                   className="pl-9" />
+</div>
               </div>
 
               {regState.error && (
-                <p role="alert" className="text-xs font-medium text-[#ba1a1a] px-1">
+                <p role="alert" className="text-xs font-medium text-destructive px-1">
                   {regState.error}
                 </p>
               )}
 
               <div className="pt-2">
-                <button
-                  type="submit"
-                  disabled={regPending}
-                  className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-[#6d28d9] to-[#8455ef] text-white text-sm font-semibold flex items-center justify-center gap-2 primary-btn-glow active:scale-[0.98] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
-                >
+                <Button type="submit" disabled={regPending} variant="brand" size="lg" className="w-full rounded-2xl">
                   {regPending ? (
                     <>
                       <Spinner className="w-4 h-4 text-white" />
@@ -328,30 +311,30 @@ export default function LoginPage() {
                   ) : (
                     <>
                       <span>Buat Akun Selaras</span>
-                      <ArrowRight className="w-4 h-4" />
+                      <ArrowRight aria-hidden="true" className="w-4 h-4" />
                     </>
                   )}
-                </button>
+                </Button>
               </div>
             </form>
           )}
 
           {/* Institutional Trust Micro-Badge */}
-          <div className="mt-5 pt-3 border-t border-[#ccc3d7]/25 flex items-center justify-between text-xs text-[#4a4455]">
+          <div className="mt-5 pt-3 border-t border-outline-variant/25 flex items-center justify-between text-xs text-muted-foreground">
             <span className="flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-[#006544]" />
-              <span>Workspace Berdua Terenkripsi</span>
+              <ShieldCheck aria-hidden="true" className="w-4 h-4 text-tertiary-container" />
+              <span>Data hanya terlihat oleh kalian berdua</span>
             </span>
-            <span className="text-[#7b7486] text-[11px]">v4.8.2 Sequoia</span>
+            
           </div>
         </section>
       </main>
 
       {/* Bottom Security & Privacy Pill */}
       <footer className="w-full flex flex-col items-center pb-2 pt-3">
-        <div className="inline-flex items-center gap-1.5 py-1.5 px-3.5 rounded-full bg-white/80 backdrop-blur-md border border-white/90 shadow-sm text-xs text-[#4a4455]">
-          <LockKeyhole className="w-3.5 h-3.5 text-[#006544]" />
-          <span>Enkripsi data keuangan end-to-end terproteksi</span>
+        <div className="inline-flex items-center gap-1.5 py-1.5 px-3.5 rounded-full bg-white border border-surface-high text-xs text-muted-foreground">
+          <LockKeyhole aria-hidden="true" className="w-3.5 h-3.5 text-tertiary-container" />
+          <span>Koneksi dilindungi HTTPS</span>
         </div>
       </footer>
     </div>

@@ -17,7 +17,7 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
 
   return (
     <>
-      <div className="mx-auto w-full max-w-md flex-1 pb-28 pt-2">{children}</div>
+      <div className="mx-auto w-full max-w-md flex-1 pb-[calc(9rem+env(safe-area-inset-bottom))] pt-2">{children}</div>
       <FloatingNav />
     </>
   );

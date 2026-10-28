@@ -12,7 +12,8 @@ import {
   type Tx,
 } from "@/supabase/functions/_shared/budget";
 import { todayJakarta } from "@/lib/format";
-import { Plus } from "lucide-react";
+import { Plus, ChevronDown } from "lucide-react";
+import { QuickAddFab } from "@/components/quick-add-fab";
 
 export default async function PeriodPage(props: PageProps<"/periods/[id]">) {
   const { id } = await props.params;
@@ -60,18 +61,19 @@ export default async function PeriodPage(props: PageProps<"/periods/[id]">) {
   const todayQuota = todayRow ? todayRow.totalBudgetToday : summary.dailyBudget;
 
   const isOwner = pRow.owner_id === user?.id;
+  const canAdd = isOwner && today >= pRow.start_date && today <= pRow.end_date;
 
   return (
     <div className="w-full max-w-md mx-auto px-4 pt-2 space-y-4">
       {/* Top App Bar from Stitch */}
-      <header className="flex justify-between items-center py-2 border-b border-[#e5eeff]">
+      <header className="flex justify-between items-center py-2 border-b border-surface-container">
         <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-full ring-2 ring-white/90 overflow-hidden shadow-sm flex items-center justify-center bg-gradient-to-br from-[#6d28d9] to-[#8455ef] text-white font-bold text-sm shrink-0">
+          <div className="w-9 h-9 rounded-full ring-2 ring-white/90 overflow-hidden shadow-sm flex items-center justify-center bg-gradient-to-br from-primary to-secondary text-white font-bold text-sm shrink-0">
             {user?.user_metadata?.name ? user.user_metadata.name[0]?.toUpperCase() : "S"}
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="text-lg font-bold text-[#0b1c30] tracking-tight">Selaras</span>
-            <span className="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#ebddff] text-[#250059] tracking-wide">
+            <span className="text-lg font-bold text-foreground tracking-tight">Selaras</span>
+            <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-primary-fixed text-on-primary-fixed tracking-wide">
               {pRow.visibility === "shared" ? "Dibagikan" : "Pribadi"}
             </span>
           </div>
@@ -79,38 +81,38 @@ export default async function PeriodPage(props: PageProps<"/periods/[id]">) {
 
         <Link
           href="/periods/new"
-          className="w-9 h-9 rounded-full flex items-center justify-center text-[#4a4455] hover:bg-[#e5eeff] transition-all active:scale-95"
+          className="size-11 rounded-full flex items-center justify-center text-muted-foreground hover:bg-surface-container transition-all active:scale-95"
           title="Buat periode baru"
           aria-label="Buat periode baru"
         >
-          <Plus className="w-5 h-5 text-[#4a4455]" />
+          <Plus aria-hidden="true" className="w-5 h-5 text-muted-foreground" />
         </Link>
       </header>
 
-      {/* Bento 1: Setup & Parameter Dock */}
-      <BentoParameterDock
-        period={{
-          id: pRow.id,
-          name: pRow.name,
-          start_date: pRow.start_date,
-          end_date: pRow.end_date,
-          initial_balance: pRow.initial_balance,
-          routine_amount: p.routineAmount!,
-          routine_day: p.routineDay!,
-        }}
-        isOwner={isOwner}
-        totalDays={summary.totalDays}
-      />
+      <BentoHeroBalance summary={summary} todayQuota={todayQuota} title={pRow.name} />
 
-      {/* Bento 2: Hero Balance & Quota Progress */}
-      <BentoHeroBalance summary={summary} />
-
-      {/* Bento 3: Auto-Calculated Breakdown Micro-Grid */}
-      <BentoAutoCalculated
-        summary={summary}
-        routineDay={p.routineDay!}
-        todayQuota={todayQuota}
-      />
+      <details className="group">
+        <summary className="glass-tile flex min-h-11 cursor-pointer list-none items-center justify-between rounded-2xl px-4 text-sm font-semibold text-foreground [&::-webkit-details-marker]:hidden">
+          Parameter &amp; cara hitung
+          <ChevronDown aria-hidden="true" className="size-4 transition-transform group-open:rotate-180" />
+        </summary>
+        <div className="mt-4 space-y-4">
+          <BentoParameterDock
+            period={{
+              id: pRow.id,
+              name: pRow.name,
+              start_date: pRow.start_date,
+              end_date: pRow.end_date,
+              initial_balance: pRow.initial_balance,
+              routine_amount: p.routineAmount!,
+              routine_day: p.routineDay!,
+            }}
+            isOwner={isOwner}
+            totalDays={summary.totalDays}
+          />
+          <BentoAutoCalculated summary={summary} routineDay={p.routineDay!} />
+        </div>
+      </details>
 
       {/* Bento 4: Interactive 'Budget Harian' Ledger */}
       <BentoDailyLedger
@@ -128,6 +130,7 @@ export default async function PeriodPage(props: PageProps<"/periods/[id]">) {
         }))}
       />
 
+      {canAdd && <QuickAddFab periodId={id} todayStr={today} />}
       <RealtimeRefresh periodId={id} />
     </div>
   );

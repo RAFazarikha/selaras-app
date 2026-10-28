@@ -41,27 +41,20 @@ export default async function SettingsPage() {
   return (
     <div className="w-full max-w-md mx-auto px-4 pt-2 space-y-4">
       {/* Top Header */}
-      <header className="flex justify-between items-center py-2 border-b border-[#e5eeff]">
+      <header className="flex justify-between items-center py-2 border-b border-surface-container">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full bg-[#e9ddff] flex items-center justify-center text-[#6d28d9]">
-            <Settings className="w-3.5 h-3.5" />
+          <div className="w-6 h-6 rounded-full bg-accent flex items-center justify-center text-primary">
+            <Settings aria-hidden="true" className="w-3.5 h-3.5" />
           </div>
-          <span className="text-base font-bold text-[#0b1c30]">Pengaturan</span>
+          <h1 className="text-lg font-bold text-foreground">Pengaturan</h1>
         </div>
 
-        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#006544]/10 border border-[#4edea3]/40 text-[11px] font-semibold text-[#006544]">
-          <span className="w-2 h-2 rounded-full bg-[#006544] animate-pulse" />
-          <span>Aktif</span>
-        </div>
       </header>
 
       {/* Subheader Intro */}
       <div className="px-1">
-        <span className="text-[10px] text-[#6d28d9] font-bold uppercase tracking-wider">
-          Arsitektur Workspace
-        </span>
-        <p className="text-xs text-[#4a4455] mt-0.5">
-          Konfigurasi sinkronisasi, kolaborator, dan automasi ledger.
+        <p className="text-sm text-muted-foreground">
+          Atur pasangan, notifikasi Discord, dan akun.
         </p>
       </div>
 
@@ -69,17 +62,17 @@ export default async function SettingsPage() {
       <section className="glass-tile rounded-3xl p-5 relative overflow-hidden space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-2xl bg-[#e9ddff] flex items-center justify-center text-[#6d28d9] shadow-inner">
-              <Building2 className="w-5 h-5" />
+            <div className="w-9 h-9 rounded-2xl bg-accent flex items-center justify-center text-primary shadow-inner">
+              <Building2 aria-hidden="true" className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-[#0b1c30]">Workspace Berdua</h2>
-              <p className="text-[11px] text-[#4a4455]">Sinkronisasi Multi-Entitas</p>
+              <h2 className="text-sm font-bold text-foreground">Workspace Berdua</h2>
+              <p className="text-xs text-muted-foreground">Anggaran dipakai berdua</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#eff4ff] border border-[#d3e4fe] text-[11px] font-semibold text-[#6d28d9]">
-            <Users className="w-3.5 h-3.5 mr-0.5" />
+          <div className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-muted border border-surface-highest text-xs font-semibold text-primary">
+            <Users aria-hidden="true" className="w-3.5 h-3.5 mr-0.5" />
             <span>{memberCount}/2 anggota</span>
           </div>
         </div>
@@ -87,52 +80,52 @@ export default async function SettingsPage() {
         {/* Members Sub-grid */}
         <div className="space-y-2">
           {/* Current User */}
-          <div className="flex items-center justify-between p-2.5 bg-white/90 rounded-2xl border border-white/80 shadow-xs">
+          <div className="flex items-center justify-between p-2.5 bg-muted/50 rounded-2xl border border-surface-high">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#6d28d9] to-[#8455ef] text-white flex items-center justify-center font-bold text-xs shrink-0">
+              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-secondary text-white flex items-center justify-center font-bold text-xs shrink-0">
                 {userName[0]?.toUpperCase()}
               </div>
               <div>
                 <div className="flex items-center gap-1.5">
-                  <span className="text-xs font-semibold text-[#0b1c30]">{userName}</span>
-                  <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-[#6d28d9]/10 text-[#6d28d9] uppercase">
+                  <span className="text-xs font-semibold text-foreground">{userName}</span>
+                  <span className="px-1.5 py-0.2 rounded text-xs font-bold bg-primary/10 text-primary uppercase">
                     {me?.role === "owner" ? "Owner" : "Member"}
                   </span>
                 </div>
-                <span className="text-[10px] text-[#4a4455]">{user?.email} (Anda)</span>
+                <span className="text-xs text-muted-foreground">{user?.email} (Anda)</span>
               </div>
             </div>
-            <ShieldCheck className="w-4 h-4 text-[#006544]" />
+            <ShieldCheck aria-hidden="true" className="w-4 h-4 text-tertiary-container" />
           </div>
 
           {/* Partner Slot or Available Slot */}
           {isFull ? (
-            <div className="flex items-center justify-between p-2.5 bg-white/90 rounded-2xl border border-white/80 shadow-xs">
+            <div className="flex items-center justify-between p-2.5 bg-muted/50 rounded-2xl border border-surface-high">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#8455ef] to-[#d3bbff] text-white flex items-center justify-center font-bold text-xs shrink-0">
+                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-secondary to-accent text-white flex items-center justify-center font-bold text-xs shrink-0">
                   P
                 </div>
                 <div>
                   <div className="flex items-center gap-1.5">
-                    <span className="text-xs font-semibold text-[#0b1c30]">Pasangan</span>
-                    <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-[#8455ef]/10 text-[#8455ef] uppercase">
+                    <span className="text-xs font-semibold text-foreground">Pasangan</span>
+                    <span className="px-1.5 py-0.2 rounded text-xs font-bold bg-secondary/10 text-secondary uppercase">
                       Member
                     </span>
                   </div>
-                  <span className="text-[10px] text-[#4a4455]">Terkoneksi ke Workspace</span>
+                  <span className="text-xs text-muted-foreground">Terkoneksi ke Workspace</span>
                 </div>
               </div>
-              <CheckCircle2 className="w-4 h-4 text-[#006544]" />
+              <CheckCircle2 aria-hidden="true" className="w-4 h-4 text-tertiary-container" />
             </div>
           ) : (
-            <div className="flex items-center justify-between p-2.5 bg-[#eff4ff]/60 rounded-2xl border border-dashed border-[#ccc3d7]">
+            <div className="flex items-center justify-between p-2.5 bg-muted/60 rounded-2xl border border-dashed border-outline-variant">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full border border-dashed border-[#7b7486] flex items-center justify-center bg-white/40 text-[#7b7486]">
-                  <UserPlus className="w-4 h-4" />
+                <div className="w-9 h-9 rounded-full border border-dashed border-outline flex items-center justify-center bg-white/40 text-outline">
+                  <UserPlus aria-hidden="true" className="w-4 h-4" />
                 </div>
                 <div>
-                  <span className="text-xs font-medium text-[#4a4455]">Slot Pasangan Tersedia</span>
-                  <p className="text-[10px] text-[#7b7486]">Gunakan kode undangan di bawah</p>
+                  <span className="text-xs font-medium text-muted-foreground">Slot Pasangan Tersedia</span>
+                  <p className="text-xs text-muted-foreground">Gunakan kode undangan di bawah</p>
                 </div>
               </div>
             </div>
@@ -142,7 +135,7 @@ export default async function SettingsPage() {
         {/* Invite Button (Owner only, if not full) */}
         {me?.role === "owner" && !isFull && <InviteButton />}
         {isFull && (
-          <p className="text-[11px] text-[#006544] font-medium text-center">
+          <p className="text-xs text-tertiary-container font-medium text-center">
             Workspace sudah lengkap (2/2 anggota).
           </p>
         )}
@@ -151,54 +144,54 @@ export default async function SettingsPage() {
       {/* BENTO CARD 2: Webhook Notifikasi (Discord) */}
       <DiscordForm hint={dc?.destination ? dc.destination.slice(-6) : null} />
 
-      {/* BENTO CARD 3: Preferensi Spreadsheet & Tampilan */}
+      {/* BENTO CARD 3: Pengaturan Hitungan & Tampilan */}
       <section className="glass-tile rounded-3xl p-5 space-y-3">
         <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-2xl bg-[#e9ddff] flex items-center justify-center text-[#6d28d9] shadow-inner">
-            <Table2 className="w-5 h-5" />
+          <div className="w-9 h-9 rounded-2xl bg-accent flex items-center justify-center text-primary shadow-inner">
+            <Table2 aria-hidden="true" className="w-5 h-5" />
           </div>
           <div>
-            <h2 className="text-sm font-bold text-[#0b1c30]">Preferensi Spreadsheet</h2>
-            <p className="text-[11px] text-[#4a4455]">Kalkulasi & Format Finansial</p>
+            <h2 className="text-sm font-bold text-foreground">Pengaturan Hitungan</h2>
+            <p className="text-xs text-muted-foreground">Cara anggaran dihitung</p>
           </div>
         </div>
 
         <div className="space-y-2 text-xs">
-          <div className="flex items-center justify-between p-2.5 bg-white/80 rounded-2xl border border-white/60">
+          <div className="flex items-center justify-between p-2.5 bg-muted/50 rounded-2xl border border-surface-high">
             <div className="flex items-center gap-2.5">
-              <Calculator className="w-4 h-4 text-[#6d28d9]" />
+              <Calculator aria-hidden="true" className="w-4 h-4 text-primary" />
               <div>
-                <span className="font-semibold text-[#0b1c30] block">Pembulatan Budget Harian</span>
-                <span className="text-[10px] text-[#4a4455]">Lining arithmetic otomatis</span>
+                <span className="font-semibold text-foreground block">Pembulatan Budget Harian</span>
+                <span className="text-xs text-muted-foreground">Dibulatkan ke bawah per Rp 100</span>
               </div>
             </div>
-            <span className="font-bold text-[#6d28d9] bg-[#eff4ff] px-2 py-0.5 rounded-lg border border-[#d3e4fe]">
+            <span className="font-bold text-primary bg-muted px-2 py-0.5 rounded-lg border border-surface-highest">
               Rp 100
             </span>
           </div>
 
-          <div className="flex items-center justify-between p-2.5 bg-white/80 rounded-2xl border border-white/60">
+          <div className="flex items-center justify-between p-2.5 bg-muted/50 rounded-2xl border border-surface-high">
             <div className="flex items-center gap-2.5">
-              <Fuel className="w-4 h-4 text-[#6d28d9]" />
+              <Fuel aria-hidden="true" className="w-4 h-4 text-primary" />
               <div>
-                <span className="font-semibold text-[#0b1c30] block">Jadwal Alokasi BBM Rutin</span>
-                <span className="text-[10px] text-[#4a4455]">Siklus pengisian mingguan</span>
+                <span className="font-semibold text-foreground block">Jadwal Alokasi BBM Rutin</span>
+                <span className="text-xs text-muted-foreground">Pengeluaran BBM tiap minggu</span>
               </div>
             </div>
-            <span className="font-semibold text-[#0b1c30] bg-[#eff4ff] px-2 py-0.5 rounded-lg border border-[#d3e4fe]">
+            <span className="font-semibold text-foreground bg-muted px-2 py-0.5 rounded-lg border border-surface-highest">
               Setiap Senin
             </span>
           </div>
 
-          <div className="flex items-center justify-between p-2.5 bg-white/80 rounded-2xl border border-white/60">
+          <div className="flex items-center justify-between p-2.5 bg-muted/50 rounded-2xl border border-surface-high">
             <div className="flex items-center gap-2.5">
-              <Coins className="w-4 h-4 text-[#6d28d9]" />
+              <Coins aria-hidden="true" className="w-4 h-4 text-primary" />
               <div>
-                <span className="font-semibold text-[#0b1c30] block">Mata Uang Utama</span>
-                <span className="text-[10px] text-[#4a4455]">ISO 4217 Rupiah Indonesia</span>
+                <span className="font-semibold text-foreground block">Mata Uang Utama</span>
+                <span className="text-xs text-muted-foreground">Rupiah Indonesia</span>
               </div>
             </div>
-            <span className="font-semibold text-[#0b1c30] bg-[#eff4ff] px-2 py-0.5 rounded-lg border border-[#d3e4fe]">
+            <span className="font-semibold text-foreground bg-muted px-2 py-0.5 rounded-lg border border-surface-highest">
               IDR (Rp)
             </span>
           </div>
@@ -209,13 +202,13 @@ export default async function SettingsPage() {
       <section className="glass-tile rounded-3xl p-5 space-y-3">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-sm font-bold text-[#0b1c30]">Akun & Sesi</h2>
-            <p className="text-[11px] text-[#4a4455]">{user?.email}</p>
+            <h2 className="text-sm font-bold text-foreground">Akun & Sesi</h2>
+            <p className="text-xs text-muted-foreground">{user?.email}</p>
           </div>
           <form action={signOut}>
             <button
               type="submit"
-              className="py-1.5 px-3 rounded-full border border-[#ba1a1a]/30 text-[#ba1a1a] hover:bg-rose-50 text-xs font-semibold transition-all active:scale-95"
+              className="min-h-11 px-4 rounded-full border border-destructive/30 text-destructive hover:bg-rose-50 text-sm font-semibold transition-all active:scale-95"
             >
               Keluar
             </button>

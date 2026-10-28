@@ -32,11 +32,11 @@ export default async function AnalyticsPage() {
   if (!periods || periods.length === 0) {
     return (
       <div className="w-full max-w-md mx-auto px-4 py-8 text-center space-y-4">
-        <h1 className="text-xl font-bold text-[#0b1c30]">Belum Ada Data Analitik</h1>
-        <p className="text-xs text-[#4a4455]">Buat periode anggaran terlebih dahulu untuk melihat grafik.</p>
+        <h1 className="text-xl font-bold text-foreground">Belum Ada Data Analitik</h1>
+        <p className="text-xs text-muted-foreground">Buat periode anggaran terlebih dahulu untuk melihat grafik.</p>
         <Link
           href="/periods/new"
-          className="inline-flex py-2 px-4 rounded-full bg-[#6d28d9] text-white text-xs font-semibold"
+          className="inline-flex py-2 px-4 rounded-full bg-primary text-white text-xs font-semibold"
         >
           Buat Periode
         </Link>
@@ -101,14 +101,14 @@ export default async function AnalyticsPage() {
   return (
     <div className="w-full max-w-md mx-auto px-4 pt-2 space-y-4">
       {/* Header */}
-      <header className="flex justify-between items-center py-2 border-b border-[#e5eeff]">
+      <header className="flex justify-between items-center py-2 border-b border-surface-container">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full bg-[#e9ddff] flex items-center justify-center text-[#6d28d9]">
-            <TrendingUp className="w-3.5 h-3.5" />
+          <div className="w-6 h-6 rounded-full bg-accent flex items-center justify-center text-primary">
+            <TrendingUp aria-hidden="true" className="w-3.5 h-3.5" />
           </div>
-          <span className="text-xs font-bold text-[#0b1c30]">Analitik & Visualisasi</span>
+          <span className="text-xs font-bold text-foreground">Analitik</span>
         </div>
-        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#eff4ff] border border-[#d3e4fe] text-[11px] font-semibold text-[#6d28d9]">
+        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-muted border border-surface-highest text-xs font-semibold text-primary">
           <span>{formatDateShort(activePeriod.start_date)} – {formatDateShort(activePeriod.end_date)}</span>
         </div>
       </header>
@@ -116,15 +116,15 @@ export default async function AnalyticsPage() {
       {/* Hero Aggregate Header Strip */}
       <section className="flex items-center justify-between px-1">
         <div>
-          <span className="text-[10px] text-[#7b7486] uppercase tracking-wider font-semibold">
-            Status Burn-Down Keuangan
+          <span className="text-xs text-outline uppercase tracking-wider font-semibold">
+            Ringkasan anggaran
           </span>
-          <h1 className="text-xl font-extrabold text-[#0b1c30] tracking-tight">
-            Performa Anggaran
+          <h1 className="text-xl font-extrabold text-foreground tracking-tight">
+            Analitik
           </h1>
         </div>
-        <div className="flex items-center gap-1.5 bg-[#4edea3]/20 border border-[#4edea3]/40 px-2.5 py-1 rounded-full text-[#004b31]">
-          <span className="w-2 h-2 rounded-full bg-[#006544] animate-pulse" />
+        <div className="flex items-center gap-1.5 bg-tertiary-fixed/20 border border-tertiary-fixed/40 px-2.5 py-1 rounded-full text-tertiary">
+          <span className="w-2 h-2 rounded-full bg-tertiary-container" />
           <span className="text-xs font-bold tabular-nums">
             {summary.cumulativeSavings >= 0 ? "+" : ""}
             {rupiah(summary.cumulativeSavings)} {summary.cumulativeSavings >= 0 ? "Hemat" : "Defisit"}
@@ -137,14 +137,14 @@ export default async function AnalyticsPage() {
         <div className="flex items-start justify-between">
           <div>
             <div className="flex items-center gap-1.5">
-              <TrendingDown className="w-4 h-4 text-[#6d28d9]" />
-              <h2 className="text-sm font-bold text-[#0b1c30]">Garis Saldo Kumulatif</h2>
+              <TrendingDown aria-hidden="true" className="w-4 h-4 text-primary" />
+              <h2 className="text-sm font-bold text-foreground">Garis Saldo Kumulatif</h2>
             </div>
-            <p className="text-[11px] text-[#4a4455]">Trajektori burn-down sisa pagu anggaran</p>
+            <p className="text-xs text-muted-foreground">Sisa anggaran dari hari ke hari</p>
           </div>
           <div className="text-right">
-            <span className="text-[10px] text-[#7b7486]">Sisa Aktual</span>
-            <div className="text-sm font-extrabold text-[#6d28d9] tabular-nums">
+            <span className="text-xs text-outline">Sisa Aktual</span>
+            <div className="text-sm font-extrabold text-primary tabular-nums">
               {rupiah(summary.currentActualBalance)}
             </div>
           </div>
@@ -154,17 +154,17 @@ export default async function AnalyticsPage() {
         <BurndownChart rows={rows} todayStr={today} />
 
         {/* Footnote Legend */}
-        <div className="flex items-center justify-between pt-2.5 border-t border-[#e5eeff] text-[11px]">
-          <div className="flex items-center gap-1.5 text-[#4a4455]">
+        <div className="flex items-center justify-between pt-2.5 border-t border-surface-container text-xs">
+          <div className="flex items-center gap-1.5 text-muted-foreground">
             <span className="w-3 h-0.5 border-t-2 border-dashed border-[#94a3b8] inline-block" />
             <span>Rencana Pagu</span>
           </div>
-          <div className="flex items-center gap-1.5 text-[#4a4455]">
-            <span className="w-3 h-1 bg-[#6d28d9] rounded-full inline-block" />
+          <div className="flex items-center gap-1.5 text-muted-foreground">
+            <span className="w-3 h-1 bg-primary rounded-full inline-block" />
             <span>Realisasi Aktual</span>
           </div>
-          <div className="flex items-center gap-1 text-[#006544] font-semibold">
-            <CheckCircle2 className="w-3.5 h-3.5" />
+          <div className="flex items-center gap-1 text-tertiary-container font-semibold">
+            <CheckCircle2 aria-hidden="true" className="w-3.5 h-3.5" />
             <span>Terkendali</span>
           </div>
         </div>
@@ -175,12 +175,12 @@ export default async function AnalyticsPage() {
         <div className="flex items-center justify-between">
           <div>
             <div className="flex items-center gap-1.5">
-              <BarChart2 className="w-4 h-4 text-[#8455ef]" />
-              <h2 className="text-sm font-bold text-[#0b1c30]">Rencana vs Aktual per Pekan</h2>
+              <BarChart2 aria-hidden="true" className="w-4 h-4 text-secondary" />
+              <h2 className="text-sm font-bold text-foreground">Rencana vs Aktual per Pekan</h2>
             </div>
-            <p className="text-[11px] text-[#4a4455]">Komparasi deviasi anggaran per pekan</p>
+            <p className="text-xs text-muted-foreground">Anggaran vs pengeluaran tiap pekan</p>
           </div>
-          <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-[#eff4ff] text-[#6d28d9]">
+          <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-muted text-primary">
             {weeks.length} Pekan
           </span>
         </div>
@@ -192,19 +192,19 @@ export default async function AnalyticsPage() {
             return (
               <div key={idx} className="space-y-1">
                 <div className="flex justify-between items-center text-xs">
-                  <span className="font-medium text-[#0b1c30]">
+                  <span className="font-medium text-foreground">
                     {w.name} ({w.dateRange})
                   </span>
-                  <span className="tabular-nums font-semibold text-[#0b1c30]">
-                    {rupiah(w.actual)} / <span className="text-[#7b7486] font-normal">{rupiah(w.budget)}</span>
+                  <span className="tabular-nums font-semibold text-foreground">
+                    {rupiah(w.actual)} / <span className="text-outline font-normal">{rupiah(w.budget)}</span>
                   </span>
                 </div>
-                <div className="w-full bg-[#eff4ff] rounded-full h-2.5 overflow-hidden flex">
+                <div className="w-full bg-muted rounded-full h-2.5 overflow-hidden flex">
                   <div
                     className={`h-full rounded-full transition-all duration-300 ${
                       isOver
-                        ? "bg-gradient-to-r from-[#6d28d9] to-[#ba1a1a]"
-                        : "bg-gradient-to-r from-[#6d28d9] to-[#8455ef]"
+                        ? "bg-gradient-to-r from-primary to-destructive"
+                        : "bg-gradient-to-r from-primary to-secondary"
                     }`}
                     style={{ width: `${pct}%` }}
                   />
@@ -220,72 +220,72 @@ export default async function AnalyticsPage() {
         <div className="flex items-center justify-between">
           <div>
             <div className="flex items-center gap-1.5">
-              <PieChart className="w-4 h-4 text-[#6d28d9]" />
-              <h2 className="text-sm font-bold text-[#0b1c30]">Alokasi Pos & BBM Tracker</h2>
+              <PieChart aria-hidden="true" className="w-4 h-4 text-primary" />
+              <h2 className="text-sm font-bold text-foreground">Alokasi Pos & BBM Tracker</h2>
             </div>
-            <p className="text-[11px] text-[#4a4455]">Realisasi per pos distribusi anggaran</p>
+            <p className="text-xs text-muted-foreground">Realisasi per pos distribusi anggaran</p>
           </div>
-          <span className="text-[11px] text-[#7b7486] font-medium">Bulan Berjalan</span>
+          <span className="text-xs text-outline font-medium">Bulan Berjalan</span>
         </div>
 
         {/* Breakdown Items */}
         <div className="space-y-2 pt-1 text-xs">
           {/* Pos BBM */}
-          <div className="flex items-center justify-between p-2.5 rounded-2xl bg-[#eff4ff]/60 border border-white/70">
+          <div className="flex items-center justify-between p-2.5 rounded-2xl bg-muted/60 border border-white/70">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-xl bg-[#ebddff] flex items-center justify-center text-[#6d28d9]">
-                <Fuel className="w-4 h-4" />
+              <div className="w-8 h-8 rounded-xl bg-primary-fixed flex items-center justify-center text-primary">
+                <Fuel aria-hidden="true" className="w-4 h-4" />
               </div>
               <div>
-                <span className="font-semibold text-[#0b1c30] block">BBM Rutin</span>
-                <span className="text-[10px] text-[#7b7486]">Pagu: {rupiah(summary.totalRoutine)}</span>
+                <span className="font-semibold text-foreground block">BBM Rutin</span>
+                <span className="text-xs text-outline">Pagu: {rupiah(summary.totalRoutine)}</span>
               </div>
             </div>
             <div className="text-right">
-              <span className="font-bold tabular-nums text-[#0b1c30] block">
+              <span className="font-bold tabular-nums text-foreground block">
                 {summary.routineDayCount}x @{rupiah(summary.routineAmountPerDay)}
               </span>
-              <span className="text-[10px] text-[#006544] font-medium">Pagu {rupiah(summary.totalRoutine)}</span>
+              <span className="text-xs text-tertiary-container font-medium">Pagu {rupiah(summary.totalRoutine)}</span>
             </div>
           </div>
 
           {/* Pos Kebutuhan Harian */}
-          <div className="flex items-center justify-between p-2.5 rounded-2xl bg-[#eff4ff]/60 border border-white/70">
+          <div className="flex items-center justify-between p-2.5 rounded-2xl bg-muted/60 border border-white/70">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-xl bg-[#e9ddff] flex items-center justify-center text-[#8455ef]">
-                <Utensils className="w-4 h-4" />
+              <div className="w-8 h-8 rounded-xl bg-accent flex items-center justify-center text-secondary">
+                <Utensils aria-hidden="true" className="w-4 h-4" />
               </div>
               <div>
-                <span className="font-semibold text-[#0b1c30] block">Kebutuhan Harian</span>
-                <span className="text-[10px] text-[#7b7486]">Pagu: {rupiah(summary.netForDaily)}</span>
+                <span className="font-semibold text-foreground block">Kebutuhan Harian</span>
+                <span className="text-xs text-outline">Pagu: {rupiah(summary.netForDaily)}</span>
               </div>
             </div>
             <div className="text-right">
-              <span className="font-bold tabular-nums text-[#0b1c30] block">
+              <span className="font-bold tabular-nums text-foreground block">
                 {rupiah(summary.totalActualSpent)}
               </span>
-              <span className="text-[10px] text-[#4a4455] font-medium">
+              <span className="text-xs text-muted-foreground font-medium">
                 Pagu {rupiah(summary.dailyBudget)}/hr
               </span>
             </div>
           </div>
 
           {/* Cadangan Pembulatan */}
-          <div className="flex items-center justify-between p-2.5 rounded-2xl bg-[#eff4ff]/60 border border-white/70">
+          <div className="flex items-center justify-between p-2.5 rounded-2xl bg-muted/60 border border-white/70">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-xl bg-[#d3e4fe] flex items-center justify-center text-[#006544]">
-                <PiggyBank className="w-4 h-4" />
+              <div className="w-8 h-8 rounded-xl bg-surface-highest flex items-center justify-center text-tertiary-container">
+                <PiggyBank aria-hidden="true" className="w-4 h-4" />
               </div>
               <div>
-                <span className="font-semibold text-[#0b1c30] block">Cadangan Pembulatan</span>
-                <span className="text-[10px] text-[#7b7486]">Akumulasi pembulatan Rp 100</span>
+                <span className="font-semibold text-foreground block">Cadangan Pembulatan</span>
+                <span className="text-xs text-outline">Akumulasi pembulatan Rp 100</span>
               </div>
             </div>
             <div className="text-right">
-              <span className="font-bold tabular-nums text-[#006544] block">
+              <span className="font-bold tabular-nums text-tertiary-container block">
                 {rupiah(summary.roundingReserve)}
               </span>
-              <span className="text-[10px] text-[#7b7486] font-medium">Otomatis</span>
+              <span className="text-xs text-outline font-medium">Otomatis</span>
             </div>
           </div>
         </div>

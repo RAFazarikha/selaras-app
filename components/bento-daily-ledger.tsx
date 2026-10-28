@@ -4,8 +4,22 @@ import { useState, useTransition } from "react";
 import { type SpreadsheetDayRow, type SpreadsheetSummary } from "@/supabase/functions/_shared/budget";
 import { formatDateIndo, rupiah } from "@/lib/format";
 import { addTransaction, deleteTransaction } from "@/app/(app)/periods/[id]/actions";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
-import { FileSpreadsheet, Sparkles, Plus, Download, FileJson } from "lucide-react";
+import { FileSpreadsheet, Plus, Download, FileJson, Trash2 } from "lucide-react";
+import { toast } from "sonner";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 type TxItem = {
   id: string;
@@ -30,9 +44,10 @@ export function BentoDailyLedger({
   todayStr: string;
   transactions: TxItem[];
 }) {
-  const [selectedDate, setSelectedDate] = useState<string | null>(todayStr);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [amountInput, setAmountInput] = useState("");
   const [noteInput, setNoteInput] = useState("");
+  const [showPast, setShowPast] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [formError, setFormError] = useState<string | null>(null);
 
@@ -45,6 +60,10 @@ export function BentoDailyLedger({
       txByDate.set(t.transaction_date, list);
     }
   }
+
+  const pastCount = rows.filter((r) => r.date < todayStr).length;
+  const hasUpcoming = rows.some((r) => r.date >= todayStr);
+  const visibleRows = showPast || !hasUpcoming ? rows : rows.filter((r) => r.date >= todayStr);
 
   const handleQuickAdd = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,9 +86,11 @@ export function BentoDailyLedger({
       const res = await addTransaction({}, fd);
       if (res.error) {
         setFormError(res.error);
+        toast.error(res.error);
       } else {
         setAmountInput("");
         setNoteInput("");
+        toast.success("Pengeluaran berhasil dicatat");
       }
     });
   };
@@ -80,6 +101,7 @@ export function BentoDailyLedger({
     fd.set("period_id", periodId);
     startTransition(async () => {
       await deleteTransaction(fd);
+      toast.success("Transaksi berhasil dihapus");
     });
   };
 
@@ -88,25 +110,28 @@ export function BentoDailyLedger({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-lg font-bold text-[#0b1c30]">Buku Kas Harian</h3>
-          <p className="text-xs text-[#4a4455]">Pencatatan realisasi belanja vs kuota</p>
+          <h3 className="text-lg font-bold text-foreground">Catatan Harian</h3>
+          <p className="text-xs text-muted-foreground">Ketuk kolom Aktual untuk lihat atau tambah rincian</p>
         </div>
-        <div className="w-8 h-8 rounded-full bg-[#eff4ff] flex items-center justify-center text-[#6d28d9]">
-          <FileSpreadsheet className="w-4 h-4" />
+        <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-primary">
+          <FileSpreadsheet aria-hidden="true" className="w-4 h-4" />
         </div>
       </div>
 
-      {/* Instructional Banner from Stitch */}
-      <div className="p-3 rounded-2xl bg-gradient-to-r from-violet-100/60 to-amber-50/70 border border-violet-200/50 flex items-start gap-2">
-        <Sparkles className="w-4 h-4 text-[#6d28d9] mt-0.5 shrink-0" />
-        <p className="text-xs text-[#0b1c30] leading-relaxed">
-          Klik kotak <strong>Aktual</strong> pada tanggal untuk mencatat atau melihat rincian pengeluaran harian.
-        </p>
-      </div>
 
       {/* Ledger Entries List */}
       <div className="space-y-2.5">
-        {rows.map((row) => {
+        {pastCount > 0 && hasUpcoming && (
+          <button
+            type="button"
+            onClick={() => setShowPast((v) => !v)}
+            aria-expanded={showPast}
+            className="min-h-11 w-full rounded-2xl border border-dashed border-outline-variant text-sm font-semibold text-primary transition-colors hover:bg-muted"
+          >
+            {showPast ? "Sembunyikan hari sebelumnya" : `Lihat ${pastCount} hari sebelumnya`}
+          </button>
+        )}
+        {visibleRows.map((row) => {
           const isToday = row.date === todayStr;
           const isExpanded = selectedDate === row.date;
           const dayTxs = txByDate.get(row.date) ?? [];
@@ -116,10 +141,10 @@ export function BentoDailyLedger({
               key={row.date}
               className={`rounded-2xl transition-all ${
                 isToday
-                  ? "bg-white border-2 border-[#6d28d9]/45 shadow-sm ring-2 ring-[#6d28d9]/10"
+                  ? "bg-white border-2 border-primary/45 shadow-sm ring-2 ring-primary/10"
                   : row.hasActual
-                  ? "bg-[#eff4ff]/60 border border-[#ccc3d7]/50"
-                  : "bg-[#eff4ff]/30 border border-dashed border-[#ccc3d7]/60 opacity-80"
+                  ? "bg-muted/60 border border-outline-variant/50"
+                  : "bg-muted/30 border border-dashed border-outline-variant/60 opacity-80"
               }`}
             >
               {/* Row Main Content */}
@@ -128,18 +153,18 @@ export function BentoDailyLedger({
                   <div className="flex items-center gap-1.5 flex-wrap">
                     <span
                       className={`text-xs font-semibold ${
-                        isToday ? "text-[#6d28d9] font-bold" : "text-[#0b1c30]"
+                        isToday ? "text-primary font-bold" : "text-foreground"
                       }`}
                     >
                       {formatDateIndo(row.date)} • {row.dayName}
                     </span>
                     {isToday && (
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#ebddff] text-[#250059]">
+                      <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-primary-fixed text-on-primary-fixed">
                         Hari Ini
                       </span>
                     )}
                     {row.isRoutineDay && (
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#e9ddff] text-[#23005c]">
+                      <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-accent text-accent-foreground">
                         BBM {rupiah(row.routineBudget)}
                       </span>
                     )}
@@ -149,44 +174,46 @@ export function BentoDailyLedger({
                   <div>
                     {row.hasActual ? (
                       row.diff < 0 ? (
-                        <span className="badge-positive text-[11px] px-2 py-0.5 rounded-full font-semibold">
+                        <span className="badge-positive text-xs px-2 py-0.5 rounded-full font-semibold">
                           +{rupiah(Math.abs(row.diff))} Hemat
                         </span>
                       ) : row.diff > 0 ? (
-                        <span className="badge-negative text-[11px] px-2 py-0.5 rounded-full font-semibold">
+                        <span className="badge-negative text-xs px-2 py-0.5 rounded-full font-semibold">
                           −{rupiah(row.diff)}
                         </span>
                       ) : (
-                        <span className="px-2 py-0.5 rounded-full text-[11px] font-medium bg-[#eff4ff] text-[#4a4455]">
+                        <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-muted text-muted-foreground">
                           Rp 0
                         </span>
                       )
                     ) : (
-                      <span className="text-[11px] text-[#7b7486] font-medium">Proyeksi</span>
+                      <span className="text-xs text-outline font-medium">Proyeksi</span>
                     )}
                   </div>
                 </div>
 
                 {/* 3 Columns: Budget | Aktual | Sisa Saldo */}
-                <div className="grid grid-cols-3 gap-2 items-center text-left pt-1.5 border-t border-[#e5eeff]">
+                <div className="grid grid-cols-3 gap-2 items-center text-left pt-1.5 border-t border-surface-container">
                   <div>
-                    <span className="text-[10px] text-[#7b7486] block">Budget</span>
-                    <span className="text-xs font-medium tabular-nums text-[#0b1c30]">
+                    <span className="text-xs text-outline block">Budget</span>
+                    <span className="text-xs font-medium tabular-nums text-foreground">
                       {rupiah(row.totalBudgetToday)}
                     </span>
                   </div>
 
                   <div className="text-center">
-                    <span className="text-[10px] text-[#7b7486] block">Aktual</span>
+                    <span className="text-xs text-outline block">Aktual</span>
                     <button
                       type="button"
                       onClick={() => setSelectedDate(isExpanded ? null : row.date)}
-                      className={`w-full py-0.5 px-1.5 rounded-xl text-xs font-bold tabular-nums transition-all ${
+                      aria-expanded={isExpanded}
+                      aria-controls={`ledger-drawer-${row.date}`}
+                      className={`w-full min-h-9 py-1 px-2 rounded-xl text-xs font-bold tabular-nums transition-all flex items-center justify-center ${
                         row.hasActual
                           ? "editable-amber hover:opacity-90"
                           : isToday
                           ? "focused-amber"
-                          : "bg-white/80 border border-[#ccc3d7]/60 text-[#7b7486] hover:border-[#f59e0b]"
+                          : "bg-white/80 border border-outline-variant/60 text-outline hover:border-[#f59e0b]"
                       }`}
                     >
                       {row.hasActual ? rupiah(row.actualSpent) : isToday ? "+ Ketik" : "−"}
@@ -194,10 +221,10 @@ export function BentoDailyLedger({
                   </div>
 
                   <div className="text-right">
-                    <span className="text-[10px] text-[#7b7486] block">
+                    <span className="text-xs text-outline block">
                       {row.hasActual ? "Sisa Saldo" : "Estimasi"}
                     </span>
-                    <span className="text-xs font-semibold tabular-nums text-[#0b1c30]">
+                    <span className="text-xs font-semibold tabular-nums text-foreground">
                       {rupiah(row.actualRemaining ?? row.plannedRemaining)}
                     </span>
                   </div>
@@ -206,15 +233,15 @@ export function BentoDailyLedger({
 
               {/* Inline Expansion Drawer (Detail & Multi-Transaction Add) */}
               {isExpanded && (
-                <div className="p-3 bg-white/95 border-t border-[#e5eeff] rounded-b-2xl space-y-3 animate-in fade-in duration-150">
+                <div id={`ledger-drawer-${row.date}`} className="p-3 bg-white/95 border-t border-surface-container rounded-b-2xl space-y-3 animate-in fade-in duration-150">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-semibold text-[#0b1c30]">
+                    <span className="text-xs font-semibold text-foreground">
                       Rincian Pengeluaran ({dayTxs.length} transaksi)
                     </span>
                     <button
                       type="button"
                       onClick={() => setSelectedDate(null)}
-                      className="text-xs text-[#7b7486] hover:text-[#0b1c30]"
+                      className="min-h-9 px-3 py-1 rounded-lg text-xs text-outline hover:text-foreground hover:bg-muted transition-colors flex items-center justify-center"
                     >
                       Tutup
                     </button>
@@ -222,78 +249,98 @@ export function BentoDailyLedger({
 
                   {/* List of items on this day */}
                   {dayTxs.length > 0 ? (
-                    <ul className="divide-y divide-[#e5eeff] text-xs">
+                    <ul className="divide-y divide-surface-container text-xs">
                       {dayTxs.map((tx) => (
                         <li key={tx.id} className="py-1.5 flex items-center justify-between">
                           <div>
-                            <span className="font-medium text-[#0b1c30]">
+                            <span className="font-medium text-foreground">
                               {tx.note || "Pengeluaran"}
                             </span>
-                            <span className="block text-[10px] text-[#7b7486]">
+                            <span className="block text-xs text-outline">
                               {formatDateIndo(tx.transaction_date)}
                             </span>
                           </div>
                           <div className="flex items-center gap-2">
-                            <span className="font-semibold text-[#ba1a1a] tabular-nums">
+                            <span className="font-semibold text-destructive tabular-nums">
                               {rupiah(tx.amount)}
                             </span>
                             {isOwner && (
-                              <button
-                                type="button"
-                                disabled={isPending}
-                                onClick={() => handleDelete(tx.id)}
-                                className="text-[#ba1a1a] hover:opacity-75 p-1"
-                                aria-label="Hapus item"
-                              >
-                                ×
-                              </button>
+                              <AlertDialog>
+                                <AlertDialogTrigger
+                                  type="button"
+                                  disabled={isPending}
+                                  className="text-destructive hover:bg-destructive/10 size-10 rounded-lg flex items-center justify-center transition-colors"
+                                  aria-label="Hapus pengeluaran"
+                                >
+                                  <Trash2 aria-hidden="true" className="size-4" />
+                                </AlertDialogTrigger>
+                                <AlertDialogContent>
+                                  <AlertDialogHeader>
+                                    <AlertDialogTitle>Hapus Transaksi?</AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                      Transaksi &ldquo;{tx.note || "Pengeluaran"}&rdquo; sebesar {rupiah(tx.amount)} akan dihapus dari buku kas.
+                                    </AlertDialogDescription>
+                                  </AlertDialogHeader>
+                                  <AlertDialogFooter>
+                                    <AlertDialogCancel>Batal</AlertDialogCancel>
+                                    <AlertDialogAction
+                                      variant="destructive"
+                                      onClick={() => handleDelete(tx.id)}
+                                    >
+                                      Hapus
+                                    </AlertDialogAction>
+                                  </AlertDialogFooter>
+                                </AlertDialogContent>
+                              </AlertDialog>
                             )}
                           </div>
                         </li>
                       ))}
                     </ul>
                   ) : (
-                    <p className="text-[11px] text-[#7b7486] italic">
+                    <p className="text-xs text-outline italic">
                       Belum ada catatan pengeluaran di tanggal ini.
                     </p>
                   )}
 
                   {/* Inline Quick Add Form */}
                   {isOwner && (
-                    <form onSubmit={handleQuickAdd} className="space-y-2 pt-2 border-t border-[#e5eeff]">
+                    <form onSubmit={handleQuickAdd} className="space-y-2 pt-2 border-t border-surface-container">
                       <div className="grid grid-cols-2 gap-2">
-                        <div className="relative flex items-center rounded-xl bg-white border border-[#ccc3d7]/70 px-2.5 py-1.5 input-ambient-glow">
-                          <span className="text-[11px] font-bold text-[#6d28d9] mr-1">Rp</span>
-                          <input
+                        <div className="relative">
+                          <span aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-primary">Rp</span>
+                          <Input
                             type="number"
                             inputMode="numeric"
                             min={1}
                             placeholder="Nominal"
+                            aria-label="Nominal pengeluaran"
                             value={amountInput}
                             onChange={(e) => setAmountInput(e.target.value)}
-                            className="w-full bg-transparent border-0 p-0 text-xs font-semibold tabular-nums text-[#0b1c30] focus:outline-none"
                             required
+                            className="pl-10 text-base tabular-nums"
                           />
                         </div>
-                        <input
+                        <Input
                           type="text"
                           placeholder="Catatan (opsional)"
+                          aria-label="Catatan pengeluaran"
                           value={noteInput}
                           onChange={(e) => setNoteInput(e.target.value)}
-                          className="rounded-xl bg-white border border-[#ccc3d7]/70 px-2.5 py-1.5 text-xs text-[#0b1c30] focus:outline-none input-ambient-glow"
+                          className="text-base"
                         />
                       </div>
 
                       {formError && (
-                        <p role="alert" className="text-[11px] text-[#ba1a1a]">
+                        <p role="alert" className="text-xs text-destructive">
                           {formError}
                         </p>
                       )}
 
-                      <button
+                      <Button
                         type="submit"
                         disabled={isPending}
-                        className="w-full py-1.5 px-3 rounded-xl bg-gradient-to-r from-[#6d28d9] to-[#8455ef] text-white text-xs font-semibold flex items-center justify-center gap-1.5 primary-btn-glow active:scale-[0.98] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+                        variant="brand" className="w-full rounded-2xl"
                       >
                         {isPending ? (
                           <>
@@ -302,11 +349,11 @@ export function BentoDailyLedger({
                           </>
                         ) : (
                           <>
-                            <Plus className="w-4 h-4" />
+                            <Plus aria-hidden="true" className="w-4 h-4" />
                             <span>Tambah Pengeluaran</span>
                           </>
                         )}
-                      </button>
+                      </Button>
                     </form>
                   )}
                 </div>
@@ -317,18 +364,18 @@ export function BentoDailyLedger({
       </div>
 
       {/* Sticky Bottom Summary from Stitch */}
-      <div className="pt-3 border-t border-[#e5eeff] space-y-2.5">
-        <div className="flex justify-between items-center bg-[#eff4ff] p-3 rounded-2xl">
+      <div className="pt-3 border-t border-surface-container space-y-2.5">
+        <div className="flex justify-between items-center bg-muted p-3 rounded-2xl">
           <div>
-            <span className="text-[10px] uppercase tracking-wider text-[#7b7486] block">
+            <span className="text-xs uppercase tracking-wider text-outline block">
               Total Budget Alokasi
             </span>
-            <span className="text-sm font-semibold tabular-nums text-[#0b1c30]">
+            <span className="text-sm font-semibold tabular-nums text-foreground">
               {rupiah(summary.totalAllocatedBudget)}
             </span>
           </div>
           <div className="text-right">
-            <span className="text-[10px] uppercase tracking-wider text-[#7b7486] block">
+            <span className="text-xs uppercase tracking-wider text-outline block">
               Hemat Kumulatif
             </span>
             <span
@@ -347,17 +394,17 @@ export function BentoDailyLedger({
           <a
             href={`/export?period=${periodId}&format=csv`}
             download
-            className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-[#eff4ff] hover:bg-[#e5eeff] border border-[#d3e4fe] text-[#6d28d9] text-xs font-semibold transition-all active:scale-95"
+            className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-muted hover:bg-surface-container border border-surface-highest text-primary text-xs font-semibold transition-all active:scale-95"
           >
-            <Download className="w-3.5 h-3.5" />
+            <Download aria-hidden="true" className="w-3.5 h-3.5" />
             <span>Ekspor CSV</span>
           </a>
           <a
             href={`/export?period=${periodId}&format=json`}
             download
-            className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-[#eff4ff] hover:bg-[#e5eeff] border border-[#d3e4fe] text-[#6d28d9] text-xs font-semibold transition-all active:scale-95"
+            className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-muted hover:bg-surface-container border border-surface-highest text-primary text-xs font-semibold transition-all active:scale-95"
           >
-            <FileJson className="w-3.5 h-3.5" />
+            <FileJson aria-hidden="true" className="w-3.5 h-3.5" />
             <span>Ekspor JSON</span>
           </a>
         </div>
