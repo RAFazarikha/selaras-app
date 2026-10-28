@@ -19,6 +19,7 @@ import {
 } from "@/supabase/functions/_shared/budget";
 import { rupiah, todayJakarta } from "@/lib/format";
 import { deletePlannedItem, deleteTransaction } from "./actions";
+import { ExportLinks } from "./export-links";
 import { PlannedItemForm, TransactionForm } from "./forms";
 
 export default async function PeriodPage(props: PageProps<"/periods/[id]">) {
@@ -231,6 +232,7 @@ export default async function PeriodPage(props: PageProps<"/periods/[id]">) {
         {mine && <PlannedItemForm {...range} />}
       </section>
 
+      <ExportLinks periodId={id} />
       <RealtimeRefresh periodId={id} />
     </div>
   );
