@@ -2,6 +2,7 @@ import { describe, expect, test } from "bun:test";
 import {
   adaptiveAllowance,
   balances,
+  calculateSpreadsheet,
   daysBetween,
   isBigDay,
   staticAllowance,
@@ -117,5 +118,76 @@ describe("usage", () => {
     expect(usage(p, [exp("2026-11-01", 300_000)]).remaining).toBe(700_000);
     expect(usage({ ...p, limit: 0 }, []).pct).toBe(0);
     expect(usage({ ...p, limit: 0 }, [exp("2026-11-01", 1)]).level).toBe("red");
+  });
+});
+
+describe("calculateSpreadsheet (Stitch / Excel Spec)", () => {
+  // Contoh spreadsheet: 26 Okt 2026 (Senin) - 30 Nov 2026 (Senin) = 36 hari
+  // Total Uang = 1.553.232, BBM = 50.000 setiap Senin
+  const spPeriod: Period = {
+    start: "2026-10-26",
+    end: "2026-11-30",
+    initialBalance: 1_553_232,
+    routineAmount: 50_000,
+    routineDay: 1, // Senin
+  };
+
+  test("ringkasan kalkulasi otomatis persis dengan dokumen desain", () => {
+    const { summary, rows } = calculateSpreadsheet(spPeriod, [
+      exp("2026-10-26", 100_000),
+      exp("2026-10-27", 41_500),
+      exp("2026-10-28", 60_000),
+    ]);
+
+    expect(summary.totalAmount).toBe(1_553_232);
+    expect(summary.totalDays).toBe(36);
+    expect(summary.routineDayCount).toBe(6); // 6 hari Senin
+    expect(summary.totalRoutine).toBe(300_000); // 6 x 50.000
+    expect(summary.netForDaily).toBe(1_253_232); // 1.553.232 - 300.000
+    expect(summary.dailyBudget).toBe(34_800); // floor(1.253.232 / 36 / 100) * 100
+    expect(summary.roundingReserve).toBe(432); // 1.253.232 - (34.800 * 36)
+    expect(summary.totalAllocatedBudget).toBe(1_552_800);
+
+    // Pengeluaran aktual terakumulasi
+    expect(summary.totalActualSpent).toBe(201_500); // 100k + 41.5k + 60k
+    expect(summary.currentActualBalance).toBe(1_351_732); // 1.553.232 - 201.500
+
+    // Cek detail baris hari 1 (Senin 26 Okt)
+    const row1 = rows[0];
+    expect(row1.date).toBe("2026-10-26");
+    expect(row1.isRoutineDay).toBe(true);
+    expect(row1.routineBudget).toBe(50_000);
+    expect(row1.dailyBudget).toBe(34_800);
+    expect(row1.totalBudgetToday).toBe(84_800);
+    expect(row1.actualSpent).toBe(100_000);
+    expect(row1.diff).toBe(15_200); // 100.000 - 84.800 (over 15.200)
+    expect(row1.actualRemaining).toBe(1_453_232);
+
+    // Cek detail baris hari 2 (Selasa 27 Okt)
+    const row2 = rows[1];
+    expect(row2.date).toBe("2026-10-27");
+    expect(row2.isRoutineDay).toBe(false);
+    expect(row2.routineBudget).toBe(0);
+    expect(row2.totalBudgetToday).toBe(34_800);
+    expect(row2.actualSpent).toBe(41_500);
+    expect(row2.diff).toBe(6_700); // 41.500 - 34.800
+    expect(row2.actualRemaining).toBe(1_411_732);
+
+    // Cek detail baris hari 3 (Rabu 28 Okt)
+    const row3 = rows[2];
+    expect(row3.date).toBe("2026-10-28");
+    expect(row3.actualSpent).toBe(60_000);
+    expect(row3.diff).toBe(25_200); // 60.000 - 34.800
+    expect(row3.actualRemaining).toBe(1_351_732);
+
+    // Cek baris hari tanpa transaksi (29 Okt)
+    const row4 = rows[3];
+    expect(row4.hasActual).toBe(false);
+    expect(row4.actualSpent).toBe(0);
+    expect(row4.actualRemaining).toBe(null);
+
+    // Sisa rencana hari terakhir harus tepat sama dengan cadangan pembulatan (432)
+    const lastRow = rows[rows.length - 1];
+    expect(lastRow.plannedRemaining).toBe(432);
   });
 });

@@ -73,14 +73,14 @@ isOneToOne: false
                   ]
                 },"periods": {
                   Row: {
-                    "created_at": string,"end_date": string,"id": string,"initial_balance": number,"name": string,"owner_id": string,"planned_expense_limit": number,"start_date": string,"visibility": string,"workspace_id": string
+                    "created_at": string,"end_date": string,"id": string,"initial_balance": number,"name": string,"owner_id": string,"planned_expense_limit": number,"routine_amount": number,"routine_day": number,"start_date": string,"visibility": string,"workspace_id": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "created_at"?: string,"end_date": string,"id"?: string,"initial_balance": number,"name": string,"owner_id"?: string,"planned_expense_limit": number,"start_date": string,"visibility"?: string,"workspace_id": string
+                    "created_at"?: string,"end_date": string,"id"?: string,"initial_balance": number,"name": string,"owner_id"?: string,"planned_expense_limit": number,"routine_amount"?: number,"routine_day"?: number,"start_date": string,"visibility"?: string,"workspace_id": string
                   }
                   Update: {
-                    "created_at"?: string,"end_date"?: string,"id"?: string,"initial_balance"?: number,"name"?: string,"owner_id"?: string,"planned_expense_limit"?: number,"start_date"?: string,"visibility"?: string,"workspace_id"?: string
+                    "created_at"?: string,"end_date"?: string,"id"?: string,"initial_balance"?: number,"name"?: string,"owner_id"?: string,"planned_expense_limit"?: number,"routine_amount"?: number,"routine_day"?: number,"start_date"?: string,"visibility"?: string,"workspace_id"?: string
                   }
                   Relationships: [
                     {

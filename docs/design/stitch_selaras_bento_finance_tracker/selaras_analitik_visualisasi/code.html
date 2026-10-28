@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Selaras - Analitik &amp; Visualisasi</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary-fixed-variant": "#005236",
+            "primary-fixed-dim": "#d3bbff",
+            "tertiary": "#004b31",
+            "on-background": "#0b1c30",
+            "primary": "#5300b7",
+            "on-primary": "#ffffff",
+            "on-secondary-fixed-variant": "#5516be",
+            "background": "#f8f9ff",
+            "inverse-on-surface": "#eaf1ff",
+            "on-primary-container": "#dac5ff",
+            "inverse-surface": "#213145",
+            "surface-container-lowest": "#ffffff",
+            "surface-dim": "#cbdbf5",
+            "surface-tint": "#7331df",
+            "outline": "#7b7486",
+            "secondary-fixed": "#e9ddff",
+            "tertiary-fixed-dim": "#4edea3",
+            "on-tertiary-fixed": "#002113",
+            "on-surface-variant": "#4a4455",
+            "on-surface": "#0b1c30",
+            "surface-container-low": "#eff4ff",
+            "on-secondary-fixed": "#23005c",
+            "on-secondary": "#ffffff",
+            "error-container": "#ffdad6",
+            "on-error-container": "#93000a",
+            "primary-container": "#6d28d9",
+            "on-primary-fixed-variant": "#5b00c5",
+            "tertiary-fixed": "#6ffbbe",
+            "on-error": "#ffffff",
+            "surface-container": "#e5eeff",
+            "secondary": "#6b38d4",
+            "surface-container-highest": "#d3e4fe",
+            "inverse-primary": "#d3bbff",
+            "surface": "#f8f9ff",
+            "outline-variant": "#ccc3d7",
+            "on-tertiary": "#ffffff",
+            "surface-variant": "#d3e4fe",
+            "error": "#ba1a1a",
+            "secondary-container": "#8455ef",
+            "secondary-fixed-dim": "#d0bcff",
+            "tertiary-container": "#006544",
+            "primary-fixed": "#ebddff",
+            "surface-bright": "#f8f9ff",
+            "on-tertiary-container": "#58e7ab",
+            "on-secondary-container": "#fffbff",
+            "on-primary-fixed": "#250059",
+            "surface-container-high": "#dce9ff"
+          },
+          "borderRadius": {
+            "DEFAULT": "1rem",
+            "lg": "2rem",
+            "xl": "3rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter": "1.25rem",
+            "margin": "2rem",
+            "space-md": "1rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2.5rem",
+            "margin-mobile": "1rem",
+            "gutter-mobile": "0.75rem",
+            "space-sm": "0.5rem",
+            "space-lg": "1.5rem"
+          },
+          "fontFamily": {
+            "body-md": ["Inter"],
+            "label-md": ["Inter"],
+            "headline-md": ["Inter"],
+            "body-lg": ["Inter"],
+            "tabular-numeric-lg": ["Inter"],
+            "label-sm": ["Inter"],
+            "display-lg": ["Inter"],
+            "display-lg-mobile": ["Inter"],
+            "headline-lg-mobile": ["Inter"],
+            "headline-lg": ["Inter"],
+            "tabular-numeric-md": ["Inter"]
+          },
+          "fontSize": {
+            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.005em", "fontWeight": "400" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "headline-md": ["20px", { "lineHeight": "26px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "tabular-numeric-lg": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "700" }],
+            "display-lg-mobile": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.025em", "fontWeight": "700" }],
+            "headline-lg-mobile": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "headline-lg": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "tabular-numeric-md": ["15px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .frosted-glass {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.9), 0 8px 32px -4px rgba(109, 40, 217, 0.04);
+    }
+    .frosted-glass-pill {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(24px) saturate(190%);
+      -webkit-backdrop-filter: blur(24px) saturate(190%);
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.95), 0 12px 36px -6px rgba(109, 40, 217, 0.12);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen antialiased selection:bg-primary-fixed selection:text-primary pb-32">
+<!-- Mobile Container Mockup Shell -->
+<div class="max-w-md mx-auto relative min-h-screen flex flex-col px-margin-mobile">
+<!-- TopAppBar (from Shared Components JSON specifications) -->
+<header class="sticky top-0 z-40 bg-surface/80 backdrop-blur-xl transition-all duration-150 py-space-sm mb-space-sm">
+<div class="flex justify-between items-center w-full">
+<!-- Leading: Executive Avatar -->
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full ring-2 ring-white/80 overflow-hidden shadow-sm flex items-center justify-center bg-primary-fixed text-primary">
+<img class="w-full h-full object-cover" data-alt="A refined high-net-worth portfolio executive profile photo headshot in a bright modern boardroom setting with gentle lavender backlighting and clean professional styling." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdK0GTKctgXVFvvDYjyiNDrD6FZcA9ZQvTTYaGt4PTDjf_mIgEiSo3G0tEOo-JOQmi-I3DmZAP9p1tBKxFcuJlKEvGRNC7RF-Zq2kg5tn8LX0V7Da-1InvD652irGNVkiFh3KBPzYwqeAiv0rpToPRrhN6GBS1e4dCn2mCpUjdxSMmD4rv329T9bybe0-jUTNbLOsLKmKdbXQ6-Oh_C_6haSS-e1fFGQ2EBpbFGQc"/>
+</div>
+<div>
+<div class="flex items-center gap-1.5">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface font-bold tracking-tight">Selaras</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded-full text-label-sm font-label-sm bg-primary-fixed text-primary">Pro</span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Analitik &amp; Burn-Down</p>
+</div>
+</div>
+<!-- Trailing: Period & Action -->
+<div class="flex items-center gap-2">
+<div class="flex items-center gap-1 bg-surface-container-low px-2.5 py-1.5 rounded-full border border-white/60">
+<span class="material-symbols-outlined text-primary text-base" data-icon="calendar_today">calendar_today</span>
+<span class="font-label-sm text-label-sm text-on-surface font-medium">26 Okt – 30 Nov</span>
+</div>
+<button aria-label="Export Data" class="w-9 h-9 rounded-full bg-white/70 hover:bg-surface-container-high/50 active:scale-95 transition-all duration-150 flex items-center justify-center border border-white/60 shadow-sm">
+<span class="material-symbols-outlined text-on-surface text-lg" data-icon="tune">tune</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas (Bento Layout) -->
+<main class="space-y-space-md flex-1">
+<!-- Hero Aggregate Header Strip -->
+<section class="flex items-center justify-between px-1">
+<div>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Status Burn-Down Keuangan</span>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface font-extrabold tracking-tight">Performa Anggaran</h1>
+</div>
+<div class="flex items-center gap-1.5 bg-tertiary-fixed/30 border border-tertiary-fixed-dim/40 px-2.5 py-1 rounded-full text-on-tertiary-fixed-variant">
+<span class="w-2 h-2 rounded-full bg-tertiary-container animate-pulse"></span>
+<span class="font-label-sm text-label-sm font-semibold">+Rp 47.100 Hemat</span>
+</div>
+</section>
+<!-- Bento Card 1: Garis Saldo Kumulatif (Burn-down Spline Visual) -->
+<section class="frosted-glass rounded-xl p-space-md relative overflow-hidden">
+<!-- Subtle Top Specular Refraction Highlight -->
+<div class="absolute inset-x-0 top-0 h-px bg-white/90"></div>
+<div class="flex items-start justify-between mb-space-sm">
+<div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="trending_down">trending_down</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Garis Saldo Kumulatif</h2>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Trajektori burn-down sisa pagu anggaran</p>
+</div>
+<div class="text-right">
+<span class="font-label-sm text-label-sm text-outline">Sisa Aktual</span>
+<div class="font-tabular-numeric-lg text-tabular-numeric-lg text-primary-container font-bold tracking-tight">
+              Rp 1.351.732
+            </div>
+</div>
+</div>
+<!-- Spline Graph Canvas & SVG Visual -->
+<div class="relative w-full h-44 mt-2 select-none">
+<!-- Background Grid lines -->
+<svg class="w-full h-full overflow-visible" fill="none" preserveaspectratio="none" viewbox="0 0 340 160">
+<!-- Grid Lines -->
+<line stroke="#E2E8F0" stroke-dasharray="3 3" stroke-opacity="0.6" x1="0" x2="340" y1="20" y2="20"></line>
+<line stroke="#E2E8F0" stroke-dasharray="3 3" stroke-opacity="0.6" x1="0" x2="340" y1="65" y2="65"></line>
+<line stroke="#E2E8F0" stroke-dasharray="3 3" stroke-opacity="0.6" x1="0" x2="340" y1="110" y2="110"></line>
+<line stroke="#CBD5E1" stroke-opacity="0.8" x1="0" x2="340" y1="150" y2="150"></line>
+<!-- Area Gradient Fill under Actual Trajectory -->
+<defs>
+<lineargradient id="actualGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.32"></stop>
+<stop offset="70%" stop-color="#6D28D9" stop-opacity="0.04"></stop>
+<stop offset="100%" stop-color="#6D28D9" stop-opacity="0.0"></stop>
+</lineargradient>
+<filter height="140%" id="glow" width="140%" x="-20%" y="-20%">
+<fegaussianblur result="blur" stddeviation="3"></fegaussianblur>
+<fecomposite in="SourceGraphic" in2="blur" operator="over"></fecomposite>
+</filter>
+</defs>
+<!-- Planned Burn-down Line (Dashed Royal Purple curve downward) -->
+<path d="M 10 24 C 70 42, 160 85, 330 148" stroke="#94A3B8" stroke-dasharray="4 4" stroke-linecap="round" stroke-width="2"></path>
+<!-- Actual Trajectory Area Fill -->
+<path d="M 10 24 C 65 38, 140 70, 220 86 L 220 150 L 10 150 Z" fill="url(#actualGradient)"></path>
+<!-- Actual Trajectory Line (Solid glowing electric violet, ends at Day 18 / pos 220) -->
+<path d="M 10 24 C 65 38, 140 70, 220 86" filter="url(#glow)" stroke="#6D28D9" stroke-linecap="round" stroke-width="3.5"></path>
+<!-- Projected Dotted Line from current day to month end -->
+<path d="M 220 86 C 260 100, 290 120, 330 132" opacity="0.6" stroke="#8B5CF6" stroke-dasharray="3 3" stroke-width="2"></path>
+<!-- Current Day Vertical Cursor Line -->
+<line opacity="0.4" stroke="#7C3AED" stroke-dasharray="2 2" stroke-width="1.5" x1="220" x2="220" y1="15" y2="150"></line>
+<!-- Current Node Dot Point -->
+<circle class="filter drop-shadow" cx="220" cy="86" fill="#6D28D9" r="6" stroke="#ffffff" stroke-width="3"></circle>
+<circle cx="220" cy="86" opacity="0.4" r="10" stroke="#8B5CF6" stroke-width="1.5"></circle>
+</svg>
+<!-- Interactive Micro Tooltip (Positioned above Day Point) -->
+<div class="absolute left-[54%] -top-1 -translate-x-1/2 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-full border border-primary/20 shadow-md flex items-center gap-1.5 z-10 pointer-events-none">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-container"></span>
+<span class="font-tabular-numeric-md text-tabular-numeric-md text-on-surface font-semibold text-xs">+Rp 47.100</span>
+<span class="font-label-sm text-label-sm text-tertiary font-bold text-[10px]">Efisien</span>
+</div>
+<!-- Timeline X-Axis markers -->
+<div class="flex justify-between items-center text-label-sm font-label-sm text-outline px-1 mt-1">
+<span>26 Okt (Awal)</span>
+<span class="text-primary font-bold">14 Nov (Hari Ini)</span>
+<span>30 Nov (Target)</span>
+</div>
+</div>
+<!-- Trajectory Legend Footnote -->
+<div class="flex items-center justify-between pt-space-sm mt-space-sm border-t border-slate-100">
+<div class="flex items-center gap-2">
+<span class="w-3 h-0.5 border-t-2 border-dashed border-slate-400 inline-block"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Rencana Pagu</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-1 bg-primary-container rounded-full inline-block"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Realisasi Aktual</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-tertiary text-sm" data-icon="verified">verified</span>
+<span class="font-label-sm text-label-sm text-tertiary font-semibold">Terkendali</span>
+</div>
+</div>
+</section>
+<!-- Bento Dual Grid: Cards 2 & 3 in Asymmetric Layout -->
+<div class="grid grid-cols-1 gap-space-md">
+<!-- Bento Card 2: Rencana vs Aktual Comparison -->
+<section class="frosted-glass rounded-xl p-space-md relative overflow-hidden">
+<div class="absolute inset-x-0 top-0 h-px bg-white/90"></div>
+<div class="flex items-center justify-between mb-space-sm">
+<div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary-container text-lg" data-icon="bar_chart">bar_chart</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Rencana vs Aktual</h2>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Komparasi deviasi anggaran per pekan</p>
+</div>
+<div class="bg-tertiary-fixed/30 border border-tertiary-fixed-dim px-2 py-0.5 rounded-full flex items-center gap-1">
+<span class="font-label-sm text-label-sm text-on-tertiary-fixed-variant font-bold">+3.4% Surplus</span>
+</div>
+</div>
+<!-- Dual-Bar Visual Stack per Week -->
+<div class="space-y-3 pt-1">
+<!-- Week 1 -->
+<div class="space-y-1">
+<div class="flex justify-between items-center text-label-sm font-label-sm">
+<span class="text-on-surface font-medium">Minggu I (26 - 31 Okt)</span>
+<span class="font-tabular-numeric-md text-tabular-numeric-md text-on-surface-variant">Rp 410.000 / <span class="text-outline">Rp 450.000</span></span>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden flex">
+<div class="bg-gradient-to-r from-primary-container to-secondary-container h-full rounded-full" style="width: 78%;"></div>
+</div>
+</div>
+<!-- Week 2 -->
+<div class="space-y-1">
+<div class="flex justify-between items-center text-label-sm font-label-sm">
+<span class="text-on-surface font-medium">Minggu II (1 - 7 Nov)</span>
+<span class="font-tabular-numeric-md text-tabular-numeric-md text-on-surface-variant">Rp 480.000 / <span class="text-outline">Rp 450.000</span></span>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden flex relative">
+<!-- Actual Bar exceeded slightly -->
+<div class="bg-gradient-to-r from-primary-container to-error h-full rounded-full" style="width: 95%;"></div>
+<div class="absolute right-0 top-0 bottom-0 w-1 bg-outline/40"></div>
+</div>
+</div>
+<!-- Week 3 (Current) -->
+<div class="space-y-1 bg-surface-container-low/50 p-2 rounded-lg border border-white/60">
+<div class="flex justify-between items-center text-label-sm font-label-sm">
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+<span class="text-primary font-semibold">Minggu III (Berjalan)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="font-tabular-numeric-md text-tabular-numeric-md text-primary font-bold">Rp 311.168</span>
+<span class="text-outline text-label-sm">/ Rp 450k</span>
+</div>
+</div>
+<div class="w-full bg-slate-200/70 rounded-full h-2.5 overflow-hidden flex">
+<div class="bg-gradient-to-r from-primary to-secondary-container h-full rounded-full" style="width: 58%;"></div>
+</div>
+<div class="flex justify-between items-center text-[10px] text-on-surface-variant pt-0.5">
+<span>Buffer aman tersisa</span>
+<span class="font-tabular-numeric-md text-tertiary font-bold">+Rp 138.832 tersisa</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Bento Card 3: Kategori Pengeluaran & BBM Tracker -->
+<section class="frosted-glass rounded-xl p-space-md relative overflow-hidden">
+<div class="absolute inset-x-0 top-0 h-px bg-white/90"></div>
+<div class="flex items-center justify-between mb-space-sm">
+<div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="pie_chart">pie_chart</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Alokasi &amp; BBM Tracker</h2>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Realisasi per pos distribusi anggaran</p>
+</div>
+<span class="text-label-sm font-label-sm text-outline">Bulan Berjalan</span>
+</div>
+<!-- Segment Bar Visual -->
+<div class="pt-1">
+<div class="h-3 w-full bg-slate-100 rounded-full overflow-hidden flex gap-0.5 shadow-inner">
+<!-- BBM: Rp 50.000 (25%) -->
+<div class="bg-primary-container h-full rounded-l-full" style="width: 25%;" title="BBM Rutin"></div>
+<!-- Makan & Harian: Rp 151.500 (73%) -->
+<div class="bg-secondary-container h-full" style="width: 73%;" title="Makan &amp; Kebutuhan"></div>
+<!-- Cadangan: Rp 432 (2%) -->
+<div class="bg-tertiary-fixed-dim h-full rounded-r-full" style="width: 2%;" title="Cadangan"></div>
+</div>
+<!-- Breakdown Legend Rows -->
+<div class="grid grid-cols-1 gap-2.5 mt-space-md">
+<!-- BBM Tracker Detail -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low/40 border border-white/70">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-lg" data-icon="local_gas_station">local_gas_station</span>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface">BBM &amp; Alokasi Rutin</div>
+<div class="font-label-sm text-label-sm text-outline">Pagu: Rp 300.000</div>
+</div>
+</div>
+<div class="text-right">
+<div class="font-tabular-numeric-md text-tabular-numeric-md text-on-surface font-semibold">Rp 50.000</div>
+<div class="font-label-sm text-label-sm text-tertiary font-medium">Sisa Rp 250.000</div>
+</div>
+</div>
+<!-- Makan & Kebutuhan Harian -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low/40 border border-white/70">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-secondary-fixed flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-lg" data-icon="restaurant">restaurant</span>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface">Makan &amp; Kebutuhan Harian</div>
+<div class="font-label-sm text-label-sm text-outline">Pagu: Rp 900.000</div>
+</div>
+</div>
+<div class="text-right">
+<div class="font-tabular-numeric-md text-tabular-numeric-md text-on-surface font-semibold">Rp 151.500</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Sisa Rp 748.500</div>
+</div>
+</div>
+<!-- Cadangan Pembulatan -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low/40 border border-white/70">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-tertiary-fixed flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-lg" data-icon="savings">savings</span>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface">Cadangan Pembulatan</div>
+<div class="font-label-sm text-label-sm text-outline">Akumulasi sisa sen</div>
+</div>
+</div>
+<div class="text-right">
+<div class="font-tabular-numeric-md text-tabular-numeric-md text-tertiary font-bold">Rp 432</div>
+<div class="font-label-sm text-label-sm text-outline">Otomatis</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Bento Card 4: Catatan & Alokasi Tambahan (Interactive Drawer Input Form) -->
+<section class="frosted-glass rounded-xl p-space-md relative overflow-hidden">
+<div class="absolute inset-x-0 top-0 h-px bg-white/90"></div>
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="edit_note">edit_note</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Catatan &amp; Alokasi Tambahan</h2>
+</div>
+<span class="px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-surface-container text-on-surface-variant font-medium">Log Cepat</span>
+</div>
+<form class="space-y-3" onsubmit="event.preventDefault();">
+<!-- Tag Selector / Quick Pill Chips -->
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant mb-1.5">Pilih Klasifikasi Transaksi</label>
+<div class="flex flex-wrap gap-1.5">
+<button class="px-3 py-1.5 rounded-full text-label-sm font-label-sm bg-primary text-on-primary font-medium shadow-sm transition-transform active:scale-95" type="button">
+                Servis motor non-rutin
+              </button>
+<button class="px-3 py-1.5 rounded-full text-label-sm font-label-sm bg-surface-container-low text-on-surface hover:bg-surface-container transition-all active:scale-95 border border-white/60" type="button">
+                Topup e-money
+              </button>
+<button class="px-3 py-1.5 rounded-full text-label-sm font-label-sm bg-surface-container-low text-on-surface hover:bg-surface-container transition-all active:scale-95 border border-white/60" type="button">
+                Keperluan Rumah
+              </button>
+</div>
+</div>
+<!-- Dual Inputs: Tanggal & Nominal (with Amber Gold focus / editable state) -->
+<div class="grid grid-cols-2 gap-2 pt-1">
+<!-- Tanggal Input -->
+<div>
+<label class="block font-label-sm text-label-sm text-outline mb-1">Tanggal</label>
+<div class="relative">
+<input class="w-full bg-white/80 border border-slate-200 rounded-lg px-2.5 py-1.5 text-body-md font-body-md text-on-surface focus:outline-none focus:border-[#F59E0B] focus:ring-2 focus:ring-[#F59E0B]/20 transition-all" type="date" value="2026-11-14"/>
+</div>
+</div>
+<!-- Nominal Amount Input (Spreadsheet Editable Cell styling with Amber Gold) -->
+<div>
+<label class="block font-label-sm text-label-sm text-outline mb-1">Nominal (Rp)</label>
+<div class="relative">
+<input class="w-full bg-white/90 border border-[#F59E0B]/60 rounded-lg px-2.5 py-1.5 font-tabular-numeric-md text-tabular-numeric-md text-on-surface font-semibold focus:outline-none focus:border-[#F59E0B] focus:ring-2 focus:ring-[#F59E0B]/30 transition-all text-right shadow-sm" placeholder="125.000" type="text" value="75.000"/>
+<span class="absolute left-2.5 top-2 text-label-sm font-label-sm text-outline">Rp</span>
+</div>
+</div>
+</div>
+<!-- Memo / Deskripsi Singkat -->
+<div>
+<label class="block font-label-sm text-label-sm text-outline mb-1">Deskripsi &amp; Catatan Spesifik</label>
+<input class="w-full bg-white/80 border border-slate-200 rounded-lg px-3 py-1.5 text-body-md font-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10" placeholder="Contoh: Penggantian oli mesin &amp; filter garansi..." type="text" value="Ganti oli berkala di bengkel resmi AHASS"/>
+</div>
+<!-- Primary Submit Button with Royal Purple linear gradient -->
+<button class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-primary-container to-secondary-container text-on-primary font-body-md font-semibold text-center shadow-md shadow-primary/20 hover:opacity-95 active:scale-[0.98] transition-all flex items-center justify-center gap-2 border-t border-white/30" type="submit">
+<span class="material-symbols-outlined text-base" data-icon="add_circle">add_circle</span>
+<span>Simpan Log &amp; Rekalkulasi Trajektori</span>
+</button>
+</form>
+</section>
+</main>
+<!-- BottomNavBar (Shared Component JSON Specifications) -->
+<!-- Floating pill shape, max-w-xs, label_icon with 3 destinations: Ringkasan, Analitik, Pengaturan -->
+<!-- Active Destination determined strictly by page context: Analitik -->
+<nav aria-label="Bottom Navigation" class="fixed bottom-0 left-0 right-0 z-50 flex justify-around items-center px-space-sm py-space-xs pb-safe max-w-xs mx-auto mb-space-md">
+<div class="frosted-glass-pill w-full flex justify-around items-center rounded-full p-1.5 border border-white/80 shadow-lg">
+<!-- Tab 1: Ringkasan (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-space-sm py-space-xs hover:text-primary transition-colors duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm mt-0.5">Ringkasan</span>
+</a>
+<!-- Tab 2: Analitik (Active State from JSON: bg-primary-container text-on-primary-container rounded-full px-space-md py-space-xs) -->
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-space-md py-space-xs shadow-sm active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined text-xl text-white" data-icon="monitoring" style="font-variation-settings: 'FILL' 1;">monitoring</span>
+<span class="font-label-sm text-label-sm text-white font-bold mt-0.5">Analitik</span>
+</a>
+<!-- Tab 3: Pengaturan (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-space-sm py-space-xs hover:text-primary transition-colors duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="settings">settings</span>
+<span class="font-label-sm text-label-sm mt-0.5">Pengaturan</span>
+</a>
+</div>
+</nav>
+</div>
+</body></html>

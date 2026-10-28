@@ -1,36 +1,84 @@
 "use client";
+
 import { useActionState } from "react";
 import type { State } from "@/app/login/actions";
 import { createWorkspace, redeemInvite } from "./actions";
 
-const input = "w-full rounded-lg border border-zinc-300 px-3 py-3 text-base dark:border-zinc-700 dark:bg-zinc-900";
-const button = "w-full rounded-lg bg-teal-700 px-3 py-3 text-base font-medium text-white disabled:opacity-60";
-
 function Form({
-  title, action, name, placeholder, cta,
+  title,
+  action,
+  name,
+  placeholder,
+  cta,
+  icon,
 }: {
   title: string;
   action: (s: State, f: FormData) => Promise<State>;
   name: string;
   placeholder: string;
   cta: string;
+  icon: string;
 }) {
   const [state, run, pending] = useActionState(action, {});
   return (
-    <form action={run} className="space-y-3 rounded-xl border border-zinc-200 p-4 dark:border-zinc-800">
-      <h2 className="text-lg font-semibold">{title}</h2>
-      <input className={input} name={name} placeholder={placeholder} required />
-      {state.error && <p role="alert" className="text-sm text-red-600">{state.error}</p>}
-      <button className={button} disabled={pending}>{pending ? "Memproses…" : cta}</button>
+    <form action={run} className="glass-tile rounded-3xl p-5 space-y-3.5 shadow-sm">
+      <div className="flex items-center gap-2">
+        <div className="w-8 h-8 rounded-xl bg-[#ebddff] flex items-center justify-center text-[#6d28d9]">
+          <span className="material-symbols-outlined text-[18px]">{icon}</span>
+        </div>
+        <h2 className="text-sm font-bold text-[#0b1c30]">{title}</h2>
+      </div>
+
+      <div className="relative flex items-center rounded-2xl bg-white border border-[#ccc3d7]/60 px-3 py-2.5 input-ambient-glow transition-all">
+        <input
+          name={name}
+          placeholder={placeholder}
+          required
+          className="w-full bg-transparent border-0 p-0 text-sm text-[#0b1c30] placeholder:text-[#7b7486]/70 focus:outline-none"
+        />
+      </div>
+
+      {state.error && (
+        <p role="alert" className="text-xs font-medium text-[#ba1a1a]">
+          {state.error}
+        </p>
+      )}
+
+      <button
+        type="submit"
+        disabled={pending}
+        className="w-full purple-gradient-btn text-white py-2.5 px-4 rounded-full text-xs font-semibold flex items-center justify-center gap-2 active:scale-95 transition-all disabled:opacity-60"
+      >
+        <span>{pending ? "Memproses…" : cta}</span>
+      </button>
     </form>
   );
 }
 
 export function OnboardingForms() {
   return (
-    <>
-      <Form title="Buat workspace baru" action={createWorkspace} name="name" placeholder="Nama workspace" cta="Buat" />
-      <Form title="Punya kode undangan?" action={redeemInvite} name="code" placeholder="Kode undangan" cta="Gabung" />
-    </>
+    <div className="space-y-4">
+      <Form
+        title="Buat Workspace Baru"
+        action={createWorkspace}
+        name="name"
+        placeholder="mis. Rumah Kita"
+        cta="Buat Workspace"
+        icon="add_home"
+      />
+      <div className="relative flex items-center py-1">
+        <div className="flex-grow border-t border-[#ccc3d7]/30" />
+        <span className="flex-shrink mx-3 text-xs text-[#7b7486]">atau gabung</span>
+        <div className="flex-grow border-t border-[#ccc3d7]/30" />
+      </div>
+      <Form
+        title="Punya Kode Undangan?"
+        action={redeemInvite}
+        name="code"
+        placeholder="Masukkan 12 karakter kode undangan"
+        cta="Gabung ke Workspace"
+        icon="key"
+      />
+    </div>
   );
 }

@@ -1,4 +1,5 @@
 "use server";
+
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import type { State } from "@/app/login/actions";
@@ -45,13 +46,46 @@ export async function addTransaction(_: State, f: FormData): Promise<State> {
   });
   if (error) return { error: error.message };
   revalidatePath(`/periods/${periodId}`);
+  revalidatePath(`/analytics`);
+  revalidatePath(`/`);
   return { info: "Tersimpan" };
 }
 
 export async function deleteTransaction(f: FormData): Promise<void> {
   const supabase = await createClient();
   await supabase.from("transactions").delete().eq("id", str(f, "id"));
-  revalidatePath(`/periods/${str(f, "period_id")}`);
+  const periodId = str(f, "period_id");
+  revalidatePath(`/periods/${periodId}`);
+  revalidatePath(`/analytics`);
+  revalidatePath(`/`);
+}
+
+export async function updatePeriodParameters(_: State, f: FormData): Promise<State> {
+  const periodId = str(f, "period_id");
+  const initialBalance = money(f, "initial_balance");
+  const routineAmount = money(f, "routine_amount");
+  const routineDay = Number(f.get("routine_day") ?? 1);
+
+  if (isNaN(initialBalance) || initialBalance < 0) return { error: "Total Uang harus >= 0" };
+  if (isNaN(routineAmount) || routineAmount < 0) return { error: "Nominal BBM harus >= 0" };
+  if (routineDay < 0 || routineDay > 6) return { error: "Hari BBM tidak valid" };
+
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("periods")
+    .update({
+      initial_balance: initialBalance,
+      planned_expense_limit: initialBalance,
+      routine_amount: routineAmount,
+      routine_day: routineDay,
+    })
+    .eq("id", periodId);
+
+  if (error) return { error: error.message };
+  revalidatePath(`/periods/${periodId}`);
+  revalidatePath(`/analytics`);
+  revalidatePath(`/`);
+  return { info: "Parameter berhasil diperbarui" };
 }
 
 export async function addPlannedItem(_: State, f: FormData): Promise<State> {

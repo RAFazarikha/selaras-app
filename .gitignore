@@ -42,3 +42,7 @@ supabase/.env.local
 *.tsbuildinfo
 next-env.d.ts
 .hermes/
+
+**/.omc/*
+!**/.omc/skills/
+!**/.omc/skills/**

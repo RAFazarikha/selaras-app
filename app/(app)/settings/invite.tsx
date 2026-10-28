@@ -1,21 +1,54 @@
 "use client";
-import { useActionState } from "react";
+
+import { useActionState, useState } from "react";
 import { createInvite } from "./actions";
 
 export function InviteButton() {
   const [state, run, pending] = useActionState(createInvite, {});
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = (code: string) => {
+    navigator.clipboard.writeText(code);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
-    <form action={run} className="space-y-2">
-      <button className="min-h-11 rounded-lg bg-teal-700 px-4 text-white disabled:opacity-60" disabled={pending}>
-        Buat kode undangan
-      </button>
-      {state.error && <p role="alert" className="text-sm text-red-600">{state.error}</p>}
-      {state.code && (
-        <p role="status">
-          Kode: <code className="rounded bg-zinc-100 px-2 py-1 dark:bg-zinc-800">{state.code}</code>
-          <span className="block text-sm text-zinc-500">Berlaku 48 jam, sekali pakai.</span>
+    <div className="space-y-3">
+      <form action={run}>
+        <button
+          type="submit"
+          disabled={pending}
+          className="w-full purple-gradient-btn text-white py-2.5 px-4 rounded-full text-xs font-semibold flex items-center justify-center gap-2 active:scale-95 transition-all disabled:opacity-60"
+        >
+          <span className="material-symbols-outlined text-[18px]">key</span>
+          <span>{pending ? "Membuat kode…" : "Buat Kode Undangan"}</span>
+        </button>
+      </form>
+
+      {state.error && (
+        <p role="alert" className="text-xs font-medium text-[#ba1a1a]">
+          {state.error}
         </p>
       )}
-    </form>
+
+      {state.code && (
+        <div className="p-3 rounded-2xl bg-[#eff4ff] border border-[#d3e4fe] flex items-center justify-between animate-in fade-in duration-150">
+          <div>
+            <span className="text-[10px] text-[#7b7486] block">Kode Undangan (48 jam, 1x pakai):</span>
+            <code className="text-sm font-bold tracking-widest text-[#6d28d9]">
+              {state.code}
+            </code>
+          </div>
+          <button
+            type="button"
+            onClick={() => handleCopy(state.code!)}
+            className="px-3 py-1.5 rounded-full bg-white border border-[#ccc3d7] text-xs font-semibold text-[#6d28d9] hover:bg-[#eff4ff] transition-all"
+          >
+            {copied ? "Tersalin!" : "Salin"}
+          </button>
+        </div>
+      )}
+    </div>
   );
 }

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Selaras - Pengaturan</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary-fixed-variant": "#005236",
+            "primary-fixed-dim": "#d3bbff",
+            "tertiary": "#004b31",
+            "on-background": "#0b1c30",
+            "primary": "#5300b7",
+            "on-primary": "#ffffff",
+            "on-secondary-fixed-variant": "#5516be",
+            "background": "#f8f9ff",
+            "inverse-on-surface": "#eaf1ff",
+            "on-primary-container": "#dac5ff",
+            "inverse-surface": "#213145",
+            "surface-container-lowest": "#ffffff",
+            "surface-dim": "#cbdbf5",
+            "surface-tint": "#7331df",
+            "outline": "#7b7486",
+            "secondary-fixed": "#e9ddff",
+            "tertiary-fixed-dim": "#4edea3",
+            "on-tertiary-fixed": "#002113",
+            "on-surface-variant": "#4a4455",
+            "on-surface": "#0b1c30",
+            "surface-container-low": "#eff4ff",
+            "on-secondary-fixed": "#23005c",
+            "on-secondary": "#ffffff",
+            "error-container": "#ffdad6",
+            "on-error-container": "#93000a",
+            "primary-container": "#6d28d9",
+            "on-primary-fixed-variant": "#5b00c5",
+            "tertiary-fixed": "#6ffbbe",
+            "on-error": "#ffffff",
+            "surface-container": "#e5eeff",
+            "secondary": "#6b38d4",
+            "surface-container-highest": "#d3e4fe",
+            "inverse-primary": "#d3bbff",
+            "surface": "#f8f9ff",
+            "outline-variant": "#ccc3d7",
+            "on-tertiary": "#ffffff",
+            "surface-variant": "#d3e4fe",
+            "error": "#ba1a1a",
+            "secondary-container": "#8455ef",
+            "secondary-fixed-dim": "#d0bcff",
+            "tertiary-container": "#006544",
+            "primary-fixed": "#ebddff",
+            "surface-bright": "#f8f9ff",
+            "on-tertiary-container": "#58e7ab",
+            "on-secondary-container": "#fffbff",
+            "on-primary-fixed": "#250059",
+            "surface-container-high": "#dce9ff"
+          },
+          "borderRadius": {
+            "DEFAULT": "1rem",
+            "lg": "2rem",
+            "xl": "3rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter": "1.25rem",
+            "margin": "2rem",
+            "space-md": "1rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2.5rem",
+            "margin-mobile": "1rem",
+            "gutter-mobile": "0.75rem",
+            "space-sm": "0.5rem",
+            "space-lg": "1.5rem"
+          },
+          "fontFamily": {
+            "body-md": ["Inter"],
+            "label-md": ["Inter"],
+            "headline-md": ["Inter"],
+            "body-lg": ["Inter"],
+            "tabular-numeric-lg": ["Inter"],
+            "label-sm": ["Inter"],
+            "display-lg": ["Inter"],
+            "display-lg-mobile": ["Inter"],
+            "headline-lg-mobile": ["Inter"],
+            "headline-lg": ["Inter"],
+            "tabular-numeric-md": ["Inter"]
+          },
+          "fontSize": {
+            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.005em", "fontWeight": "400" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "headline-md": ["20px", { "lineHeight": "26px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "tabular-numeric-lg": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "700" }],
+            "display-lg-mobile": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.025em", "fontWeight": "700" }],
+            "headline-lg-mobile": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "headline-lg": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "tabular-numeric-md": ["15px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .glass-tile {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 8px 32px -4px rgba(109, 40, 217, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.02), inset 0 1px 0 0 rgba(255, 255, 255, 0.95);
+    }
+    .purple-gradient-btn {
+      background: linear-gradient(135deg, #6D28D9 0%, #8B5CF6 100%);
+      box-shadow: 0 4px 14px rgba(109, 40, 217, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+    .toggle-checkbox:checked {
+      background: linear-gradient(135deg, #6D28D9 0%, #8B5CF6 100%);
+      border-color: transparent;
+    }
+    .toggle-checkbox:checked + .toggle-label {
+      background: linear-gradient(135deg, #6D28D9 0%, #8B5CF6 100%);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen font-body-md text-body-md antialiased selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- Atmospheric Soft Gradients Behind Glass -->
+<div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+<div class="absolute -top-24 -left-20 w-80 h-80 rounded-full bg-secondary-fixed/40 blur-3xl"></div>
+<div class="absolute top-1/3 -right-24 w-96 h-96 rounded-full bg-primary-fixed/30 blur-3xl"></div>
+<div class="absolute bottom-10 left-1/4 w-80 h-80 rounded-full bg-surface-container-high/60 blur-3xl"></div>
+</div>
+<!-- Mobile Viewport Container -->
+<div class="relative z-10 max-w-md mx-auto min-h-screen flex flex-col pb-32">
+<!-- TopAppBar Component (Conforming to Shared Components JSON) -->
+<header class="sticky top-0 z-40 bg-surface/80 dark:bg-inverse-surface/80 backdrop-blur-xl shadow-sm dark:shadow-none">
+<div class="flex justify-between items-center w-full px-margin-mobile py-space-sm max-w-md mx-auto">
+<!-- Leading Action: Brand Anchor & Back Pill -->
+<div class="flex items-center space-x-2">
+<button aria-label="Kembali" class="w-9 h-9 rounded-full bg-surface-container-lowest/80 border border-white/80 shadow-sm flex items-center justify-center text-on-surface hover:bg-surface-container-high/50 active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">arrow_back_ios_new</span>
+</button>
+<div class="flex flex-col">
+<span class="font-headline-lg-mobile text-headline-lg-mobile font-bold tracking-tight text-on-surface">Pengaturan</span>
+</div>
+</div>
+<!-- Trailing Action: Status Indicator & Filter Tune Icon -->
+<div class="flex items-center space-x-2">
+<div class="flex items-center space-x-1.5 px-3 py-1 rounded-full bg-tertiary-container/10 border border-tertiary-fixed-dim/40 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-tertiary-container animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-tertiary-container font-semibold">Aktif</span>
+</div>
+<button aria-label="Pilihan Tambahan" class="w-9 h-9 rounded-full bg-surface-container-lowest/80 border border-white/80 shadow-sm flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high/50 active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Area: Executive Bento Grid Layout -->
+<main class="flex-1 px-margin-mobile pt-space-md space-y-space-md">
+<!-- Subheader / Editorial Intro -->
+<div class="flex justify-between items-end px-1">
+<div>
+<span class="font-label-sm text-label-sm text-primary font-bold uppercase tracking-wider">Arsitektur Workspace</span>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5">Konfigurasi sinkronisasi, kolaborator, dan automasi ledger.</p>
+</div>
+</div>
+<!-- BENTO CARD 1: Workspace & Kolaborasi -->
+<section class="glass-tile rounded-3xl p-space-lg relative overflow-hidden transition-all duration-200">
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center space-x-2.5">
+<div class="w-9 h-9 rounded-2xl bg-secondary-fixed flex items-center justify-center text-primary shadow-inner">
+<span class="material-symbols-outlined text-[20px]">corporate_fare</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Workspace Eksekutif</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Sinkronisasi Multi-Entitas</p>
+</div>
+</div>
+<!-- Shared Badge -->
+<div class="flex items-center space-x-1 px-2.5 py-1 rounded-full bg-surface-container-low border border-outline-variant/40">
+<span class="material-symbols-outlined text-primary text-[14px]">group</span>
+<span class="font-label-sm text-label-sm text-primary font-semibold">1/2 anggota</span>
+</div>
+</div>
+<!-- Members Sub-grid -->
+<div class="space-y-2 mb-space-md">
+<!-- Owner Item -->
+<div class="flex items-center justify-between p-space-sm bg-surface-container-lowest/90 rounded-2xl border border-white/70 shadow-sm">
+<div class="flex items-center space-x-3">
+<img class="w-10 h-10 rounded-full object-cover border border-primary/20 shadow-sm" data-alt="A refined close-up portrait of an Indonesian corporate executive with neatly styled hair, captured against a clean architectural studio backdrop with soft diffused lighting, matching the luxury purple and white color scheme of an executive lifestyle application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGDQVryNeRfJZ6ffsGx5_Vit5ICap2Iy2szWkAfM7Im_uNSnmEgCkFlkmXsZDhlgIN_pVFWQXifaBrlptXjjsLHKRu0jfbHy2VktTcPTW11Fuw7YIh_wUSlA6MeWBIuGaVJEsHVQsf-vuiPaZJc_Usi17Ts7gs8JxUKlARWqkWxkqgXnTHkDWcBUFYGhraKuaEy9RSToWrVSD1EC7DOtVxx6uFmD-9sWjG7mzlcFo"/>
+<div>
+<div class="flex items-center space-x-1.5">
+<span class="font-body-md text-body-md font-semibold text-on-surface">Rian Sastrawan</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-primary/10 text-primary uppercase">Owner</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">rian@selaras.finance (Anda)</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-[18px]">verified_user</span>
+</div>
+<!-- Empty Collaborative Slot -->
+<div class="flex items-center justify-between p-space-sm bg-surface-container-low/60 rounded-2xl border border-dashed border-outline-variant">
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 rounded-full border border-dashed border-outline flex items-center justify-center bg-white/40 text-outline">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+</div>
+<div>
+<span class="font-body-md text-body-md text-on-surface-variant font-medium">Slot Anggota Tersedia</span>
+<p class="font-label-sm text-label-sm text-outline">Kemitraan atau Akuntan Keluarga</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Call to Action -->
+<button class="w-full purple-gradient-btn text-on-primary py-2.5 px-4 rounded-full font-label-md text-label-md flex items-center justify-center space-x-2 active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">key</span>
+<span>Buat kode undangan</span>
+</button>
+</section>
+<!-- BENTO CARD 2: Integrasi & Notifikasi (Discord Webhook) -->
+<section class="glass-tile rounded-3xl p-space-lg relative overflow-hidden">
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center space-x-2.5">
+<div class="w-9 h-9 rounded-2xl bg-primary-fixed flex items-center justify-center text-primary shadow-inner">
+<span class="material-symbols-outlined text-[20px]">notifications_active</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Webhook Notifikasi</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Integrasi Real-time Ledger</p>
+</div>
+</div>
+<!-- Status Tag -->
+<div class="flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-tertiary-container/10 border border-tertiary-fixed-dim/40">
+<span class="w-2 h-2 rounded-full bg-tertiary-container"></span>
+<span class="font-label-sm text-label-sm text-tertiary font-semibold">Terkoneksi</span>
+</div>
+</div>
+<!-- Input Field Container -->
+<div class="space-y-space-md">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5" for="discord_webhook">
+              Discord Webhook URL
+            </label>
+<div class="relative rounded-2xl bg-surface-container-lowest border border-outline-variant/60 focus-within:border-primary-container focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-outline">
+<span class="material-symbols-outlined text-[18px]">link</span>
+</div>
+<input class="block w-full pl-9 pr-8 py-2.5 bg-transparent border-0 font-body-md text-body-md text-on-surface focus:ring-0 truncate" id="discord_webhook" placeholder="https://discord.com/api/webhooks/..." type="text" value="https://discord.com/api/webhooks/124982/selaras-ops-exec"/>
+<button aria-label="Salin tautan" class="absolute inset-y-0 right-0 pr-3 flex items-center text-outline hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+</button>
+</div>
+</div>
+<!-- Toggles Stack -->
+<div class="space-y-3 pt-1">
+<!-- Toggle 1 -->
+<div class="flex items-center justify-between p-2.5 bg-surface-container-lowest/80 rounded-2xl border border-white/60">
+<div class="pr-2">
+<span class="font-body-md text-body-md font-medium text-on-surface block">Rekap harian jam 21:00</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Laporan pergerakan kas &amp; pembagian budget</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer flex-shrink-0">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-high peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+<!-- Toggle 2 -->
+<div class="flex items-center justify-between p-2.5 bg-surface-container-lowest/80 rounded-2xl border border-white/60">
+<div class="pr-2">
+<span class="font-body-md text-body-md font-medium text-on-surface block">Peringatan over-budget</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Trigger instan ketika kuota pos melampaui limit</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer flex-shrink-0">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-high peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+</div>
+<!-- Save Button -->
+<button class="w-full purple-gradient-btn text-on-primary py-2.5 px-4 rounded-full font-label-md text-label-md flex items-center justify-center space-x-2 active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">cloud_sync</span>
+<span>Simpan Perubahan</span>
+</button>
+</div>
+</section>
+<!-- BENTO CARD 3: Preferensi Spreadsheet & Tampilan -->
+<section class="glass-tile rounded-3xl p-space-lg relative overflow-hidden">
+<div class="flex items-center space-x-2.5 mb-space-md">
+<div class="w-9 h-9 rounded-2xl bg-secondary-fixed flex items-center justify-center text-primary shadow-inner">
+<span class="material-symbols-outlined text-[20px]">table_chart</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Preferensi Spreadsheet</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Kalkulasi &amp; Format Finansial</p>
+</div>
+</div>
+<div class="space-y-space-sm">
+<!-- Item 1: Pembulatan Budget -->
+<div class="flex items-center justify-between p-3 bg-surface-container-lowest/80 rounded-2xl border border-white/60">
+<div class="flex items-center space-x-3">
+<span class="material-symbols-outlined text-primary text-[20px]">calculate</span>
+<div>
+<span class="font-body-md text-body-md font-medium text-on-surface block">Pembulatan Budget Harian</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Lining arithmetic otomatis</span>
+</div>
+</div>
+<div class="px-3 py-1 rounded-xl bg-surface-container border border-outline-variant/30 flex items-center space-x-1">
+<span class="font-tabular-numeric-md text-tabular-numeric-md text-primary font-semibold">Rp 100</span>
+<span class="material-symbols-outlined text-[14px] text-outline">unfold_more</span>
+</div>
+</div>
+<!-- Item 2: Alokasi BBM -->
+<div class="flex items-center justify-between p-3 bg-surface-container-lowest/80 rounded-2xl border border-white/60">
+<div class="flex items-center space-x-3">
+<span class="material-symbols-outlined text-primary text-[20px]">local_gas_station</span>
+<div>
+<span class="font-body-md text-body-md font-medium text-on-surface block">Jadwal Alokasi BBM Rutin</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Siklus pengisian mingguan</span>
+</div>
+</div>
+<div class="px-3 py-1 rounded-xl bg-surface-container border border-outline-variant/30 flex items-center space-x-1">
+<span class="font-label-md text-label-md text-on-surface">Senin</span>
+<span class="material-symbols-outlined text-[14px] text-outline">unfold_more</span>
+</div>
+</div>
+<!-- Item 3: Mata Uang -->
+<div class="flex items-center justify-between p-3 bg-surface-container-lowest/80 rounded-2xl border border-white/60">
+<div class="flex items-center space-x-3">
+<span class="material-symbols-outlined text-primary text-[20px]">payments</span>
+<div>
+<span class="font-body-md text-body-md font-medium text-on-surface block">Mata Uang Utama</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">ISO 4217 Rupiah Indonesia</span>
+</div>
+</div>
+<div class="px-3 py-1 rounded-xl bg-surface-container border border-outline-variant/30 flex items-center space-x-1">
+<span class="font-label-md text-label-md text-on-surface">IDR (Rp)</span>
+<span class="material-symbols-outlined text-[14px] text-outline">expand_more</span>
+</div>
+</div>
+</div>
+</section>
+<!-- BENTO CARD 4: Akun & Sesi Keamanan -->
+<section class="glass-tile rounded-3xl p-space-lg relative overflow-hidden">
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center space-x-2.5">
+<div class="w-9 h-9 rounded-2xl bg-secondary-fixed flex items-center justify-center text-primary shadow-inner">
+<span class="material-symbols-outlined text-[20px]">shield_person</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Akun &amp; Sesi Keamanan</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Kredensial Pengguna Aktif</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-outline font-medium">Build 2.4.1</span>
+</div>
+<div class="p-space-sm bg-surface-container-lowest/80 rounded-2xl border border-white/60 flex items-center justify-between mb-space-md">
+<div class="flex items-center space-x-3">
+<div class="w-11 h-11 rounded-full bg-secondary-fixed flex items-center justify-center text-primary font-bold text-body-lg shadow-sm">
+              RS
+            </div>
+<div>
+<span class="font-body-md text-body-md font-semibold text-on-surface block">Rian Sastrawan</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">rian@selaras.finance</span>
+</div>
+</div>
+<div class="flex items-center space-x-1 px-2 py-0.5 rounded-full bg-tertiary-container/10 text-tertiary">
+<span class="material-symbols-outlined text-[14px]">shield</span>
+<span class="font-label-sm text-label-sm font-semibold">2FA On</span>
+</div>
+</div>
+<!-- Subtle Danger Action: Logout -->
+<button class="w-full py-2.5 px-4 rounded-full bg-error-container/30 hover:bg-error-container/60 border border-error-container text-error font-label-md text-label-md flex items-center justify-center space-x-2 active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">logout</span>
+<span>Keluar Sesi</span>
+</button>
+</section>
+<!-- Institutional Footer Note -->
+<footer class="pt-2 text-center text-outline">
+<p class="font-label-sm text-label-sm">Selaras Wealth Systems • Dilindungi Enkripsi TLS 1.3</p>
+</footer>
+</main>
+<!-- BottomNavBar Component (Executing Shared Components JSON verbatim) -->
+<!-- active: Pengaturan (index 2), inactive: Ringkasan, Analitik -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 flex justify-around items-center px-space-sm py-space-xs pb-safe max-w-xs mx-auto floating pill rounded-full mb-space-md border border-surface-container-lowest/60 dark:border-outline/20 bg-surface-container-lowest/80 dark:bg-inverse-surface/80 backdrop-blur-2xl shadow-lg dark:shadow-none">
+<!-- Nav Destination 1: Ringkasan (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline px-space-sm py-space-xs hover:text-primary dark:hover:text-inverse-primary transition-colors duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm mt-0.5">Ringkasan</span>
+</a>
+<!-- Nav Destination 2: Analitik (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline px-space-sm py-space-xs hover:text-primary dark:hover:text-inverse-primary transition-colors duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined text-[20px]">monitoring</span>
+<span class="font-label-sm text-label-sm mt-0.5">Analitik</span>
+</a>
+<!-- Nav Destination 3: Pengaturan (ACTIVE - mapped accurately to current view) -->
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-space-md py-space-xs active:scale-95 transition-transform duration-150 shadow-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-label-sm text-label-sm mt-0.5 font-bold">Pengaturan</span>
+</a>
+</nav>
+</div>
+</body></html>

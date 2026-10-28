@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Selaras - Masuk &amp; Daftar</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary-fixed-variant": "#005236",
+            "primary-fixed-dim": "#d3bbff",
+            "tertiary": "#004b31",
+            "on-background": "#0b1c30",
+            "primary": "#5300b7",
+            "on-primary": "#ffffff",
+            "on-secondary-fixed-variant": "#5516be",
+            "background": "#f8f9ff",
+            "inverse-on-surface": "#eaf1ff",
+            "on-primary-container": "#dac5ff",
+            "inverse-surface": "#213145",
+            "surface-container-lowest": "#ffffff",
+            "surface-dim": "#cbdbf5",
+            "surface-tint": "#7331df",
+            "outline": "#7b7486",
+            "secondary-fixed": "#e9ddff",
+            "tertiary-fixed-dim": "#4edea3",
+            "on-tertiary-fixed": "#002113",
+            "on-surface-variant": "#4a4455",
+            "on-surface": "#0b1c30",
+            "surface-container-low": "#eff4ff",
+            "on-secondary-fixed": "#23005c",
+            "on-secondary": "#ffffff",
+            "error-container": "#ffdad6",
+            "on-error-container": "#93000a",
+            "primary-container": "#6d28d9",
+            "on-primary-fixed-variant": "#5b00c5",
+            "tertiary-fixed": "#6ffbbe",
+            "on-error": "#ffffff",
+            "surface-container": "#e5eeff",
+            "secondary": "#6b38d4",
+            "surface-container-highest": "#d3e4fe",
+            "inverse-primary": "#d3bbff",
+            "surface": "#f8f9ff",
+            "outline-variant": "#ccc3d7",
+            "on-tertiary": "#ffffff",
+            "surface-variant": "#d3e4fe",
+            "error": "#ba1a1a",
+            "secondary-container": "#8455ef",
+            "secondary-fixed-dim": "#d0bcff",
+            "tertiary-container": "#006544",
+            "primary-fixed": "#ebddff",
+            "surface-bright": "#f8f9ff",
+            "on-tertiary-container": "#58e7ab",
+            "on-secondary-container": "#fffbff",
+            "on-primary-fixed": "#250059",
+            "surface-container-high": "#dce9ff"
+          },
+          "borderRadius": {
+            "DEFAULT": "1rem",
+            "lg": "2rem",
+            "xl": "3rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter": "1.25rem",
+            "margin": "2rem",
+            "space-md": "1rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2.5rem",
+            "margin-mobile": "1rem",
+            "gutter-mobile": "0.75rem",
+            "space-sm": "0.5rem",
+            "space-lg": "1.5rem"
+          },
+          "fontFamily": {
+            "body-md": ["Inter"],
+            "label-md": ["Inter"],
+            "headline-md": ["Inter"],
+            "body-lg": ["Inter"],
+            "tabular-numeric-lg": ["Inter"],
+            "label-sm": ["Inter"],
+            "display-lg": ["Inter"],
+            "display-lg-mobile": ["Inter"],
+            "headline-lg-mobile": ["Inter"],
+            "headline-lg": ["Inter"],
+            "tabular-numeric-md": ["Inter"]
+          },
+          "fontSize": {
+            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.005em", "fontWeight": "400" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "headline-md": ["20px", { "lineHeight": "26px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "tabular-numeric-lg": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "700" }],
+            "display-lg-mobile": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.025em", "fontWeight": "700" }],
+            "headline-lg-mobile": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "headline-lg": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "tabular-numeric-md": ["15px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      font-size: 20px;
+      line-height: 1;
+      display: inline-block;
+    }
+    .specular-border {
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.95), 0 12px 36px -4px rgba(109, 40, 217, 0.08), 0 2px 6px 0 rgba(0, 0, 0, 0.02);
+    }
+    .primary-btn-glow {
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.35), 0 8px 24px -2px rgba(109, 40, 217, 0.38);
+    }
+    .input-ambient-glow:focus-within {
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.16);
+      border-color: #f59e0b;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface antialiased min-h-screen relative overflow-x-hidden flex flex-col justify-between selection:bg-primary selection:text-on-primary">
+<!-- Ambient Luxury Violet Mesh Background Orbs -->
+<div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+<div class="absolute -top-24 -left-20 w-80 h-80 rounded-full bg-primary-fixed-dim/35 blur-3xl"></div>
+<div class="absolute top-1/3 -right-24 w-96 h-96 rounded-full bg-secondary-fixed/40 blur-3xl"></div>
+<div class="absolute -bottom-20 left-10 w-72 h-72 rounded-full bg-surface-container-high/60 blur-3xl"></div>
+<div class="absolute inset-0 bg-radial from-transparent via-background/40 to-background"></div>
+</div>
+<!-- Main Mobile Container -->
+<div class="relative z-10 w-full max-w-md mx-auto min-h-screen flex flex-col justify-between px-margin-mobile py-space-md">
+<!-- Top Status Bar & Quick Actions Placeholder -->
+<header class="w-full flex items-center justify-between pt-space-xs pb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="text-label-sm font-label-sm text-on-surface-variant font-medium tracking-tight">ID • IDR</span>
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-container"></span>
+</div>
+<button aria-label="Bantuan atau Pengaturan" class="w-9 h-9 rounded-full bg-surface-container-lowest/80 backdrop-blur-md flex items-center justify-center border border-surface-container-lowest/90 text-on-surface-variant hover:bg-surface-container-high/50 active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined" data-icon="tune">tune</span>
+</button>
+</header>
+<!-- Main Content Area -->
+<main class="w-full flex flex-col items-center flex-1 justify-center my-space-sm">
+<!-- Top Hero Branding -->
+<section class="w-full flex flex-col items-center text-center mb-space-lg">
+<!-- Logo Emblem with Apple-style Squircle Glass Refraction -->
+<div class="relative mb-space-md">
+<div class="absolute inset-0 rounded-2xl bg-primary-container/30 blur-xl scale-125"></div>
+<div class="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-container to-secondary flex items-center justify-center specular-border shadow-lg">
+<span class="material-symbols-outlined text-white text-[32px]" data-icon="account_balance_wallet" data-weight="fill" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<div class="absolute top-1 left-1 right-1 h-1/2 bg-white/20 rounded-t-xl pointer-events-none"></div>
+</div>
+</div>
+<h1 class="text-headline-lg-mobile font-headline-lg-mobile text-on-surface tracking-tight mb-space-xs font-semibold">
+          Kelola Keuangan Lebih Selaras
+        </h1>
+<p class="text-body-md font-body-md text-on-surface-variant max-w-[280px]">
+          Presisi spreadsheet berbalut estetika executive iOS.
+        </p>
+</section>
+<!-- Central Frosted Bento Card -->
+<section class="w-full rounded-3xl bg-surface-container-lowest/80 backdrop-blur-2xl border border-white/90 p-space-md specular-border transition-all">
+<!-- Segmented iOS Segment Pill Control (3 Options) -->
+<div class="w-full p-1 bg-surface-container-low rounded-full flex items-center justify-between mb-space-md border border-outline-variant/30">
+<button class="flex-1 py-1.5 px-space-xs rounded-full bg-white text-primary text-label-sm font-label-sm shadow-sm transition-all text-center" type="button">
+            Masuk
+          </button>
+<button class="flex-1 py-1.5 px-space-xs rounded-full text-on-surface-variant hover:text-on-surface text-label-sm font-label-sm transition-all text-center truncate" type="button">
+            Tautan Email
+          </button>
+<button class="flex-1 py-1.5 px-space-xs rounded-full text-on-surface-variant hover:text-on-surface text-label-sm font-label-sm transition-all text-center" type="button">
+            Daftar
+          </button>
+</div>
+<!-- Form Elements -->
+<form class="w-full space-y-3" onsubmit="event.preventDefault();">
+<!-- Input Field: Email / Username -->
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-1 ml-1" for="identifier">
+              Email atau Nama Pengguna
+            </label>
+<div class="relative flex items-center rounded-2xl bg-white/90 border border-outline-variant/50 px-space-sm py-2.5 transition-all input-ambient-glow">
+<span class="material-symbols-outlined text-outline mr-2 text-[20px]" data-icon="mail">mail</span>
+<input class="w-full bg-transparent border-0 p-0 text-body-md font-body-md text-on-surface placeholder:text-outline/70 focus:ring-0 focus:outline-none" id="identifier" inputmode="email" placeholder="nama@perusahaan.com" type="email" value="adrian.wirawan@selaras.id"/>
+<span class="w-2 h-2 rounded-full bg-tertiary-container/80 ml-1" title="Format valid"></span>
+</div>
+</div>
+<!-- Input Field: Kata Sandi -->
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-1 ml-1" for="password">
+              Kata Sandi
+            </label>
+<div class="relative flex items-center rounded-2xl bg-white/90 border border-outline-variant/50 px-space-sm py-2.5 transition-all input-ambient-glow">
+<span class="material-symbols-outlined text-outline mr-2 text-[20px]" data-icon="lock">lock</span>
+<input class="w-full bg-transparent border-0 p-0 text-body-md font-body-md text-on-surface placeholder:text-outline/70 focus:ring-0 focus:outline-none" id="password" placeholder="••••••••••••" type="password" value="ExecutivePortfolio2025!"/>
+<button aria-label="Tampilkan sandi" class="text-outline hover:text-on-surface transition-colors p-0.5" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+<!-- Options Row: Checkbox & Lupa Sandi -->
+<div class="flex items-center justify-between pt-1 pb-1">
+<label class="flex items-center gap-2 cursor-pointer select-none">
+<input checked="" class="w-4 h-4 rounded text-primary focus:ring-primary-container border-outline-variant transition-all cursor-pointer" type="checkbox"/>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Ingat sesi ini</span>
+</label>
+<a class="text-label-sm font-label-sm text-primary hover:text-secondary-container transition-colors" href="#forgot">
+              Lupa sandi?
+            </a>
+</div>
+<!-- Primary Gradient Button -->
+<div class="pt-2">
+<button class="w-full py-3.5 px-space-md rounded-2xl bg-gradient-to-r from-primary-container to-secondary text-white text-body-md font-body-md font-semibold flex items-center justify-center gap-2 primary-btn-glow active:scale-[0.98] transition-all" type="submit">
+<span>Masuk ke Selaras</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<!-- Subtle Divider -->
+<div class="relative flex items-center py-2">
+<div class="flex-grow border-t border-outline-variant/30"></div>
+<span class="flex-shrink mx-3 text-label-sm font-label-sm text-outline">atau otentikasi cepat</span>
+<div class="flex-grow border-t border-outline-variant/30"></div>
+</div>
+<!-- Biometric Face ID / Touch ID Button -->
+<button class="w-full py-3 px-space-md rounded-2xl bg-surface-container-low hover:bg-surface-container text-on-surface text-body-md font-body-md font-medium border border-outline-variant/40 flex items-center justify-center gap-2.5 active:scale-[0.98] transition-all shadow-sm" type="button">
+<span class="material-symbols-outlined text-primary text-[22px]" data-icon="fingerprint">fingerprint</span>
+<span>Masuk via Apple Face ID</span>
+</button>
+</form>
+<!-- Institutional Trust Micro-Badge inside Bento -->
+<div class="mt-space-md pt-space-xs border-t border-outline-variant/20 flex items-center justify-between text-label-sm font-label-sm text-on-surface-variant">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-tertiary-container text-[16px]" data-icon="verified_user">verified_user</span>
+<span>ISO 27001 Certified</span>
+</span>
+<span class="text-outline font-normal">v4.8.2 Sequoia</span>
+</div>
+</section>
+</main>
+<!-- Bottom Security & Privacy Pill -->
+<footer class="w-full flex flex-col items-center pb-space-xs pt-space-sm">
+<div class="inline-flex items-center gap-2 py-1.5 px-3 rounded-full bg-surface-container-lowest/80 backdrop-blur-md border border-white/80 shadow-xs">
+<span class="material-symbols-outlined text-tertiary-container text-[16px]" data-icon="lock">lock</span>
+<p class="text-label-sm font-label-sm text-on-surface-variant tracking-normal">
+          Enkripsi data keuangan end-to-end terproteksi
+        </p>
+</div>
+<div class="flex items-center gap-4 mt-2 text-label-sm font-label-sm text-outline">
+<a class="hover:text-primary transition-colors" href="#privacy">Privasi</a>
+<span>•</span>
+<a class="hover:text-primary transition-colors" href="#terms">Ketentuan Layanan</a>
+</div>
+</footer>
+</div>
+</body></html>
