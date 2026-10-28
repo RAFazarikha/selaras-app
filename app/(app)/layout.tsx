@@ -11,6 +11,7 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
   const { data: m } = await supabase
     .from("workspace_members")
     .select("workspace_id")
+    .eq("user_id", user.id)
     .maybeSingle();
   if (!m) redirect("/onboarding");
 

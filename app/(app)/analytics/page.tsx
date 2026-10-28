@@ -47,7 +47,10 @@ export default async function AnalyticsPage() {
   const today = todayJakarta();
   const activePeriod =
     periods.find(
-      (p) => p.owner_id === user?.id && p.start_date <= today && today <= p.end_date,
+      (p) =>
+        (p.owner_id === user?.id || p.visibility === "shared") &&
+        p.start_date <= today &&
+        today <= p.end_date,
     ) ?? periods[0];
 
   const { data: txRows } = await supabase

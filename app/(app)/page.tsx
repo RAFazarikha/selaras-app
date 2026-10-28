@@ -15,9 +15,12 @@ export default async function Home() {
     .order("start_date", { ascending: false });
 
   const today = todayJakarta();
-  // Temukan periode aktif berdasarkan hari ini
+  // Temukan periode aktif berdasarkan hari ini (milik sendiri atau dibagikan)
   const active = periods?.find(
-    (p) => p.owner_id === user?.id && p.start_date <= today && today <= p.end_date,
+    (p) =>
+      (p.owner_id === user?.id || p.visibility === "shared") &&
+      p.start_date <= today &&
+      today <= p.end_date,
   );
   if (active) redirect(`/periods/${active.id}`);
 

@@ -19,7 +19,13 @@ export async function createPeriod(_: State, f: FormData): Promise<State> {
   }
 
   const supabase = await createClient();
-  const { data: m } = await supabase.from("workspace_members").select("workspace_id").single();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Belum login" };
+  const { data: m } = await supabase
+    .from("workspace_members")
+    .select("workspace_id")
+    .eq("user_id", user.id)
+    .maybeSingle();
   if (!m) return { error: "Belum punya workspace" };
   const { data, error } = await supabase
     .from("periods")
