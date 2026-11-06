@@ -7,12 +7,14 @@ import { BentoHeroBalance } from "@/components/bento-hero-balance";
 import { BentoAutoCalculated } from "@/components/bento-auto-calculated";
 import { BentoDailyLedger } from "@/components/bento-daily-ledger";
 import {
+  actualDailyBudget,
+  balances,
   calculateSpreadsheet,
   type Period,
   type Tx,
 } from "@/supabase/functions/_shared/budget";
 import { todayJakarta } from "@/lib/format";
-import { Plus, ChevronDown } from "lucide-react";
+import { Plus, ChevronDown, List } from "lucide-react";
 import { QuickAddFab } from "@/components/quick-add-fab";
 
 export default async function PeriodPage(props: PageProps<"/periods/[id]">) {
@@ -58,7 +60,18 @@ export default async function PeriodPage(props: PageProps<"/periods/[id]">) {
 
   const today = todayJakarta();
   const todayRow = rows.find((r) => r.date === today);
-  const todayQuota = todayRow ? todayRow.totalBudgetToday : summary.dailyBudget;
+  const plannedQuota = todayRow ? todayRow.totalBudgetToday : summary.dailyBudget;
+  const actual = actualDailyBudget(p, txs, today);
+  // Budget aktual per hari: hari lewat/ini dihitung dari saldo awal hari itu; hari depan = proyeksi dari hari ini.
+  const actualBudgets: Record<string, number> = {};
+  const actualBalances: Record<string, number> = {}; // saldo aktual akhir hari (hanya hari <= hari ini)
+  for (const r of rows) {
+    if (r.date <= today) {
+      actualBudgets[r.date] = actualDailyBudget(p, txs, r.date).todayQuota;
+      actualBalances[r.date] = balances(p, [], txs, r.date).actual;
+    }
+    else actualBudgets[r.date] = actual.daily + r.routineBudget;
+  }
 
   const isOwner = pRow.owner_id === user?.id;
   const canAdd = isOwner && today >= pRow.start_date && today <= pRow.end_date;
@@ -79,6 +92,15 @@ export default async function PeriodPage(props: PageProps<"/periods/[id]">) {
           </div>
         </div>
 
+        <div className="flex items-center">
+        <Link
+          href="/periods"
+          className="size-11 rounded-full flex items-center justify-center text-muted-foreground hover:bg-surface-container transition-all active:scale-95"
+          title="Semua periode"
+          aria-label="Semua periode"
+        >
+          <List aria-hidden="true" className="w-5 h-5 text-muted-foreground" />
+        </Link>
         <Link
           href="/periods/new"
           className="size-11 rounded-full flex items-center justify-center text-muted-foreground hover:bg-surface-container transition-all active:scale-95"
@@ -87,9 +109,10 @@ export default async function PeriodPage(props: PageProps<"/periods/[id]">) {
         >
           <Plus aria-hidden="true" className="w-5 h-5 text-muted-foreground" />
         </Link>
+        </div>
       </header>
 
-      <BentoHeroBalance summary={summary} todayQuota={todayQuota} title={pRow.name} />
+      <BentoHeroBalance summary={summary} actual={actual} plannedQuota={plannedQuota} title={pRow.name} />
 
       <details className="group">
         <summary className="glass-tile flex min-h-11 cursor-pointer list-none items-center justify-between rounded-2xl px-4 text-sm font-semibold text-foreground [&::-webkit-details-marker]:hidden">
@@ -119,6 +142,8 @@ export default async function PeriodPage(props: PageProps<"/periods/[id]">) {
         periodId={id}
         isOwner={isOwner}
         rows={rows}
+        actualBudgets={actualBudgets}
+        actualBalances={actualBalances}
         summary={summary}
         todayStr={today}
         transactions={(txRows ?? []).map((t) => ({

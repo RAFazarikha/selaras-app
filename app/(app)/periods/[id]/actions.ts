@@ -110,3 +110,15 @@ export async function deletePlannedItem(f: FormData): Promise<void> {
   await supabase.from("planned_items").delete().eq("id", str(f, "id"));
   revalidatePath(`/periods/${str(f, "period_id")}`);
 }
+
+export async function deletePeriod(id: string): Promise<State> {
+  const supabase = await createClient();
+  // RLS per_delete: hanya pemilik; baris terhapus = 0 berarti bukan pemilik / tidak ada.
+  const { data, error } = await supabase.from("periods").delete().eq("id", id).select("id");
+  if (error) return { error: error.message };
+  if (!data?.length) return { error: "Periode tidak ditemukan atau bukan milikmu" };
+  revalidatePath("/periods");
+  revalidatePath("/analytics");
+  revalidatePath("/");
+  return { info: "Periode dihapus" };
+}

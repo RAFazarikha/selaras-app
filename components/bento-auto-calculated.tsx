@@ -25,7 +25,7 @@ export function BentoAutoCalculated({
         {/* Tile 1 */}
         <div className="p-2.5 rounded-2xl bg-muted/70 border border-white/90">
           <span className="text-xs font-medium text-muted-foreground block">Jumlah Hari</span>
-          <span className="text-xs font-bold tabular-nums text-foreground mt-0.5 block">
+          <span className="text-sm font-bold tabular-nums text-foreground mt-0.5 block">
             {summary.totalDays} Hari
           </span>
         </div>
@@ -34,10 +34,10 @@ export function BentoAutoCalculated({
         <div className="p-2.5 rounded-2xl bg-muted/70 border border-white/90">
           <span className="text-xs font-medium text-muted-foreground block">Frekuensi BBM</span>
           <div className="flex items-baseline gap-1 mt-0.5">
-            <span className="text-xs font-bold tabular-nums text-foreground">
+            <span className="text-sm font-bold tabular-nums text-foreground">
               {summary.routineDayCount}x {getDayName(routineDay)}
             </span>
-            <span className="text-xs text-outline font-medium">
+            <span className="text-xs text-muted-foreground font-medium">
               ({rupiah(summary.totalRoutine)})
             </span>
           </div>
@@ -46,7 +46,7 @@ export function BentoAutoCalculated({
         {/* Tile 3 */}
         <div className="p-2.5 rounded-2xl bg-muted/70 border border-white/90">
           <span className="text-xs font-medium text-muted-foreground block">Sisa Kebutuhan</span>
-          <span className="text-xs font-bold tabular-nums text-primary mt-0.5 block">
+          <span className="text-sm font-bold tabular-nums text-primary mt-0.5 block">
             {rupiah(summary.netForDaily)}
           </span>
         </div>
@@ -54,7 +54,7 @@ export function BentoAutoCalculated({
         {/* Tile 4 */}
         <div className="p-2.5 rounded-2xl bg-muted/70 border border-white/90">
           <span className="text-xs font-medium text-muted-foreground block">Budget Harian</span>
-          <span className="text-xs font-bold tabular-nums text-foreground mt-0.5 block">
+          <span className="text-sm font-bold tabular-nums text-foreground mt-0.5 block">
             {rupiah(summary.dailyBudget)}
             <span className="text-xs text-outline font-normal ml-0.5">/hr</span>
           </span>
@@ -63,7 +63,7 @@ export function BentoAutoCalculated({
         {/* Tile 5 */}
         <div className="col-span-2 p-2.5 rounded-2xl bg-muted/70 border border-white/90">
           <span className="text-xs font-medium text-muted-foreground block">Cadangan Pembulatan</span>
-          <span className="text-xs font-bold tabular-nums text-outline mt-0.5 block">
+          <span className="text-sm font-bold tabular-nums text-outline mt-0.5 block">
             {rupiah(summary.roundingReserve)}
           </span>
         </div>

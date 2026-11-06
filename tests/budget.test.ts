@@ -1,5 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import {
+  actualDailyBudget,
   adaptiveAllowance,
   balances,
   calculateSpreadsheet,
@@ -189,5 +190,39 @@ describe("calculateSpreadsheet (Stitch / Excel Spec)", () => {
     // Sisa rencana hari terakhir harus tepat sama dengan cadangan pembulatan (432)
     const lastRow = rows[rows.length - 1];
     expect(lastRow.plannedRemaining).toBe(432);
+  });
+});
+
+describe("actualDailyBudget", () => {
+  const sp: Period = { start: "2026-10-26", end: "2026-11-30", initialBalance: 1_553_232, routineAmount: 50_000, routineDay: 1 };
+  test("hari pertama tanpa transaksi = sama dengan rencana", () => {
+    const a = actualDailyBudget(sp, [], "2026-10-26");
+    expect(a.daily).toBe(34_800);
+    expect(a.todayQuota).toBe(84_800); // Senin + BBM
+    expect(a.remainingDays).toBe(36);
+  });
+  test("boros kemarin -> budget turun; transaksi hari ini tidak mengubah jatah", () => {
+    const txs = [exp("2026-10-26", 100_000), exp("2026-10-27", 41_500)];
+    const a = actualDailyBudget(sp, txs, "2026-10-28");
+    // saldo 1.411.732; sisa 34 hari; BBM Senin 2,9,16,23,30 Nov = 5x
+    expect(a.startBalance).toBe(1_411_732);
+    expect(a.remainingDays).toBe(34);
+    expect(a.daily).toBe(Math.floor((1_411_732 - 250_000) / 34 / 100) * 100);
+    const b = actualDailyBudget(sp, [...txs, exp("2026-10-28", 30_000)], "2026-10-28");
+    expect(b.todayQuota).toBe(a.todayQuota);
+    expect(b.todayLeft).toBe(a.todayQuota - 30_000);
+  });
+  test("pemasukan menambah saldo", () => {
+    const a = actualDailyBudget(sp, [inc("2026-10-26", 340_000)], "2026-10-27");
+    expect(a.startBalance).toBe(1_893_232);
+  });
+  test("saldo kurang dari BBM -> daily 0 + shortfall", () => {
+    const a = actualDailyBudget(sp, [exp("2026-10-26", 1_500_000)], "2026-10-27");
+    expect(a.daily).toBe(0);
+    expect(a.shortfall).toBeGreaterThan(0);
+  });
+  test("today di luar periode di-clamp", () => {
+    expect(actualDailyBudget(sp, [], "2026-12-15").remainingDays).toBe(1);
+    expect(actualDailyBudget(sp, [], "2026-10-01").remainingDays).toBe(36);
   });
 });

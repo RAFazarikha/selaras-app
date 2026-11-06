@@ -63,7 +63,7 @@ export function BentoParameterDock({
           <div className="w-6 h-6 rounded-full bg-accent flex items-center justify-center text-primary shrink-0">
             <Calendar aria-hidden="true" className="w-3.5 h-3.5" />
           </div>
-          <h2 className="text-xs font-bold text-foreground tracking-tight">{period.name}</h2>
+          <h2 className="text-sm font-bold text-foreground tracking-tight">{period.name}</h2>
         </div>
         <div className="flex items-center gap-1.5">
           <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-muted text-muted-foreground border border-surface-highest">

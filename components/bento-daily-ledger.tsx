@@ -33,6 +33,8 @@ export function BentoDailyLedger({
   periodId,
   isOwner,
   rows,
+  actualBudgets,
+  actualBalances,
   summary,
   todayStr,
   transactions,
@@ -40,6 +42,8 @@ export function BentoDailyLedger({
   periodId: string;
   isOwner: boolean;
   rows: SpreadsheetDayRow[];
+  actualBudgets: Record<string, number>;
+  actualBalances: Record<string, number>;
   summary: SpreadsheetSummary;
   todayStr: string;
   transactions: TxItem[];
@@ -134,6 +138,8 @@ export function BentoDailyLedger({
         {visibleRows.map((row) => {
           const isToday = row.date === todayStr;
           const isExpanded = selectedDate === row.date;
+          const budget = actualBudgets[row.date] ?? row.totalBudgetToday;
+          const diff = row.actualSpent - budget;
           const dayTxs = txByDate.get(row.date) ?? [];
 
           return (
@@ -152,7 +158,7 @@ export function BentoDailyLedger({
                 <div className="flex justify-between items-center mb-1.5">
                   <div className="flex items-center gap-1.5 flex-wrap">
                     <span
-                      className={`text-xs font-semibold ${
+                      className={`text-sm font-semibold ${
                         isToday ? "text-primary font-bold" : "text-foreground"
                       }`}
                     >
@@ -173,13 +179,13 @@ export function BentoDailyLedger({
                   {/* Diff / Status Badge */}
                   <div>
                     {row.hasActual ? (
-                      row.diff < 0 ? (
+                      diff < 0 ? (
                         <span className="badge-positive text-xs px-2 py-0.5 rounded-full font-semibold">
-                          +{rupiah(Math.abs(row.diff))} Hemat
+                          +{rupiah(Math.abs(diff))} Hemat
                         </span>
-                      ) : row.diff > 0 ? (
+                      ) : diff > 0 ? (
                         <span className="badge-negative text-xs px-2 py-0.5 rounded-full font-semibold">
-                          −{rupiah(row.diff)}
+                          −{rupiah(diff)}
                         </span>
                       ) : (
                         <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-muted text-muted-foreground">
@@ -187,33 +193,38 @@ export function BentoDailyLedger({
                         </span>
                       )
                     ) : (
-                      <span className="text-xs text-outline font-medium">Proyeksi</span>
+                      <span className="text-xs text-muted-foreground font-medium">Proyeksi</span>
                     )}
                   </div>
                 </div>
 
                 {/* 3 Columns: Budget | Aktual | Sisa Saldo */}
-                <div className="grid grid-cols-3 gap-2 items-center text-left pt-1.5 border-t border-surface-container">
+                <div className="grid grid-cols-3 gap-3 items-start text-left pt-2 border-t border-surface-container">
                   <div>
-                    <span className="text-xs text-outline block">Budget</span>
-                    <span className="text-xs font-medium tabular-nums text-foreground">
-                      {rupiah(row.totalBudgetToday)}
+                    <span className="text-xs text-muted-foreground block mb-0.5">Budget</span>
+                    <span className="text-sm font-semibold tabular-nums text-foreground">
+                      {rupiah(budget)}
                     </span>
+                    {budget !== row.totalBudgetToday && (
+                      <span className="text-xs text-muted-foreground block tabular-nums mt-0.5">
+                        Rencana {rupiah(row.totalBudgetToday)}
+                      </span>
+                    )}
                   </div>
 
                   <div className="text-center">
-                    <span className="text-xs text-outline block">Aktual</span>
+                    <span className="text-xs text-muted-foreground block mb-0.5">Aktual</span>
                     <button
                       type="button"
                       onClick={() => setSelectedDate(isExpanded ? null : row.date)}
                       aria-expanded={isExpanded}
                       aria-controls={`ledger-drawer-${row.date}`}
-                      className={`w-full min-h-9 py-1 px-2 rounded-xl text-xs font-bold tabular-nums transition-all flex items-center justify-center ${
+                      className={`w-full min-h-10 py-1 px-2 rounded-xl text-sm font-bold tabular-nums transition-all flex items-center justify-center ${
                         row.hasActual
                           ? "editable-amber hover:opacity-90"
                           : isToday
                           ? "focused-amber"
-                          : "bg-white/80 border border-outline-variant/60 text-outline hover:border-[#f59e0b]"
+                          : "bg-white/80 border border-outline-variant/60 text-muted-foreground hover:border-[#f59e0b]"
                       }`}
                     >
                       {row.hasActual ? rupiah(row.actualSpent) : isToday ? "+ Ketik" : "−"}
@@ -221,12 +232,24 @@ export function BentoDailyLedger({
                   </div>
 
                   <div className="text-right">
-                    <span className="text-xs text-outline block">
-                      {row.hasActual ? "Sisa Saldo" : "Estimasi"}
-                    </span>
-                    <span className="text-xs font-semibold tabular-nums text-foreground">
-                      {rupiah(row.actualRemaining ?? row.plannedRemaining)}
-                    </span>
+                    {actualBalances[row.date] !== undefined ? (
+                      <>
+                        <span className="text-xs text-muted-foreground block mb-0.5">Sisa Aktual</span>
+                        <span className="text-sm font-semibold tabular-nums text-foreground block">
+                          {rupiah(actualBalances[row.date])}
+                        </span>
+                        <span className="text-xs text-muted-foreground block tabular-nums mt-0.5">
+                          Rencana {rupiah(row.plannedRemaining)}
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-xs text-muted-foreground block mb-0.5">Sisa Rencana</span>
+                        <span className="text-sm font-semibold tabular-nums text-foreground block">
+                          {rupiah(row.plannedRemaining)}
+                        </span>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
@@ -241,7 +264,7 @@ export function BentoDailyLedger({
                     <button
                       type="button"
                       onClick={() => setSelectedDate(null)}
-                      className="min-h-9 px-3 py-1 rounded-lg text-xs text-outline hover:text-foreground hover:bg-muted transition-colors flex items-center justify-center"
+                      className="min-h-9 px-3 py-1 rounded-lg text-xs text-muted-foreground hover:text-foreground hover:bg-muted transition-colors flex items-center justify-center"
                     >
                       Tutup
                     </button>
@@ -256,7 +279,7 @@ export function BentoDailyLedger({
                             <span className="font-medium text-foreground">
                               {tx.note || "Pengeluaran"}
                             </span>
-                            <span className="block text-xs text-outline">
+                            <span className="block text-xs text-muted-foreground">
                               {formatDateIndo(tx.transaction_date)}
                             </span>
                           </div>
@@ -298,7 +321,7 @@ export function BentoDailyLedger({
                       ))}
                     </ul>
                   ) : (
-                    <p className="text-xs text-outline italic">
+                    <p className="text-xs text-muted-foreground italic">
                       Belum ada catatan pengeluaran di tanggal ini.
                     </p>
                   )}
@@ -367,7 +390,7 @@ export function BentoDailyLedger({
       <div className="pt-3 border-t border-surface-container space-y-2.5">
         <div className="flex justify-between items-center bg-muted p-3 rounded-2xl">
           <div>
-            <span className="text-xs uppercase tracking-wider text-outline block">
+            <span className="text-xs uppercase tracking-wider text-muted-foreground block">
               Total Budget Alokasi
             </span>
             <span className="text-sm font-semibold tabular-nums text-foreground">
@@ -375,7 +398,7 @@ export function BentoDailyLedger({
             </span>
           </div>
           <div className="text-right">
-            <span className="text-xs uppercase tracking-wider text-outline block">
+            <span className="text-xs uppercase tracking-wider text-muted-foreground block">
               Hemat Kumulatif
             </span>
             <span

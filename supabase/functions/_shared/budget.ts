@@ -209,3 +209,33 @@ export function calculateSpreadsheet(
     rows,
   };
 }
+
+/**
+ * Budget harian AKTUAL: sisa saldo di awal hari `today` (pemasukan - pengeluaran sebelum hari itu),
+ * dikurangi BBM yang belum lewat (hari ini ikut), dibagi sisa hari. Tidak berubah saat transaksi hari ini dicatat.
+ * `today` di luar periode di-clamp ke start/end. Saldo < kebutuhan BBM -> daily 0, shortfall > 0.
+ */
+export function actualDailyBudget(p: Period, txs: Tx[], today: string) {
+  const d = today < p.start ? p.start : today > p.end ? p.end : today;
+  const routineAmount = p.routineAmount ?? 50_000;
+  const targetDay = p.routineDay ?? 1;
+  const before = txs.filter((t) => t.date < d);
+  const startBalance =
+    p.initialBalance +
+    sum(before.filter((t) => t.type === "income")) -
+    sum(before.filter((t) => t.type === "expense"));
+  const remainingDays = daysBetween(d, p.end);
+  const remainingRoutine = eachDay(d, p.end).filter((x) => dayOfWeek(x) === targetDay).length * routineAmount;
+  const net = startBalance - remainingRoutine;
+  const daily = Math.floor(Math.max(0, net) / remainingDays / 100) * 100;
+  const todayQuota = daily + (dayOfWeek(d) === targetDay ? routineAmount : 0);
+  const spentToday = sum(txs.filter((t) => t.type === "expense" && t.date === d));
+  return {
+    daily,
+    todayQuota,
+    todayLeft: todayQuota - spentToday,
+    startBalance,
+    remainingDays,
+    shortfall: Math.max(0, -net),
+  };
+}

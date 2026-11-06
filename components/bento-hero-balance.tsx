@@ -1,13 +1,15 @@
 import { rupiah } from "@/lib/format";
-import { type SpreadsheetSummary } from "@/supabase/functions/_shared/budget";
+import { type actualDailyBudget, type SpreadsheetSummary } from "@/supabase/functions/_shared/budget";
 
 export function BentoHeroBalance({
   summary,
-  todayQuota,
+  actual,
+  plannedQuota,
   title,
 }: {
   summary: SpreadsheetSummary;
-  todayQuota: number;
+  actual: ReturnType<typeof actualDailyBudget>;
+  plannedQuota: number;
   title: string;
 }) {
   const pctSpent =
@@ -15,23 +17,34 @@ export function BentoHeroBalance({
       ? Math.min(100, Math.max(0, Math.round((summary.totalActualSpent / summary.totalAmount) * 100)))
       : 0;
   const pctLeft = 100 - pctSpent;
+  const delta = actual.todayQuota - plannedQuota; // > 0 = lebih longgar dari rencana
 
   return (
     <section className="hero-glass rounded-3xl p-5 text-white space-y-4">
       <div>
         <p className="text-xs font-medium text-on-primary-container">{title}</p>
         <p className="mt-2 text-sm font-semibold text-on-primary-container">Jatah hari ini</p>
-        <p className="text-4xl font-extrabold tracking-tight tabular-nums">{rupiah(todayQuota)}</p>
+        <p className="text-4xl font-extrabold tracking-tight tabular-nums">{rupiah(actual.todayQuota)}</p>
+        <p className="mt-1.5 text-xs leading-relaxed text-on-primary-container tabular-nums">
+          Rencana {rupiah(plannedQuota)}
+          {delta !== 0 && ` · ${delta > 0 ? "longgar" : "lebih ketat"} ${rupiah(Math.abs(delta))}`}
+          {" · "}sisa hari ini {rupiah(Math.max(0, actual.todayLeft))}
+        </p>
+        {actual.shortfall > 0 && (
+          <p role="alert" className="mt-1 text-xs font-semibold text-white">
+            Saldo kurang {rupiah(actual.shortfall)} untuk BBM yang tersisa
+          </p>
+        )}
       </div>
 
       <div className="grid grid-cols-2 gap-2">
         <div className="rounded-2xl border border-white/15 bg-white/15 p-3">
           <p className="text-xs text-on-primary-container">Saldo sekarang</p>
-          <p className="mt-0.5 text-base font-bold tabular-nums">{rupiah(summary.currentActualBalance)}</p>
+          <p className="mt-0.5 text-lg font-bold tabular-nums">{rupiah(summary.currentActualBalance)}</p>
         </div>
         <div className="rounded-2xl border border-white/15 bg-white/15 p-3">
           <p className="text-xs text-on-primary-container">Sudah dipakai</p>
-          <p className="mt-0.5 text-base font-bold tabular-nums">{rupiah(summary.totalActualSpent)}</p>
+          <p className="mt-0.5 text-lg font-bold tabular-nums">{rupiah(summary.totalActualSpent)}</p>
         </div>
       </div>
 
